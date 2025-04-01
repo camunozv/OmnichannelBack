@@ -32,8 +32,13 @@ public class EmpresaController {
         return new ResponseEntity<>(empresaService.getAllEmpresas(), HttpStatus.OK);
     }
 
-    @GetMapping("{empresaId}")
+    @GetMapping("/{empresaId}")
     public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long empresaId) {
-
+        Empresa empresa = empresaService.getEmpresaById(empresaId);
+        if (empresa == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(empresa, HttpStatus.OK);
+        }
     }
 }
