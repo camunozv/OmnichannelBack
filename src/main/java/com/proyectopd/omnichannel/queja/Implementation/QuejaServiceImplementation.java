@@ -1,9 +1,12 @@
 package com.proyectopd.omnichannel.queja.Implementation;
 
+import com.proyectopd.omnichannel.empresa.Empresa;
+import com.proyectopd.omnichannel.empresa.EmpresaService;
 import com.proyectopd.omnichannel.queja.Queja;
 import com.proyectopd.omnichannel.queja.QuejaRepository;
 import com.proyectopd.omnichannel.queja.QuejaService;
 import com.proyectopd.omnichannel.usuario.Usuario;
+import com.proyectopd.omnichannel.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +15,13 @@ import java.util.List;
 public class QuejaServiceImplementation implements QuejaService {
 
     QuejaRepository quejaRepository;
+    EmpresaService empresaService;
+    UsuarioService usuarioService;
 
-    public QuejaServiceImplementation(QuejaRepository quejaRepository) {
+    public QuejaServiceImplementation(QuejaRepository quejaRepository, EmpresaService empresaService, UsuarioService usuarioService) {
         this.quejaRepository = quejaRepository;
+        this.empresaService = empresaService;
+        this.usuarioService = usuarioService;
     }
 
     @Override
@@ -33,14 +40,22 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
-    public boolean createQueja(Queja queja, Usuario usuario) {
-
+    public boolean createQueja(Queja queja, Long cedula, Long nit) {
         boolean created = false;
+        Empresa empresa = empresaService.getEmpresaById(nit);
+        Usuario usuario = usuarioService.getUsuarioById(cedula);
 
-        quejaRepository.save(queja);
+        if (empresa != null && usuario != null) {
+            queja.setEmpresa(empresa);
+            queja.setUsuario(usuario);
 
-        return false;
+            quejaRepository.save(queja);
+            created = true;
+        }
+
+        return created;
     }
+
 
     @Override
     public boolean deleteQueja(Long idEmpresa, Long idUsuario, Long idQueja) {
