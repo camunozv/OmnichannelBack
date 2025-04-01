@@ -16,6 +16,7 @@ public class Queja {
     private int prioridad;
     private String tiempoMinimoRespuesta;
     private String descripcion;
+    private String respuesta;
 
     // Uncomment when the other entities are ready
     @JsonIgnore
@@ -29,12 +30,13 @@ public class Queja {
     public Queja() {
     }
 
-    public Queja(Long idQueja, String tipoServicio, int prioridad, String tiempoMinimoRespuesta, String descripcion, Usuario usuario, Empresa empresa) {
+    public Queja(Long idQueja, String tipoServicio, int prioridad, String tiempoMinimoRespuesta, String descripcion, String respuesta, Usuario usuario, Empresa empresa) {
         this.idQueja = idQueja;
         this.tipoServicio = tipoServicio;
         this.prioridad = prioridad;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
         this.descripcion = descripcion;
+        this.respuesta = respuesta;
         this.usuario = usuario;
         this.empresa = empresa;
     }
@@ -93,5 +95,13 @@ public class Queja {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public String getRespuesta() {
+        return respuesta;
+    }
+
+    public void setRespuesta(String respuesta) {
+        this.respuesta = respuesta;
     }
 }

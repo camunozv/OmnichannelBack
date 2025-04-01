@@ -10,6 +10,7 @@ import com.proyectopd.omnichannel.usuario.UsuarioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuejaServiceImplementation implements QuejaService {
@@ -54,6 +55,23 @@ public class QuejaServiceImplementation implements QuejaService {
         }
 
         return created;
+    }
+
+    @Override
+    public boolean answerQueja(String respuesta, Long idQueja) {
+
+        boolean answered = false;
+        Optional<Queja> quejaOptional = quejaRepository.findById(idQueja);
+
+        if (quejaOptional.isPresent()) {
+            System.out.println("Hello");
+            Queja queja = quejaOptional.get();
+            queja.setRespuesta(respuesta);
+            quejaRepository.save(queja);
+            answered = true;
+        }
+
+        return answered;
     }
 
 

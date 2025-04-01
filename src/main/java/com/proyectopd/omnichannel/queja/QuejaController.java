@@ -23,4 +23,14 @@ public class QuejaController {
             return new ResponseEntity<>("Usuario o empresa no registrados, queja no creada", HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/{quejaId}")
+    public ResponseEntity<String> responderQueja(@PathVariable Long quejaId, @RequestBody String respuesta) {
+        boolean answered = quejaService.answerQueja(respuesta, quejaId);
+        if (answered) {
+            return new ResponseEntity<>("Queja respondida", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Queja no encontrada", HttpStatus.NOT_FOUND);
+        }
+    }
 }
