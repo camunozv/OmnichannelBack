@@ -1,5 +1,8 @@
 package com.proyectopd.omnichannel.queja;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.proyectopd.omnichannel.empresa.Empresa;
+import com.proyectopd.omnichannel.usuario.Usuario;
 import jakarta.persistence.*;
 
 @Entity
@@ -15,16 +18,26 @@ public class Queja {
     private String descripcion;
 
     // Uncomment when the other entities are ready
-    /*@ManyToOne
-    private Usuario usuario;*/
+    @JsonIgnore
+    @ManyToOne
+    private Usuario usuario;
 
-    /*@ManyToOne
-    private Empresa empresa;*/
+    @JsonIgnore
+    @ManyToOne
+    private Empresa empresa;
 
     public Queja() {
     }
 
-    // Create constructor when the other entities are ready.
+    public Queja(Long idQueja, String tipoServicio, int prioridad, String tiempoMinimoRespuesta, String descripcion, Usuario usuario, Empresa empresa) {
+        this.idQueja = idQueja;
+        this.tipoServicio = tipoServicio;
+        this.prioridad = prioridad;
+        this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
+        this.descripcion = descripcion;
+        this.usuario = usuario;
+        this.empresa = empresa;
+    }
 
     public Long getIdQueja() {
         return idQueja;

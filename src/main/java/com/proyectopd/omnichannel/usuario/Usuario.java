@@ -19,7 +19,7 @@ public class Usuario {
     private String departamento;
 
     // Pending to add mapping and json ignore
-    @OneToMany
+    @OneToMany(mappedBy = "usuario")
     private List<Queja> misQuejas;
 
     public Usuario() {

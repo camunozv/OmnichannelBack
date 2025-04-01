@@ -1,4 +1,7 @@
 package com.proyectopd.omnichannel.usuario;
 
-public interface UsuarioRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    // Add methods if considered necessary.
 }

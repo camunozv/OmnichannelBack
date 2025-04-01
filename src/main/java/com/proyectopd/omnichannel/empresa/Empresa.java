@@ -19,7 +19,7 @@ public class Empresa {
     private String tipoDeServicio;
 
     // Pending Json Ignore and mapping
-    @OneToMany
+    @OneToMany(mappedBy = "empresa")
     private List<Queja> quejas;
 
     public Empresa() {
