@@ -1,5 +1,7 @@
 package com.proyectopd.omnichannel.queja;
 
+import com.proyectopd.omnichannel.usuario.Usuario;
+
 import java.util.List;
 
 public interface QuejaService {
@@ -8,7 +10,7 @@ public interface QuejaService {
     List<Queja> getAllQuejasUsuario(Long idUsuario);
     Queja getQuejaByCompany(Long idEmpresa, Long idQueja);
 
-    boolean createQueja (Queja queja);
+    boolean createQueja (Queja queja, Usuario usuario);
     boolean deleteQueja (Long idEmpresa, Long idUsuario, Long idQueja);
     boolean updateQueja (Queja queja, Long idQueja);
 //    boolean updateQueja (Queja queja, Long idQueja, Long idEmpresa, Long idUsuario);

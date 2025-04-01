@@ -1,13 +1,21 @@
 package com.proyectopd.omnichannel.queja.Implementation;
 
 import com.proyectopd.omnichannel.queja.Queja;
+import com.proyectopd.omnichannel.queja.QuejaRepository;
 import com.proyectopd.omnichannel.queja.QuejaService;
+import com.proyectopd.omnichannel.usuario.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class QuejaServiceImplementation implements QuejaService {
+
+    QuejaRepository quejaRepository;
+
+    public QuejaServiceImplementation(QuejaRepository quejaRepository) {
+        this.quejaRepository = quejaRepository;
+    }
 
     @Override
     public List<Queja> getAllQuejasEmpresa(Long idEmpresa) {
@@ -25,7 +33,12 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
-    public boolean createQueja(Queja queja) {
+    public boolean createQueja(Queja queja, Usuario usuario) {
+
+        boolean created = false;
+
+        quejaRepository.save(queja);
+
         return false;
     }
 
