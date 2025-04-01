@@ -6,6 +6,7 @@ import com.proyectopd.omnichannel.empresa.EmpresaService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpresaServiceImplementation implements EmpresaService {
@@ -43,11 +44,18 @@ public class EmpresaServiceImplementation implements EmpresaService {
 
     @Override
     public List<Empresa> getAllEmpresas() {
-        return List.of();
+        return empresaRepository.findAll();
     }
 
     @Override
     public Empresa getEmpresaById(Long nit) {
-        return null;
+        Optional<Empresa> empresaOptional = empresaRepository.findById(nit);
+
+        Empresa empresa = null;
+        if (empresaOptional.isPresent()) {
+            empresa = empresaOptional.get();
+        }
+
+        return empresa;
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/empresa")
 public class EmpresaController {
@@ -23,5 +25,15 @@ public class EmpresaController {
         } else {
             return new ResponseEntity<>("No se pudo crear la empresa", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Empresa>> getAllEmpresas() {
+        return new ResponseEntity<>(empresaService.getAllEmpresas(), HttpStatus.OK);
+    }
+
+    @GetMapping("{empresaId}")
+    public ResponseEntity<Empresa> getEmpresaById(@PathVariable Long empresaId) {
+
     }
 }
