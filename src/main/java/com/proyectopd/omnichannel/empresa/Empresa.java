@@ -1,5 +1,70 @@
 package com.proyectopd.omnichannel.empresa;
 
+import com.proyectopd.omnichannel.usuario.Usuario;
+import jakarta.persistence.*;
+
+@Entity
+public class Empresa {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer idEmpresa;
+
+    private String nombre;
+    private String ciudad;
+    private String contrasenha;
+
+
+    @OneToOne
+    @JoinColumn(name = "idUsuario", nullable = false)
+    private Usuario idUsuario;
+
+    // Pending to add type service linking object
+
+    public Usuario getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public Integer getIdEmpresa() {
+        return idEmpresa;
+    }
+
+    public void setIdEmpresa(Integer idEmpresa) {
+        this.idEmpresa = idEmpresa;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    public String getContrasenha() {
+        return contrasenha;
+    }
+
+    public void setContrasenha(String contrasenha) {
+        this.contrasenha = contrasenha;
+    }
+}
+
+/*
+package com.proyectopd.omnichannel.empresa;
+
 import com.proyectopd.omnichannel.queja.Queja;
 import jakarta.persistence.*;
 
@@ -100,3 +165,4 @@ public class Empresa {
         this.quejas = quejas;
     }
 }
+*/

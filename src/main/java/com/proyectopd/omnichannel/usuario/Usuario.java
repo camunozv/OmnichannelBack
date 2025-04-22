@@ -1,5 +1,7 @@
 package com.proyectopd.omnichannel.usuario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proyectopd.omnichannel.queja.Queja;
+import com.proyectopd.omnichannel.rol.Rol;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -8,104 +10,43 @@ import java.util.List;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long cedula;
-    private String nombres;
-    private String apellidos;
-    private String direccion;
-    private int estrato;
-    private String barrio;
-    private String ciudad;
-    private String departamento;
+    private Integer idUsuario;
+    private Integer idRol;
 
-    // Pending to add mapping and json ignore
-    @OneToMany(mappedBy = "usuario")
-    private List<Queja> misQuejas;
+    @ManyToOne
+    @JoinColumn(name = "idRol", nullable = false)
+    private Rol rolUsuario;
 
     public Usuario() {
     }
 
-    public Usuario(Long cedula, String nombres, String apellidos, String direccion, int estrato, String barrio, String ciudad, String departamento, List<Queja> misQuejas) {
-        this.cedula = cedula;
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.direccion = direccion;
-        this.estrato = estrato;
-        this.barrio = barrio;
-        this.ciudad = ciudad;
-        this.departamento = departamento;
-        this.misQuejas = misQuejas;
+    public Usuario(Integer idUsuario, Integer idRol, Rol rolUsuario) {
+        this.idUsuario = idUsuario;
+        this.idRol = idRol;
+        this.rolUsuario = rolUsuario;
     }
 
-    public Long getCedula() {
-        return cedula;
+    public Rol getRolUsuario() {
+        return rolUsuario;
     }
 
-    public void setCedula(Long cedula) {
-        this.cedula = cedula;
+    public void setRolUsuario(Rol rolUsuario) {
+        this.rolUsuario = rolUsuario;
     }
 
-    public String getNombres() {
-        return nombres;
+    public Integer getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setNombres(String nombres) {
-        this.nombres = nombres;
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
-    public String getApellidos() {
-        return apellidos;
+    public Integer getIdRol() {
+        return idRol;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
-    }
-
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-
-    public int getEstrato() {
-        return estrato;
-    }
-
-    public void setEstrato(int estrato) {
-        this.estrato = estrato;
-    }
-
-    public String getBarrio() {
-        return barrio;
-    }
-
-    public void setBarrio(String barrio) {
-        this.barrio = barrio;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public String getDepartamento() {
-        return departamento;
-    }
-
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
-    }
-
-    public List<Queja> getMisQuejas() {
-        return misQuejas;
-    }
-
-    public void setMisQuejas(List<Queja> misQuejas) {
-        this.misQuejas = misQuejas;
+    public void setIdRol(Integer idRol) {
+        this.idRol = idRol;
     }
 }
