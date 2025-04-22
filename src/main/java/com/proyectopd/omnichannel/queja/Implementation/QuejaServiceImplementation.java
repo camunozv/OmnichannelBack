@@ -64,7 +64,6 @@ public class QuejaServiceImplementation implements QuejaService {
         Optional<Queja> quejaOptional = quejaRepository.findById(idQueja);
 
         if (quejaOptional.isPresent()) {
-            System.out.println("Hello");
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
             quejaRepository.save(queja);
