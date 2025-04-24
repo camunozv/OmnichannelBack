@@ -1,5 +1,8 @@
 package com.proyectopd.omnichannel.usuario;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.proyectopd.omnichannel.administrador.Administrador;
+import com.proyectopd.omnichannel.profesional.Profesional;
 import com.proyectopd.omnichannel.queja.Queja;
 import com.proyectopd.omnichannel.rol.Rol;
 import jakarta.persistence.*;
@@ -11,27 +14,49 @@ public class Usuario {
 
     @Id
     private Integer idUsuario;
-    private Integer idRol;
+
+    @OneToOne(mappedBy = "usuario")
+    private Administrador administrador;
+
+    @OneToOne(mappedBy = "usuario")
+    private Profesional profesional;
 
     @ManyToOne
     @JoinColumn(name = "idRol", nullable = false)
-    private Rol rolUsuario;
+    private Rol rol;
 
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, Integer idRol, Rol rolUsuario) {
+    public Usuario(Integer idUsuario, Administrador administrador, Profesional profesional, Rol rol) {
         this.idUsuario = idUsuario;
-        this.idRol = idRol;
-        this.rolUsuario = rolUsuario;
+        this.administrador = administrador;
+        this.profesional = profesional;
+        this.rol = rol;
     }
 
-    public Rol getRolUsuario() {
-        return rolUsuario;
+    public Administrador getAdministrador() {
+        return administrador;
     }
 
-    public void setRolUsuario(Rol rolUsuario) {
-        this.rolUsuario = rolUsuario;
+    public void setAdministrador(Administrador administrador) {
+        this.administrador = administrador;
+    }
+
+    public Profesional getProfesional() {
+        return profesional;
+    }
+
+    public void setProfesional(Profesional profesional) {
+        this.profesional = profesional;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
     public Integer getIdUsuario() {
@@ -42,11 +67,4 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public Integer getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
-    }
 }

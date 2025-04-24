@@ -1,6 +1,9 @@
 package com.proyectopd.omnichannel.rol;
 
+import com.proyectopd.omnichannel.usuario.Usuario;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 
 @Entity
@@ -11,6 +14,8 @@ public class Rol {
     private Integer idRol;
     private String nombreRol;
 
+    @OneToMany(mappedBy = "rol")
+    private List<Usuario> usuario;
 
     public Rol() {
     }

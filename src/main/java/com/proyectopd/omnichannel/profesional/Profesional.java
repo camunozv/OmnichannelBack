@@ -1,7 +1,11 @@
 package com.proyectopd.omnichannel.profesional;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.proyectopd.omnichannel.queja.Queja;
 import com.proyectopd.omnichannel.usuario.Usuario;
 import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Profesional {
@@ -15,23 +19,20 @@ public class Profesional {
     private String correoElectronico;
     private Integer telefonoMovil;
     private String contrasenha;
+    private Integer quejasEncargadas;
 
     @OneToOne
     @JoinColumn(name = "idUsuario", nullable = false) // nullable = false -> doesnt allow null values in foreignkey values.
     private Usuario usuario;
 
+    @OneToMany(mappedBy = "profesional")
+    @JsonIgnore
+    private List<Queja> quejas;
+
     public Profesional() {
     }
 
-    public Profesional(Integer idProfesional, String nombre, String apellido, String correoElectronico, Integer telefonoMovil, String contrasenha, Usuario usuario) {
-        this.idProfesional = idProfesional;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correoElectronico = correoElectronico;
-        this.telefonoMovil = telefonoMovil;
-        this.contrasenha = contrasenha;
-        this.usuario = usuario;
-    }
+
 
     public Integer getIdProfesional() {
         return idProfesional;

@@ -1,7 +1,13 @@
 package com.proyectopd.omnichannel.empresa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.proyectopd.omnichannel.queja.Queja;
+import com.proyectopd.omnichannel.tipoServicio.TipoServicio;
 import com.proyectopd.omnichannel.usuario.Usuario;
 import jakarta.persistence.*;
+import org.springframework.web.bind.annotation.Mapping;
+
+import java.util.List;
 
 @Entity
 public class Empresa {
@@ -14,12 +20,20 @@ public class Empresa {
     private String ciudad;
     private String contrasenha;
 
-
     @OneToOne
     @JoinColumn(name = "idUsuario", nullable = false)
     private Usuario idUsuario;
 
-    // Pending to add type service linking object
+    @OneToMany(mappedBy = "empresa") // Mapped by indicates who is the owner entity in the relationship
+    @JsonIgnore
+    private List<Queja> quejas;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "idTipoServicio", nullable = false)
+    private TipoServicio tipoServicio;
+
+
 
     public Usuario getIdUsuario() {
         return idUsuario;

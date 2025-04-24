@@ -2,6 +2,7 @@ package com.proyectopd.omnichannel.queja;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.proyectopd.omnichannel.empresa.Empresa;
+import com.proyectopd.omnichannel.profesional.Profesional;
 import com.proyectopd.omnichannel.usuario.Usuario;
 import jakarta.persistence.*;
 
@@ -17,36 +18,48 @@ public class Queja {
     private String tiempoMinimoRespuesta;
     private String descripcion;
     private String respuesta;
+    private String documento;
 
     // Uncomment when the other entities are ready
     @JsonIgnore
+    @JoinColumn(name = "idProfesional", nullable = true)
     @ManyToOne
-    private Usuario usuario;
+    private Profesional profesional;
 
     @JsonIgnore
+    @JoinColumn(name = "idEmpresa", nullable = true)
     @ManyToOne
     private Empresa empresa;
 
     public Queja() {
     }
 
-    public Queja(Long idQueja, String tipoServicio, int prioridad, String tiempoMinimoRespuesta, String descripcion, String respuesta, Usuario usuario, Empresa empresa) {
+    public Queja(Long idQueja, String tipoServicio, int prioridad, String tiempoMinimoRespuesta, String descripcion, String respuesta, String documento, Profesional profesional, Empresa empresa) {
         this.idQueja = idQueja;
         this.tipoServicio = tipoServicio;
         this.prioridad = prioridad;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
         this.descripcion = descripcion;
         this.respuesta = respuesta;
-        this.usuario = usuario;
+        this.documento = documento;
+        this.profesional = profesional;
         this.empresa = empresa;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public String getDocumento() {
+        return documento;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public Profesional getProfesional() {
+        return profesional;
+    }
+
+    public void setProfesional(Profesional profesional) {
+        this.profesional = profesional;
     }
 
     public Empresa getEmpresa() {
