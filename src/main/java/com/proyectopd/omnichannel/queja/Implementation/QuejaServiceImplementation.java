@@ -43,7 +43,7 @@ public class QuejaServiceImplementation implements QuejaService {
     @Override
     public boolean createQueja(Queja queja, Long cedula, Long nit) {
         boolean created = false;
-        Empresa empresa = empresaService.getEmpresaById(nit);
+        /*Empresa empresa = empresaService.getEmpresaById(nit);
         Usuario usuario = usuarioService.getUsuarioById(cedula);
 
         if (empresa != null && usuario != null) {
@@ -52,7 +52,7 @@ public class QuejaServiceImplementation implements QuejaService {
 
             quejaRepository.save(queja);
             created = true;
-        }
+        }*/
 
         return created;
     }
