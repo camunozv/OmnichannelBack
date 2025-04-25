@@ -33,7 +33,18 @@ public class Empresa {
     @JoinColumn(name = "idTipoServicio", nullable = false)
     private TipoServicio tipoServicio;
 
+    public Empresa() {
+    }
 
+    public Empresa(Integer idEmpresa, String nombre, String ciudad, String contrasenha, Usuario idUsuario, List<Queja> quejas, TipoServicio tipoServicio) {
+        this.idEmpresa = idEmpresa;
+        this.nombre = nombre;
+        this.ciudad = ciudad;
+        this.contrasenha = contrasenha;
+        this.idUsuario = idUsuario;
+        this.quejas = quejas;
+        this.tipoServicio = tipoServicio;
+    }
 
     public Usuario getIdUsuario() {
         return idUsuario;

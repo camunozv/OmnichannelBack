@@ -3,7 +3,9 @@ package com.proyectopd.omnichannel.rol.implementation;
 import com.proyectopd.omnichannel.rol.Rol;
 import com.proyectopd.omnichannel.rol.RolRepository;
 import com.proyectopd.omnichannel.rol.RolService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RolServiceImplementation implements RolService {
 
     RolRepository rolRepository;
