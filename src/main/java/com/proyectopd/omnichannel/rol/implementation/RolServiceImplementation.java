@@ -5,6 +5,8 @@ import com.proyectopd.omnichannel.rol.RolRepository;
 import com.proyectopd.omnichannel.rol.RolService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RolServiceImplementation implements RolService {
 
@@ -29,5 +31,17 @@ public class RolServiceImplementation implements RolService {
         }
 
         return created;
+    }
+
+    @Override
+    public Rol getRolById(String rolName) {
+
+        try {
+            List<Rol> rolToReturn = rolRepository.getRolByNombreRol(rolName);
+            return rolToReturn.get(0);
+        } catch (Exception e) {
+            return new Rol("NOT FOUND");
+        }
+
     }
 }

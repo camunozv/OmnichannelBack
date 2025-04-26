@@ -18,12 +18,15 @@ public class Profesional {
     private String apellido;
     private String correoElectronico;
     private Integer telefonoMovil;
-    private String contrasenha;
-    private Integer quejasEncargadas;
+    private Integer cantidadQuejasEncargadas;
 
+    // Since we specified join column and not mapped by
+    // means this entity contains within its data a foreign key, that
+    // cannot be null
     @OneToOne
-    @JoinColumn(name = "idUsuario", nullable = false) // nullable = false -> doesnt allow null values in foreignkey values.
-    private Usuario usuario;
+    @JoinColumn(name = "idUsuario", nullable = false)
+    // nullable = false -> doesnt allow null values in foreignkey values.
+    private Usuario usuario; // This object i think it's just fot the query that involves geting the user
 
     @OneToMany(mappedBy = "profesional")
     @JsonIgnore
@@ -32,7 +35,32 @@ public class Profesional {
     public Profesional() {
     }
 
+    public Profesional(Integer idProfesional, String nombre, String apellido, String correoElectronico, Integer telefonoMovil, Integer cantidadQuejasEncargadas, Usuario usuario, List<Queja> quejas) {
+        this.idProfesional = idProfesional;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correoElectronico = correoElectronico;
+        this.telefonoMovil = telefonoMovil;
+        this.cantidadQuejasEncargadas = cantidadQuejasEncargadas;
+        this.usuario = usuario;
+        this.quejas = quejas;
+    }
 
+    public Integer getCantidadQuejasEncargadas() {
+        return cantidadQuejasEncargadas;
+    }
+
+    public void setCantidadQuejasEncargadas(Integer cantidadQuejasEncargadas) {
+        this.cantidadQuejasEncargadas = cantidadQuejasEncargadas;
+    }
+
+    public List<Queja> getQuejas() {
+        return quejas;
+    }
+
+    public void setQuejas(List<Queja> quejas) {
+        this.quejas = quejas;
+    }
 
     public Integer getIdProfesional() {
         return idProfesional;
@@ -72,14 +100,6 @@ public class Profesional {
 
     public void setTelefonoMovil(Integer telefonoMovil) {
         this.telefonoMovil = telefonoMovil;
-    }
-
-    public String getContrasenha() {
-        return contrasenha;
-    }
-
-    public void setContrasenha(String contrasenha) {
-        this.contrasenha = contrasenha;
     }
 
     public Usuario getUsuario() {

@@ -1,5 +1,6 @@
 package com.proyectopd.omnichannel.usuario.Implementation;
 
+import com.proyectopd.omnichannel.rol.RolRepository;
 import com.proyectopd.omnichannel.usuario.Usuario;
 import com.proyectopd.omnichannel.usuario.UsuarioRepository;
 import com.proyectopd.omnichannel.usuario.UsuarioService;
@@ -11,14 +12,16 @@ import java.util.Optional;
 public class UsuarioServiceImplementation implements UsuarioService {
 
     private UsuarioRepository usuarioRepository;
+    private RolRepository rolRepository;
 
-    public UsuarioServiceImplementation(UsuarioRepository usuarioRepository) {
+    public UsuarioServiceImplementation(UsuarioRepository usuarioRepository, RolRepository rolRepository) {
         this.usuarioRepository = usuarioRepository;
+        this.rolRepository = rolRepository;
     }
 
     @Override
-    public Usuario getUsuarioById(Long cedula) {
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(cedula);
+    public Usuario getUsuarioById(Integer userId) {
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(userId);
         Usuario usuario = null;
         if (usuarioOptional.isPresent()) {
             usuario = usuarioOptional.get();

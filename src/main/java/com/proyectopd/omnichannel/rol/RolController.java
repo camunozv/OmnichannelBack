@@ -2,10 +2,7 @@ package com.proyectopd.omnichannel.rol;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rol")
@@ -23,10 +20,18 @@ public class RolController {
             rolService.createNewRol(newRol);
             return new ResponseEntity<>(newRol, HttpStatus.CREATED);
         } catch (Exception e) {
-            return new ResponseEntity<>(new Rol(0, "ERROR"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Rol("ERROR"), HttpStatus.NOT_FOUND);
         }
-
     }
 
+    @GetMapping
+    public ResponseEntity<Rol> getRol(@RequestBody Rol rolToFind) {
+        try {
+            Rol rolToReturn = rolService.getRolById(rolToFind.getNombreRol());
+            return new ResponseEntity<>(rolToReturn, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new Rol("ERROR"), HttpStatus.NOT_FOUND);
+        }
+    }
 
 }

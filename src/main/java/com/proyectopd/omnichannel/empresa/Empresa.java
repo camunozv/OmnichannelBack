@@ -5,7 +5,6 @@ import com.proyectopd.omnichannel.queja.Queja;
 import com.proyectopd.omnichannel.tipoServicio.TipoServicio;
 import com.proyectopd.omnichannel.usuario.Usuario;
 import jakarta.persistence.*;
-import org.springframework.web.bind.annotation.Mapping;
 
 import java.util.List;
 
@@ -15,10 +14,8 @@ public class Empresa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idEmpresa;
-
     private String nombre;
     private String ciudad;
-    private String contrasenha;
 
     @OneToOne
     @JoinColumn(name = "idUsuario", nullable = false)
@@ -36,11 +33,10 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, String nombre, String ciudad, String contrasenha, Usuario idUsuario, List<Queja> quejas, TipoServicio tipoServicio) {
+    public Empresa(Integer idEmpresa, String nombre, String ciudad, Usuario idUsuario, List<Queja> quejas, TipoServicio tipoServicio) {
         this.idEmpresa = idEmpresa;
         this.nombre = nombre;
         this.ciudad = ciudad;
-        this.contrasenha = contrasenha;
         this.idUsuario = idUsuario;
         this.quejas = quejas;
         this.tipoServicio = tipoServicio;
@@ -78,13 +74,6 @@ public class Empresa {
         this.ciudad = ciudad;
     }
 
-    public String getContrasenha() {
-        return contrasenha;
-    }
-
-    public void setContrasenha(String contrasenha) {
-        this.contrasenha = contrasenha;
-    }
 }
 
 /*

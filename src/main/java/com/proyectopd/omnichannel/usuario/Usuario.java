@@ -14,6 +14,7 @@ public class Usuario {
 
     @Id
     private Integer idUsuario;
+    private String contrasenha;
 
     @OneToOne(mappedBy = "usuario")
     private Administrador administrador;
@@ -28,11 +29,20 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, Administrador administrador, Profesional profesional, Rol rol) {
+    public Usuario(Integer idUsuario, String contrasenha, Administrador administrador, Profesional profesional, Rol rol) {
         this.idUsuario = idUsuario;
+        this.contrasenha = contrasenha;
         this.administrador = administrador;
         this.profesional = profesional;
         this.rol = rol;
+    }
+
+    public String getContrasenha() {
+        return contrasenha;
+    }
+
+    public void setContrasenha(String contrasenha) {
+        this.contrasenha = contrasenha;
     }
 
     public Administrador getAdministrador() {

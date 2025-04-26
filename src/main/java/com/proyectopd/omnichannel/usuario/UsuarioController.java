@@ -25,7 +25,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{cedula}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long cedula) {
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer cedula) {
         Usuario usuario = usuarioService.getUsuarioById(cedula);
         if (usuario == null) {
             return new ResponseEntity<>(usuario, HttpStatus.NOT_FOUND);

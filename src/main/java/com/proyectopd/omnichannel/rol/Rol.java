@@ -5,32 +5,21 @@ import jakarta.persistence.*;
 
 import java.util.List;
 
-
 @Entity
 public class Rol {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRol;
     private String nombreRol;
 
     @OneToMany(mappedBy = "rol")
-    private List<Usuario> usuario;
+    private List<Usuario> usuario; // This kind of memebers don't need to be specified
+    // when posting a new user.
 
     public Rol() {
     }
 
-    public Rol(Integer idRol, String nombreRol) {
-        this.idRol = idRol;
+    public Rol(String nombreRol) {
         this.nombreRol = nombreRol;
-    }
-
-    public Integer getIdRol() {
-        return idRol;
-    }
-
-    public void setIdRol(Integer idRol) {
-        this.idRol = idRol;
     }
 
     public String getNombreRol() {

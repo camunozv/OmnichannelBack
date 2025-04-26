@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface UsuarioService {
     // Implemented
-    Usuario getUsuarioById(Long cedula);
+    Usuario getUsuarioById(Integer userId);
     boolean createUsuario(Usuario usuario);
 
     // Not implemented
