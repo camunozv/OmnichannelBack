@@ -1,11 +1,10 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
 import com.proyectopd.omnichannel.dtos.createuser.creators.CreateAdministradorProfesionalDTO;
-import com.proyectopd.omnichannel.dtos.createuser.models.AdministradorProfesionalDTO;
+import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
 import com.proyectopd.omnichannel.models.Administrador;
 import com.proyectopd.omnichannel.repositories.AdministradorRepository;
 import com.proyectopd.omnichannel.services.AdministradorService;
-import com.proyectopd.omnichannel.services.UsuarioService;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,11 +30,11 @@ public class AdministradorServiceImplementation implements AdministradorService 
     }
 
     @Override
-    public AdministradorProfesionalDTO getAdministradorById(Integer administradorId) {
+    public UsuarioAdministradorDTO getAdministradorById(Integer administradorId) {
 
         try {
             Administrador originalAdmin = administradorRepository.getAdministradorByIdAdministrador(administradorId);
-            AdministradorProfesionalDTO adminToReturn = new CreateAdministradorProfesionalDTO().createNewUserDTO();
+            UsuarioAdministradorDTO adminToReturn = new CreateAdministradorProfesionalDTO().createNewUserDTO();
 
             adminToReturn.setId(originalAdmin.getUsuario().getIdUsuario());
             adminToReturn.setNombre(originalAdmin.getNombre());
@@ -44,7 +43,7 @@ public class AdministradorServiceImplementation implements AdministradorService 
 
             return adminToReturn;
         } catch (Exception e) {
-            return new AdministradorProfesionalDTO();
+            return new UsuarioAdministradorDTO();
         }
     }
 }

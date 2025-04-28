@@ -2,7 +2,7 @@ package com.proyectopd.omnichannel.dtos.createuser.models;
 
 import com.proyectopd.omnichannel.dtos.createuser.UserDTO;
 
-public class AdministradorProfesionalDTO implements UserDTO {
+public class UsuarioAdministradorDTO implements UserDTO {
 
     private Integer id;
     private String nombre;
@@ -10,10 +10,10 @@ public class AdministradorProfesionalDTO implements UserDTO {
     private String contrasenha;
     private String rol;
 
-    public AdministradorProfesionalDTO() {
+    public UsuarioAdministradorDTO() {
     }
 
-    public AdministradorProfesionalDTO(Integer id, String nombre, String apellido, String contrasenha, String rol) {
+    public UsuarioAdministradorDTO(Integer id, String nombre, String apellido, String contrasenha, String rol) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;

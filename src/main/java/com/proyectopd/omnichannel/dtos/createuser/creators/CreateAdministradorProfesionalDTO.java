@@ -1,12 +1,12 @@
 package com.proyectopd.omnichannel.dtos.createuser.creators;
 
 import com.proyectopd.omnichannel.dtos.createuser.CreateUserDTO;
-import com.proyectopd.omnichannel.dtos.createuser.models.AdministradorProfesionalDTO;
+import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
 
 public class CreateAdministradorProfesionalDTO extends CreateUserDTO {
 
     @Override
-    public AdministradorProfesionalDTO createNewUserDTO() {
-        return new AdministradorProfesionalDTO();
+    public UsuarioAdministradorDTO createNewUserDTO() {
+        return new UsuarioAdministradorDTO();
     }
 }

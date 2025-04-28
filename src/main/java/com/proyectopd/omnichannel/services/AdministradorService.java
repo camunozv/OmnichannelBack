@@ -1,6 +1,6 @@
 package com.proyectopd.omnichannel.services;
 
-import com.proyectopd.omnichannel.dtos.createuser.models.AdministradorProfesionalDTO;
+import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
 import com.proyectopd.omnichannel.models.Administrador;
 
 public interface AdministradorService {
@@ -9,5 +9,5 @@ public interface AdministradorService {
     Administrador crearAdministrador(Administrador newAdministrador);
 
     // Get
-    AdministradorProfesionalDTO getAdministradorById(Integer administradorId);
+    UsuarioAdministradorDTO getAdministradorById(Integer administradorId);
 }

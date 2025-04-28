@@ -1,8 +1,6 @@
 package com.proyectopd.omnichannel.controllers;
 
-import com.proyectopd.omnichannel.dtos.createuser.creators.CreateAdministradorProfesionalDTO;
-import com.proyectopd.omnichannel.dtos.createuser.models.AdministradorProfesionalDTO;
-import com.proyectopd.omnichannel.models.Usuario;
+import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
 import com.proyectopd.omnichannel.services.AdministradorService;
 import com.proyectopd.omnichannel.models.Administrador;
 import com.proyectopd.omnichannel.services.UsuarioService;
@@ -26,10 +24,10 @@ public class AdministradorController {
 
 
     @GetMapping("/{adminId}")
-    public ResponseEntity<AdministradorProfesionalDTO> getAdministradorById(@PathVariable Integer adminId) {
+    public ResponseEntity<UsuarioAdministradorDTO> getAdministradorById(@PathVariable Integer adminId) {
 
         // Called the Creator -> replace new by factory method.
-        AdministradorProfesionalDTO adminToReturn = administradorService.getAdministradorById(adminId);
+        UsuarioAdministradorDTO adminToReturn = administradorService.getAdministradorById(adminId);
 
         if (Objects.equals(adminToReturn.getNombre(), null)) {
             return new ResponseEntity<>(adminToReturn, HttpStatus.NOT_FOUND);

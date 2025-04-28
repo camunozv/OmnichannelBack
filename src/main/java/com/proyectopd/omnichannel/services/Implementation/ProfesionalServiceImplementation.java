@@ -3,7 +3,9 @@ package com.proyectopd.omnichannel.services.Implementation;
 import com.proyectopd.omnichannel.models.Profesional;
 import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.services.ProfesionalService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProfesionalServiceImplementation implements ProfesionalService {
 
     ProfesionalRepository profesionalRepository;
