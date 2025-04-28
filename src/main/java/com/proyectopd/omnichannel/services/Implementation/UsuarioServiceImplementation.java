@@ -1,5 +1,7 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
+import com.proyectopd.omnichannel.models.Administrador;
+import com.proyectopd.omnichannel.repositories.AdministradorRepository;
 import com.proyectopd.omnichannel.repositories.RolRepository;
 import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
@@ -13,10 +15,12 @@ public class UsuarioServiceImplementation implements UsuarioService {
 
     private UsuarioRepository usuarioRepository;
     private RolRepository rolRepository;
+    private AdministradorRepository administradorRepository;
 
-    public UsuarioServiceImplementation(UsuarioRepository usuarioRepository, RolRepository rolRepository) {
+    public UsuarioServiceImplementation(UsuarioRepository usuarioRepository, RolRepository rolRepository, AdministradorRepository administradorRepository) {
         this.usuarioRepository = usuarioRepository;
         this.rolRepository = rolRepository;
+        this.administradorRepository = administradorRepository;
     }
 
     @Override
@@ -28,6 +32,8 @@ public class UsuarioServiceImplementation implements UsuarioService {
         }
         return usuario;
     }
+
+
 
     @Override
     public boolean createUsuario(Usuario usuario) {
