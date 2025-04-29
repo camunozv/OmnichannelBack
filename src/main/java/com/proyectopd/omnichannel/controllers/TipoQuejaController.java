@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/tipoQueja")
@@ -29,8 +28,8 @@ public class TipoQuejaController {
         }
     }
 
-    @GetMapping("/{nombreTipoQueja}")
-    public ResponseEntity<TipoQueja> createTipoQueja(@PathVariable String nombreTipoQueja) {
+    @GetMapping
+    public ResponseEntity<TipoQueja> getTipoQueja(@RequestParam String nombreTipoQueja) {
 
         TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(nombreTipoQueja);
 

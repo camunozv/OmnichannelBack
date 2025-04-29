@@ -3,7 +3,9 @@ package com.proyectopd.omnichannel.services.Implementation;
 import com.proyectopd.omnichannel.models.Respuesta;
 import com.proyectopd.omnichannel.repositories.RespuestaRepository;
 import com.proyectopd.omnichannel.services.RespuestaService;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RespuestaServiceImplementation implements RespuestaService {
 
     RespuestaRepository respuestaRepository;
@@ -24,9 +26,25 @@ public class RespuestaServiceImplementation implements RespuestaService {
             respuestaRepository.save(newRespuesta);
             created = true;
         } catch (Exception e) {
+            System.out.println("Excepcion: " + e);
             created = false;
         }
 
         return created;
     }
+
+    @Override
+    public boolean deleteRespuestaById(Integer idRespuesta) {
+        boolean deleted;
+        try {
+            respuestaRepository.deleteById(idRespuesta);
+            deleted = true;
+        } catch (Exception e) {
+            deleted = false;
+        }
+
+        return deleted;
+    }
+
+
 }

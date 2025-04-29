@@ -1,5 +1,6 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
+import com.proyectopd.omnichannel.models.Respuesta;
 import com.proyectopd.omnichannel.services.EmpresaService;
 import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
@@ -34,6 +35,11 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
+    public Queja getQuejaById(Integer idQueja) {
+        return quejaRepository.getQuejaByIdQueja(idQueja);
+    }
+
+    @Override
     public Queja getQuejaByCompany(Long idEmpresa, Long idQueja) {
         return null;
     }
@@ -53,17 +59,17 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
-    public boolean answerQueja(String respuesta, Long idQueja) {
+    public boolean answerQueja(Respuesta respuesta, Integer idQueja) {
 
         boolean answered = false;
         Optional<Queja> quejaOptional = quejaRepository.findById(idQueja);
 
-        /*if (quejaOptional.isPresent()) {
+        if (quejaOptional.isPresent()) {
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
             quejaRepository.save(queja);
             answered = true;
-        }*/
+        }
 
         return answered;
     }

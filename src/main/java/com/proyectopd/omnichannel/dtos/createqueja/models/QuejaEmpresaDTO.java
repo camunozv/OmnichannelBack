@@ -6,6 +6,7 @@ import com.proyectopd.omnichannel.models.Empresa;
 public class QuejaEmpresaDTO {
 
     // Datos de queja
+    private Integer idQueja;
     private String prioridad;
     private String tiempoMinimoRespuesta;
     private String descripcion;
@@ -15,13 +16,22 @@ public class QuejaEmpresaDTO {
     private String tipoQueja;
     private String nombreEmpresa;
 
-    public QuejaEmpresaDTO(String prioridad, String tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
+    public QuejaEmpresaDTO(Integer idQueja, String prioridad, String tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
+        this.idQueja = idQueja;
         this.prioridad = prioridad;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
         this.descripcion = descripcion;
         this.archivo = archivo;
         this.tipoQueja = tipoQueja;
         this.nombreEmpresa = nombreEmpresa;
+    }
+
+    public Integer getIdQueja() {
+        return idQueja;
+    }
+
+    public void setIdQueja(Integer idQueja) {
+        this.idQueja = idQueja;
     }
 
     public String getPrioridad() {

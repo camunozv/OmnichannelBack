@@ -7,15 +7,14 @@ import jakarta.persistence.*;
 public class Queja {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idQueja;
+    private Integer idQueja;
     private String prioridad;
     private String tiempoMinimoRespuesta;
     private String descripcion;
     private String archivo;
 
-    @JsonIgnore
     @OneToOne(mappedBy = "queja")
+    @JsonIgnore
     private Respuesta respuesta;
 
     @JsonIgnore
@@ -36,7 +35,7 @@ public class Queja {
     public Queja() {
     }
 
-    public Queja(Long idQueja, String prioridad, String tiempoMinimoRespuesta, String descripcion, String archivo, TipoQueja tipoQueja, Profesional profesional, Empresa empresa, Respuesta respuesta) {
+    public Queja(Integer idQueja, String prioridad, String tiempoMinimoRespuesta, String descripcion, String archivo, TipoQueja tipoQueja, Profesional profesional, Empresa empresa, Respuesta respuesta) {
         this.idQueja = idQueja;
         this.prioridad = prioridad;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
@@ -88,11 +87,11 @@ public class Queja {
         this.empresa = empresa;
     }
 
-    public Long getIdQueja() {
+    public Integer getIdQueja() {
         return idQueja;
     }
 
-    public void setIdQueja(Long idQueja) {
+    public void setIdQueja(Integer idQueja) {
         this.idQueja = idQueja;
     }
 

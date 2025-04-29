@@ -1,25 +1,16 @@
-package com.proyectopd.omnichannel.models;
+package com.proyectopd.omnichannel.dtos.createrespuesta;
 
-import jakarta.persistence.*;
+public class QuejaRespuestaDTO {
 
-@Entity
-public class Respuesta {
-
-    @Id
     private Integer idRespuesta;
     private String textoRespuesta;
 
-    @OneToOne
-    @JoinColumn(name = "idQueja", nullable = false)
-    private Queja queja;
+    private Integer idQueja;
 
-    public Respuesta() {
-    }
-
-    public Respuesta(Integer idRespuesta, String textoRespuesta, Queja queja) {
+    public QuejaRespuestaDTO(Integer idRespuesta, String textoRespuesta, Integer idQueja) {
         this.idRespuesta = idRespuesta;
         this.textoRespuesta = textoRespuesta;
-        this.queja = queja;
+        this.idQueja = idQueja;
     }
 
     public Integer getIdRespuesta() {
@@ -38,11 +29,11 @@ public class Respuesta {
         this.textoRespuesta = textoRespuesta;
     }
 
-    public Queja getQueja() {
-        return queja;
+    public Integer getIdQueja() {
+        return idQueja;
     }
 
-    public void setQueja(Queja queja) {
-        this.queja = queja;
+    public void setIdQueja(Integer idQueja) {
+        this.idQueja = idQueja;
     }
 }
