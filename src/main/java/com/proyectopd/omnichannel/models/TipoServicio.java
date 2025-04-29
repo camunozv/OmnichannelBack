@@ -8,8 +8,6 @@ import java.util.List;
 public class TipoServicio {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idTipoServicio;
     private String nombreServicio;
 
     @OneToMany(mappedBy = "tipoServicio")
@@ -18,18 +16,9 @@ public class TipoServicio {
     public TipoServicio() {
     }
 
-    public TipoServicio(Integer idTipoServicio, String nombreServicio, List<Empresa> empresa) {
-        this.idTipoServicio = idTipoServicio;
+    public TipoServicio(String nombreServicio, List<Empresa> empresa) {
         this.nombreServicio = nombreServicio;
         this.empresa = empresa;
-    }
-
-    public Integer getIdTipoServicio() {
-        return idTipoServicio;
-    }
-
-    public void setIdTipoServicio(Integer idTipoServicio) {
-        this.idTipoServicio = idTipoServicio;
     }
 
     public String getNombreServicio() {

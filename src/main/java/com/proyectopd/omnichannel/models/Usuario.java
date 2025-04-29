@@ -18,6 +18,10 @@ public class Usuario {
     @JsonIgnore
     private Profesional profesional;
 
+    @OneToOne(mappedBy = "usuario")
+    @JsonIgnore
+    private Empresa empresa;
+
     @ManyToOne
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
@@ -31,6 +35,14 @@ public class Usuario {
         this.administrador = administrador;
         this.profesional = profesional;
         this.rol = rol;
+    }
+
+    public Empresa getEmpresa() {
+        return empresa;
+    }
+
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
     }
 
     public String getContrasenha() {

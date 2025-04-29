@@ -16,7 +16,7 @@ public class Empresa {
 
     @OneToOne
     @JoinColumn(name = "idUsuario", nullable = false)
-    private Usuario idUsuario;
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "empresa") // Mapped by indicates who is the owner entity in the relationship
     @JsonIgnore
@@ -30,21 +30,37 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, String nombre, String ciudad, Usuario idUsuario, List<Queja> quejas, TipoServicio tipoServicio) {
+    public Empresa(Integer idEmpresa, String nombre, String ciudad, Usuario usuario, List<Queja> quejas, TipoServicio tipoServicio) {
         this.idEmpresa = idEmpresa;
         this.nombre = nombre;
         this.ciudad = ciudad;
-        this.idUsuario = idUsuario;
+        this.usuario = usuario;
         this.quejas = quejas;
         this.tipoServicio = tipoServicio;
     }
 
-    public Usuario getIdUsuario() {
-        return idUsuario;
+    public List<Queja> getQuejas() {
+        return quejas;
     }
 
-    public void setIdUsuario(Usuario idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setQuejas(List<Queja> quejas) {
+        this.quejas = quejas;
+    }
+
+    public TipoServicio getTipoServicio() {
+        return tipoServicio;
+    }
+
+    public void setTipoServicio(TipoServicio tipoServicio) {
+        this.tipoServicio = tipoServicio;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public Integer getIdEmpresa() {
@@ -70,6 +86,7 @@ public class Empresa {
     public void setCiudad(String ciudad) {
         this.ciudad = ciudad;
     }
+
 
 }
 

@@ -1,12 +1,11 @@
 package com.proyectopd.omnichannel.controllers;
 
 import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
+import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioEmpresaDTO;
 import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioProfesionalDTO;
-import com.proyectopd.omnichannel.models.Administrador;
-import com.proyectopd.omnichannel.models.Profesional;
-import com.proyectopd.omnichannel.models.Rol;
-import com.proyectopd.omnichannel.models.Usuario;
+import com.proyectopd.omnichannel.models.*;
 import com.proyectopd.omnichannel.services.AdministradorService;
+import com.proyectopd.omnichannel.services.EmpresaService;
 import com.proyectopd.omnichannel.services.ProfesionalService;
 import com.proyectopd.omnichannel.services.UsuarioService;
 import org.springframework.http.HttpStatus;
@@ -22,11 +21,13 @@ public class UsuarioController {
     private UsuarioService usuarioService;
     private AdministradorService administradorService;
     private ProfesionalService profesionalService;
+    private EmpresaService empresaService;
 
-    public UsuarioController(UsuarioService usuarioService, AdministradorService administradorService, ProfesionalService profesionalService) {
+    public UsuarioController(UsuarioService usuarioService, AdministradorService administradorService, ProfesionalService profesionalService, EmpresaService empresaService) {
         this.usuarioService = usuarioService;
         this.administradorService = administradorService;
         this.profesionalService = profesionalService;
+        this.empresaService = empresaService;
     }
 
     @PostMapping("/admin")
@@ -59,13 +60,12 @@ public class UsuarioController {
     @PostMapping("/profesional")
     public ResponseEntity<Usuario> createProfesional(@RequestBody UsuarioProfesionalDTO newProfesional) {
 
-        Rol rol = new Rol(newProfesional.getRol());
-
         Usuario usuario = new Usuario();
 
         usuario.setIdUsuario(newProfesional.getId());
         usuario.setContrasenha(newProfesional.getContrasenha());
 
+        Rol rol = new Rol(newProfesional.getRol());
         usuario.setRol(rol);
 
         Profesional profesional = new Profesional();
@@ -75,8 +75,9 @@ public class UsuarioController {
         profesional.setCorreoElectronico(newProfesional.getCorreoElectronico());
         profesional.setTelefonoMovil(newProfesional.getTelefonoMovil());
         profesional.setCantidadQuejasEncargadas(newProfesional.getCantidadQuejasEncargadas());
-
         profesional.setUsuario(usuario); // VERY IMPORTANT FOR THE DATABASE TO SAVE IT
+
+        System.out.println(profesional);
 
         boolean created1 = usuarioService.createUsuario(usuario);
         boolean created2 = profesionalService.crearProfesional(profesional);
@@ -85,6 +86,37 @@ public class UsuarioController {
             return new ResponseEntity<>(usuario, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(usuario, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/empresa")
+    public ResponseEntity<UsuarioEmpresaDTO> createEmpresa(@RequestBody UsuarioEmpresaDTO newEmpresa) {
+
+        Usuario usuario = new Usuario();
+
+        usuario.setIdUsuario(newEmpresa.getId());
+        usuario.setContrasenha(newEmpresa.getContrasenha());
+
+        Rol rol = new Rol(newEmpresa.getRol());
+        usuario.setRol(rol);
+
+        Empresa empresa = new Empresa();
+
+        empresa.setNombre(newEmpresa.getNombre());
+        empresa.setCiudad(newEmpresa.getCiudad());
+
+        empresa.setUsuario(usuario);
+
+        TipoServicio tipoServicio = new TipoServicio();
+        tipoServicio.setNombreServicio(newEmpresa.getTipoServicio());
+        empresa.setTipoServicio(tipoServicio);
+
+        boolean created1 = usuarioService.createUsuario(usuario);
+        boolean created2 = empresaService.createEmpresa(empresa);
+        if (created1 && created2) {
+            return new ResponseEntity<>(newEmpresa, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(newEmpresa, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
