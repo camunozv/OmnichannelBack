@@ -20,7 +20,6 @@ public class AdministradorServiceImplementation implements AdministradorService 
     public Administrador crearAdministrador(Administrador newAdministrador) {
 
         try {
-            System.out.println("hola");
             administradorRepository.save(newAdministrador);
             return newAdministrador;
         } catch (Exception e) {

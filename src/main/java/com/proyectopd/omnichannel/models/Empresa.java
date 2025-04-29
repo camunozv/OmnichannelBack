@@ -9,9 +9,7 @@ import java.util.List;
 public class Empresa {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEmpresa;
-    private String nombre;
+    private String nombreEmpresa;
     private String ciudad;
 
     @OneToOne
@@ -30,9 +28,8 @@ public class Empresa {
     public Empresa() {
     }
 
-    public Empresa(Integer idEmpresa, String nombre, String ciudad, Usuario usuario, List<Queja> quejas, TipoServicio tipoServicio) {
-        this.idEmpresa = idEmpresa;
-        this.nombre = nombre;
+    public Empresa(String nombreEmpresa, String ciudad, Usuario usuario, List<Queja> quejas, TipoServicio tipoServicio) {
+        this.nombreEmpresa = nombreEmpresa;
         this.ciudad = ciudad;
         this.usuario = usuario;
         this.quejas = quejas;
@@ -63,20 +60,12 @@ public class Empresa {
         this.usuario = usuario;
     }
 
-    public Integer getIdEmpresa() {
-        return idEmpresa;
+    public String getNombreEmpresa() {
+        return nombreEmpresa;
     }
 
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombreEmpresa(String nombreEmpresa) {
+        this.nombreEmpresa = nombreEmpresa;
     }
 
     public String getCiudad() {

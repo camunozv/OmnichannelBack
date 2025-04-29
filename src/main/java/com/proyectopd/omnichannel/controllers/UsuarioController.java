@@ -77,8 +77,6 @@ public class UsuarioController {
         profesional.setCantidadQuejasEncargadas(newProfesional.getCantidadQuejasEncargadas());
         profesional.setUsuario(usuario); // VERY IMPORTANT FOR THE DATABASE TO SAVE IT
 
-        System.out.println(profesional);
-
         boolean created1 = usuarioService.createUsuario(usuario);
         boolean created2 = profesionalService.crearProfesional(profesional);
 
@@ -102,7 +100,7 @@ public class UsuarioController {
 
         Empresa empresa = new Empresa();
 
-        empresa.setNombre(newEmpresa.getNombre());
+        empresa.setNombreEmpresa(newEmpresa.getNombre());
         empresa.setCiudad(newEmpresa.getCiudad());
 
         empresa.setUsuario(usuario);

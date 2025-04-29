@@ -13,5 +13,5 @@ public interface EmpresaService {
     // Implemented
     boolean createEmpresa(Empresa empresa);
     List<Empresa> getAllEmpresas();
-    Empresa getEmpresaById(Long nit);
+    Empresa getEmpresaByName(String nombreEmpresa);
 }

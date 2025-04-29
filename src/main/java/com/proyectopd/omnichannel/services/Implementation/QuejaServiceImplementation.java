@@ -39,18 +39,15 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
-    public boolean createQueja(Queja queja, Long cedula, Long nit) {
-        boolean created = false;
-        /*Empresa empresa = empresaService.getEmpresaById(nit);
-        Usuario usuario = usuarioService.getUsuarioById(cedula);
+    public boolean createQueja(Queja queja) {
+        boolean created;
 
-        if (empresa != null && usuario != null) {
-            queja.setEmpresa(empresa);
-            queja.setUsuario(usuario);
-
+        try {
             quejaRepository.save(queja);
             created = true;
-        }*/
+        } catch (Exception e) {
+            created = false;
+        }
 
         return created;
     }
@@ -61,12 +58,12 @@ public class QuejaServiceImplementation implements QuejaService {
         boolean answered = false;
         Optional<Queja> quejaOptional = quejaRepository.findById(idQueja);
 
-        if (quejaOptional.isPresent()) {
+        /*if (quejaOptional.isPresent()) {
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
             quejaRepository.save(queja);
             answered = true;
-        }
+        }*/
 
         return answered;
     }

@@ -1,7 +1,12 @@
 package com.proyectopd.omnichannel.controllers;
 
+import com.proyectopd.omnichannel.dtos.createqueja.models.QuejaEmpresaDTO;
+import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.Queja;
+import com.proyectopd.omnichannel.models.TipoQueja;
+import com.proyectopd.omnichannel.services.EmpresaService;
 import com.proyectopd.omnichannel.services.QuejaService;
+import com.proyectopd.omnichannel.services.TipoQuejaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,18 +16,39 @@ import org.springframework.web.bind.annotation.*;
 public class QuejaController {
 
     private QuejaService quejaService;
+    private TipoQuejaService tipoQuejaService;
+    private EmpresaService empresaService;
 
-    public QuejaController(QuejaService quejaService) {
+    public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService) {
         this.quejaService = quejaService;
+        this.tipoQuejaService = tipoQuejaService;
+        this.empresaService = empresaService;
     }
 
-    @PostMapping("/{companyId}/{cedula}")
-    public ResponseEntity<String> registrarQueja(@PathVariable Long companyId, @PathVariable Long cedula, @RequestBody Queja queja) {
-        boolean created = quejaService.createQueja(queja, cedula, companyId);
+    @PostMapping
+    public ResponseEntity<QuejaEmpresaDTO> registrarQueja(@RequestBody QuejaEmpresaDTO newQueja) {
+
+        Queja queja = new Queja();
+
+        queja.setPrioridad(newQueja.getPrioridad());
+        queja.setTiempoMinimoRespuesta(newQueja.getTiempoMinimoRespuesta());
+        queja.setDescripcion(newQueja.getDescripcion());
+        queja.setArchivo(newQueja.getArchivo());
+
+        TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(newQueja.getTipoQueja());
+
+        queja.setTipoQueja(tipoQueja);
+
+        Empresa empresa = empresaService.getEmpresaByName(newQueja.getNombreEmpresa());
+
+        queja.setEmpresa(empresa);
+
+        boolean created = quejaService.createQueja(queja);
+
         if (created) {
-            return new ResponseEntity<>("Queja registrada exitosamente", HttpStatus.CREATED);
+            return new ResponseEntity<>(newQueja, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>("Usuario o empresa no registrados, queja no creada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(newQueja, HttpStatus.NOT_ACCEPTABLE);
         }
     }
 

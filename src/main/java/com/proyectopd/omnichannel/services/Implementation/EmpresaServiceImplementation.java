@@ -48,14 +48,7 @@ public class EmpresaServiceImplementation implements EmpresaService {
     }
 
     @Override
-    public Empresa getEmpresaById(Long nit) {
-        Optional<Empresa> empresaOptional = empresaRepository.findById(nit);
-
-        Empresa empresa = null;
-        if (empresaOptional.isPresent()) {
-            empresa = empresaOptional.get();
-        }
-
-        return empresa;
+    public Empresa getEmpresaByName(String nombreEmpresa) {
+        return empresaRepository.findEmpresaByNombreEmpresa(nombreEmpresa);
     }
 }
