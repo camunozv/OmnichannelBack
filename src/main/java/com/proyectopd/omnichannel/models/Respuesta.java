@@ -1,5 +1,6 @@
 package com.proyectopd.omnichannel.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,6 +12,7 @@ public class Respuesta {
 
     @OneToOne
     @JoinColumn(name = "idQueja", nullable = false)
+    @JsonIgnore
     private Queja queja;
 
     public Respuesta() {

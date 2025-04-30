@@ -12,8 +12,7 @@ public class TipoQueja {
     private String tipoQueja;
 
     @JsonIgnore
-    @OneToMany
-    @JoinColumn(name = "idQueja", nullable = true)
+    @OneToMany(mappedBy = "tipoQueja")
     private List<Queja> queja;
 
     public TipoQueja() {

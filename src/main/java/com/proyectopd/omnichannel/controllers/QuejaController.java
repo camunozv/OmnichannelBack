@@ -42,8 +42,10 @@ public class QuejaController {
         queja.setArchivo(newQueja.getArchivo());
 
         TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(newQueja.getTipoQueja());
+        System.out.println("hola" + tipoQueja);
 
         queja.setTipoQueja(tipoQueja);
+
 
         Empresa empresa = empresaService.getEmpresaByName(newQueja.getNombreEmpresa());
 
@@ -67,7 +69,7 @@ public class QuejaController {
 
         Queja quejaToAnswer = quejaService.getQuejaById(newRespuesta.getIdQueja());
 
-        System.out.println(quejaToAnswer.getTipoQueja().getTipoQueja());
+        //System.out.println(quejaToAnswer.getTipoQueja().getTipoQueja());
 
         respuesta.setQueja(quejaToAnswer);
 

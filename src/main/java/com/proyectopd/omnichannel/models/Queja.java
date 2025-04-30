@@ -13,11 +13,11 @@ public class Queja {
     private String descripcion;
     private String archivo;
 
-    @OneToOne(mappedBy = "queja")
+    @OneToOne
+    @JoinColumn(name = "idRespuesta", nullable = true)
     @JsonIgnore
     private Respuesta respuesta;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "tipoQueja", nullable = false)
     private TipoQueja tipoQueja;

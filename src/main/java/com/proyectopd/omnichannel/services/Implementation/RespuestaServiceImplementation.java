@@ -10,9 +10,6 @@ public class RespuestaServiceImplementation implements RespuestaService {
 
     RespuestaRepository respuestaRepository;
 
-    public RespuestaServiceImplementation() {
-    }
-
     public RespuestaServiceImplementation(RespuestaRepository respuestaRepository) {
         this.respuestaRepository = respuestaRepository;
     }
