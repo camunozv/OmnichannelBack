@@ -27,7 +27,7 @@ public class TipoServicioController {
         if (created) {
             return new ResponseEntity<>(tipoServicio, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(tipoServicio, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(tipoServicio, HttpStatus.BAD_REQUEST);
         }
 
     }

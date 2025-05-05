@@ -1,22 +1,16 @@
 package com.proyectopd.omnichannel.integration;
 
-import com.proyectopd.omnichannel.controllers.RolController;
-import com.proyectopd.omnichannel.models.Rol;
-import com.proyectopd.omnichannel.services.RolService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.annotation.*;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import java.util.ArrayList;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // Our intention here is to test the rest controller
@@ -48,18 +42,28 @@ public class RolControllerTest {
     // execution. Doing it this way ensures we do not write boiler plate code
     // such as wrapping the whole code of the method within a try catch block.
     @Test
-    public void testCreateNewRole() throws Exception {
-        // Role to test
-        String requestBody = "{\n \"nombreRol\" : \"Empresa\" }";
+    public void testCreateNewRoles() throws Exception {
 
         // What does the when(...).thenReturn(...)
         // clause does ?
         // Defines the behavior of a mocked object.
         /*when(rolService.createNewRol(newRol)).thenReturn(true);*/
 
-        mockMvc.perform(post(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)).andExpect(status().isCreated());
+        ArrayList<String> requestBodies = new ArrayList<>();
+
+        requestBodies.add("{\n \"nombreRol\" : \"Empresa\" }");
+        requestBodies.add("{\n \"nombreRol\" : \"Profesional\" }");
+        requestBodies.add("{\n \"nombreRol\" : \"Administrador\" }");
+
+        for (String requestBody : requestBodies) {
+
+            mockMvc.perform(post(BASE_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestBody)).andExpect(status().isCreated());
+
+            mockMvc.perform(get(BASE_URL).contentType(MediaType.APPLICATION_JSON)
+                    .content(requestBody)).andExpect(status().isOk());
+        }
 
     }
 

@@ -83,7 +83,7 @@ public class UsuarioController {
         if (created1 && created2) {
             return new ResponseEntity<>(usuario, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(usuario, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(usuario, HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -114,7 +114,7 @@ public class UsuarioController {
         if (created1 && created2) {
             return new ResponseEntity<>(newEmpresa, HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<>(newEmpresa, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(newEmpresa, HttpStatus.BAD_REQUEST);
         }
     }
 
