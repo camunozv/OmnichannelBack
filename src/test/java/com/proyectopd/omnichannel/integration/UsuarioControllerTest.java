@@ -9,6 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -22,24 +23,45 @@ public class UsuarioControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void createAdmin() throws Exception{
+    public void createAdmin() throws Exception {
 
         String requestBody = "{\"id\":1,\"nombre\":\"carlitos\",\"apellido\":\"munoz\",\"contrasenha\":1234,\"rol\":\"Administrador\"}";
         String userId = "1";
-        mockMvc.perform(post(BASE_URL + "/admin").contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)).andExpect(status().isCreated());
+        mockMvc.perform(post(BASE_URL + "/admin")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("{\"idUsuario\":1,\"contrasenha\":\"1234\",\"rol\":{\"nombreRol\":\"Administrador\"}}"));
+
+        mockMvc.perform(get(BASE_URL + "/" + userId))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createEmpresa() throws Exception {
+
+        String requestBody = "{\"id\":1230,\"contrasenha\":1234,\"nombre\":\"EMCALI\",\"ciudad\":\"Cali\",\"tipoServicio\":\"Alcantarillado\",\"rol\":\"Empresa\"}";
+
+        String userId = "1230";
+        mockMvc.perform(post(BASE_URL + "/empresa")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("{\"id\":1230,\"contrasenha\":\"1234\",\"nombre\":\"EMCALI\",\"ciudad\":\"Cali\",\"tipoServicio\":\"Alcantarillado\",\"rol\":\"Empresa\"}"));
 
         mockMvc.perform(get(BASE_URL + "/" + userId)).andExpect(status().isOk());
     }
 
     @Test
-    public void createEmpresa() throws Exception{
+    public void createProfesional() throws Exception {
+        String requestBody = "{\"id\":1,\"contrasenha\":\"1234\",\"nombre\":\"fernando\",\"apellido\":\"martinez\",\"correoElectronico\":\"fernando@gmail.com\",\"telefonoMovil\":31256,\"cantidadQuejasEncargadas\":0,\"rol\":\"Profesional\"}";
 
-        String requestBody = "{\"id\":1230,\"contrasenha\":1234,\"nombre\":\"EMCALI\",\"ciudad\":\"Cali\",\"tipoServicio\":\"Alcantarillado\",\"rol\":\"Empresa\"}";
-
-        String userId = "1230";
-        mockMvc.perform(post(BASE_URL + "/empresa").contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)).andExpect(status().isCreated());
+        String userId = "1";
+        mockMvc.perform(post(BASE_URL + "/profesional")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("{\"idUsuario\":1,\"contrasenha\":\"1234\",\"rol\":{\"nombreRol\":\"Profesional\"}}"));
 
         mockMvc.perform(get(BASE_URL + "/" + userId)).andExpect(status().isOk());
     }

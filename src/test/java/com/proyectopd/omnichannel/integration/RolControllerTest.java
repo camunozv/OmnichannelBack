@@ -11,6 +11,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // Our intention here is to test the rest controller
@@ -51,18 +52,24 @@ public class RolControllerTest {
 
         ArrayList<String> requestBodies = new ArrayList<>();
 
-        requestBodies.add("{\n \"nombreRol\" : \"Empresa\" }");
-        requestBodies.add("{\n \"nombreRol\" : \"Profesional\" }");
-        requestBodies.add("{\n \"nombreRol\" : \"Administrador\" }");
+        requestBodies.add("{\"nombreRol\":\"Empresa\"}");
+        requestBodies.add("{\"nombreRol\":\"Profesional\"}");
+        requestBodies.add("{\"nombreRol\":\"Administrador\"}");
 
         for (String requestBody : requestBodies) {
 
             mockMvc.perform(post(BASE_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody)).andExpect(status().isCreated());
+                    .content(requestBody))
+                    .andExpect(status().isCreated())
+                    .andExpect(content().string(requestBody));
 
-            mockMvc.perform(get(BASE_URL).contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody)).andExpect(status().isOk());
+
+            mockMvc.perform(get(BASE_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestBody))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(requestBody));
         }
 
     }
