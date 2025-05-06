@@ -41,7 +41,7 @@ public class AdministradorController {
     public ResponseEntity<Administrador> crearAdministrador(@RequestBody Administrador newAdministrador) {
         Administrador adminToReturn = administradorService.crearAdministrador(newAdministrador);
         if (Objects.equals(adminToReturn.getNombre(), "NOT CREATED")) {
-            return new ResponseEntity<>(adminToReturn, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(adminToReturn, HttpStatus.BAD_REQUEST);
         } else {
             return new ResponseEntity<>(adminToReturn, HttpStatus.CREATED);
         }
