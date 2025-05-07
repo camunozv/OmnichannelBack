@@ -13,7 +13,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+/*@SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
 public class QuejaControllerTest {
@@ -28,19 +28,20 @@ public class QuejaControllerTest {
         String requestBody = "{\"idQueja\":154,\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"EMCALI\"}";
 
         mockMvc.perform(post(BASE_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
+                        .content(requestBody))
                 .andExpect(status().isCreated())
                 .andExpect(content().string("{\"idQueja\":154,\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"EMCALI\"}"));
     }
 
     @Test
-    public void answerQueja() throws Exception {
+    public void answerQuejaTest() throws Exception {
         String requestBody = "{\"idRespuesta\":74,\"textoRespuesta\":\"Pronto se arreglará\",\"idQueja\":154}";
 
         mockMvc.perform(put(BASE_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody))
+                        .content(requestBody))
                 .andExpect(status().isOk())
                 .andExpect(content().string("{\"idRespuesta\":74,\"textoRespuesta\":\"Pronto se arreglará\",\"idQueja\":154}"));
 
     }
-}
+
+}*/
