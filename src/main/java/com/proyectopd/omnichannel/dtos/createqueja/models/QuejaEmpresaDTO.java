@@ -2,13 +2,15 @@ package com.proyectopd.omnichannel.dtos.createqueja.models;
 
 import com.proyectopd.omnichannel.models.Empresa;
 
+import java.time.LocalDate;
+
 
 public class QuejaEmpresaDTO {
 
     // Datos de queja
     private Integer idQueja;
     private String prioridad;
-    private String tiempoMinimoRespuesta;
+    private LocalDate tiempoMinimoRespuesta;
     private String descripcion;
     private String archivo;
 
@@ -16,7 +18,7 @@ public class QuejaEmpresaDTO {
     private String tipoQueja;
     private String nombreEmpresa;
 
-    public QuejaEmpresaDTO(Integer idQueja, String prioridad, String tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
+    public QuejaEmpresaDTO(Integer idQueja, String prioridad, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
         this.idQueja = idQueja;
         this.prioridad = prioridad;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
@@ -42,11 +44,11 @@ public class QuejaEmpresaDTO {
         this.prioridad = prioridad;
     }
 
-    public String getTiempoMinimoRespuesta() {
+    public LocalDate getTiempoMinimoRespuesta() {
         return tiempoMinimoRespuesta;
     }
 
-    public void setTiempoMinimoRespuesta(String tiempoMinimoRespuesta) {
+    public void setTiempoMinimoRespuesta(LocalDate tiempoMinimoRespuesta) {
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
     }
 

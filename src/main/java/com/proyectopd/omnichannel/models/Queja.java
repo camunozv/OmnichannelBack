@@ -3,14 +3,23 @@ package com.proyectopd.omnichannel.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Queja {
 
     @Id
     private Integer idQueja;
     private String prioridad;
-    private String tiempoMinimoRespuesta;
+    // tiempoMinimoRespuesta should be refactored to Date datatype
+    @Column(name = "tiempoMinimoRespuesta")
+    private LocalDate tiempoMinimoRespuesta;
+    // descripcion should be refactored to Long text instead of varchar(255)
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
+    // archivo should be refactored to Long text instead of varchar(255) since
+    // we want to store a base64 string within the data base.
+    @Column(columnDefinition = "TEXT")
     private String archivo;
 
     @OneToOne
@@ -35,7 +44,7 @@ public class Queja {
     public Queja() {
     }
 
-    public Queja(Integer idQueja, String prioridad, String tiempoMinimoRespuesta, String descripcion, String archivo, TipoQueja tipoQueja, Profesional profesional, Empresa empresa, Respuesta respuesta) {
+    public Queja(Integer idQueja, String prioridad, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, TipoQueja tipoQueja, Profesional profesional, Empresa empresa, Respuesta respuesta) {
         this.idQueja = idQueja;
         this.prioridad = prioridad;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
@@ -103,11 +112,11 @@ public class Queja {
         this.prioridad = prioridad;
     }
 
-    public String getTiempoMinimoRespuesta() {
+    public LocalDate getTiempoMinimoRespuesta() {
         return tiempoMinimoRespuesta;
     }
 
-    public void setTiempoMinimoRespuesta(String tiempoMinimoRespuesta) {
+    public void setTiempoMinimoRespuesta(LocalDate tiempoMinimoRespuesta) {
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
     }
 

@@ -8,6 +8,8 @@ public class Usuario {
 
     @Id
     private Integer idUsuario;
+    // contrasenha needs to be refactored to long text since we are going to encrypt it.
+    @Column(columnDefinition = "TEXT")
     private String contrasenha;
 
     @OneToOne(mappedBy = "usuario")

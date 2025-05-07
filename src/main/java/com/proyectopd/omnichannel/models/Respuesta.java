@@ -8,6 +8,8 @@ public class Respuesta {
 
     @Id
     private Integer idRespuesta;
+    // textoRespuesta needs to be refactored to long text instead of varchar(255)
+    @Column(columnDefinition = "TEXT")
     private String textoRespuesta;
 
     @OneToOne
