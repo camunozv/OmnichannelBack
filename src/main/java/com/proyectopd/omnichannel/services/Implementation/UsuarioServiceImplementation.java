@@ -1,8 +1,5 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
-import com.proyectopd.omnichannel.models.Administrador;
-import com.proyectopd.omnichannel.repositories.AdministradorRepository;
-import com.proyectopd.omnichannel.repositories.RolRepository;
 import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.UsuarioService;
