@@ -81,29 +81,24 @@ public class QuejaServiceImplementation implements QuejaService {
         List<Queja> quejasVencidas = quejaRepository.findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate.now());
         List<Profesional> profesionales = profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
 
-        int cantidadQuejasAsignables = 0;
-
-        for (Profesional profesional : profesionales) {
-            cantidadQuejasAsignables += profesional.getCantidadQuejasEncargadas();
-        }
-
-        if (cantidadQuejasAsignables >= quejasVencidas.size()) {
-            int i = 0;
-            for (Queja queja : quejasVencidas) {
+        int assigned = 0;
+        int i = 0;
+        for (Queja queja : quejasVencidas) {
+            if (i < profesionales.size()) {
                 Profesional profesional = profesionales.get(i);
                 if (profesional.getCantidadQuejasEncargadas() < 3) {
                     queja.setProfesional(profesional);
                     quejaRepository.save(queja);
                     profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
+                    assigned += 1;
                 } else {
                     profesionalRepository.save(profesional);
                     i += 1;
                 }
             }
-            boolean assigned = true;
         }
 
-        return false;
+        return assigned == quejasVencidas.size();
     }
 
     @Override

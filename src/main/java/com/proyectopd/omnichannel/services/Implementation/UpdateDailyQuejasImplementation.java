@@ -10,7 +10,7 @@ public class UpdateDailyQuejasImplementation {
 
 
     @Autowired
-    private QuejaService quejaService;
+    private QuejaServiceImplementation quejaService;
 
     @Scheduled(cron = "0 0 0 * * ?") // Runs at midnight every day
     public void updateQuejasDaily() {
