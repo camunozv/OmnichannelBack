@@ -87,4 +87,12 @@ public class UsuarioControllerTest {
                 .andExpect(content().string("{\"idRespuesta\":74,\"textoRespuesta\":\"Pronto se arreglará\",\"idQueja\":154}"));
 
     }
+
+    @Test
+    public void getAllQuejasEmpresaTest() throws Exception {
+
+        mockMvc.perform(get(BASE_URL2 + "/EMCALI"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("[{\"idQueja\":154,\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-06-03\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"EMCALI\"}]"));
+    }
 }

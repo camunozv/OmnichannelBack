@@ -27,16 +27,16 @@ public class TipoQuejaControllerTest {
     @Test
     public void createTipoQueja() throws Exception {
 
-        String requestBody = "{\"tipoQueja\":\"Incumplimiento\"}";
+        String requestBody = "{\"tipoQueja\":\"Incumplimiento\",\"dias\":15}";
 
         mockMvc.perform(post(BASE_URL).contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("{\"tipoQueja\":\"Incumplimiento\"}"));
+                .andExpect(content().string("{\"tipoQueja\":\"Incumplimiento\",\"dias\":15}"));
 
         mockMvc.perform(get(BASE_URL).param("nombreTipoQueja", "Incumplimiento"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("{\"tipoQueja\":\"Incumplimiento\"}"));
+                .andExpect(content().string("{\"tipoQueja\":\"Incumplimiento\",\"dias\":15}"));
     }
 
 

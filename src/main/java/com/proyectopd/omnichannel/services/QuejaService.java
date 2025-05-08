@@ -10,7 +10,7 @@ import java.util.List;
 public interface QuejaService {
 
     // Implemented
-    List<Queja> getAllQuejasEmpresa(Long idEmpresa);
+    List<Queja> getAllQuejasEmpresa(String nombreEmpresa);
     List<Queja> getAllQuejasUsuario(Long idUsuario);
 
     Queja getQuejaById(Integer idQueja);

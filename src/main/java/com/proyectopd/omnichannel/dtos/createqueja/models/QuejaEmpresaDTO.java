@@ -18,6 +18,9 @@ public class QuejaEmpresaDTO {
     private String tipoQueja;
     private String nombreEmpresa;
 
+    public QuejaEmpresaDTO() {
+    }
+
     public QuejaEmpresaDTO(Integer idQueja, String prioridad, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
         this.idQueja = idQueja;
         this.prioridad = prioridad;

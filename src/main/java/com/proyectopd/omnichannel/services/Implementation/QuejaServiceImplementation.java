@@ -25,8 +25,8 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
-    public List<Queja> getAllQuejasEmpresa(Long idEmpresa) {
-        return List.of();
+    public List<Queja> getAllQuejasEmpresa(String nombreEmpresa){
+        return quejaRepository.findQuejasByEmpresa_NombreEmpresaEquals(nombreEmpresa);
     }
 
     @Override

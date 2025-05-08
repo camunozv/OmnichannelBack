@@ -10,6 +10,7 @@ public class TipoQueja {
 
     @Id
     private String tipoQueja;
+    private Integer dias;
 
     @JsonIgnore
     @OneToMany(mappedBy = "tipoQueja")
@@ -18,9 +19,18 @@ public class TipoQueja {
     public TipoQueja() {
     }
 
-    public TipoQueja(String tipoQueja, List<Queja> queja) {
+    public TipoQueja(String tipoQueja, Integer dias, List<Queja> queja) {
         this.tipoQueja = tipoQueja;
+        this.dias = dias;
         this.queja = queja;
+    }
+
+    public Integer getDias() {
+        return dias;
+    }
+
+    public void setDias(Integer dias) {
+        this.dias = dias;
     }
 
     public String getTipoQueja() {
