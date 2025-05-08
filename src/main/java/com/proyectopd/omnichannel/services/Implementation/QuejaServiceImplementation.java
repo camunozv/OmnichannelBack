@@ -3,14 +3,12 @@ package com.proyectopd.omnichannel.services.Implementation;
 import com.proyectopd.omnichannel.models.Profesional;
 import com.proyectopd.omnichannel.models.Respuesta;
 import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
-import com.proyectopd.omnichannel.services.EmpresaService;
 import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
-import com.proyectopd.omnichannel.services.ProfesionalService;
 import com.proyectopd.omnichannel.services.QuejaService;
-import com.proyectopd.omnichannel.services.UsuarioService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -78,26 +76,34 @@ public class QuejaServiceImplementation implements QuejaService {
     }
 
     @Override
-    public boolean assignProfesional(Integer idQueja) {
+    public boolean assignProfesional() {
 
-        Optional<Queja> quejaOptional = quejaRepository.findById(idQueja);
+        List<Queja> quejasVencidas = quejaRepository.findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate.now());
+        List<Profesional> profesionales = profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
 
-        boolean assigned = false;
+        int cantidadQuejasAsignables = 0;
 
-        if (quejaOptional.isPresent()) {
-            List<Profesional> profesionales = profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
-            Random random = new Random();
-            Integer randomProfesional = random.nextInt(profesionales.size());
-            Profesional profesional = profesionales.get(randomProfesional);
-            Queja queja = quejaOptional.get();
-            queja.setProfesional(profesional);
-            quejaRepository.save(queja);
-            profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
-            profesionalRepository.save(profesional);
-            assigned = true;
+        for (Profesional profesional : profesionales) {
+            cantidadQuejasAsignables += profesional.getCantidadQuejasEncargadas();
         }
 
-        return assigned;
+        if (cantidadQuejasAsignables >= quejasVencidas.size()) {
+            int i = 0;
+            for (Queja queja : quejasVencidas) {
+                Profesional profesional = profesionales.get(i);
+                if (profesional.getCantidadQuejasEncargadas() < 3) {
+                    queja.setProfesional(profesional);
+                    quejaRepository.save(queja);
+                    profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
+                } else {
+                    profesionalRepository.save(profesional);
+                    i += 1;
+                }
+            }
+            boolean assigned = true;
+        }
+
+        return false;
     }
 
     @Override

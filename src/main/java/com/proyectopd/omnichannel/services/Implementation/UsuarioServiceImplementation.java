@@ -14,13 +14,9 @@ import java.util.Optional;
 public class UsuarioServiceImplementation implements UsuarioService {
 
     private UsuarioRepository usuarioRepository;
-    private RolRepository rolRepository;
-    private AdministradorRepository administradorRepository;
 
-    public UsuarioServiceImplementation(UsuarioRepository usuarioRepository, RolRepository rolRepository, AdministradorRepository administradorRepository) {
+    public UsuarioServiceImplementation(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
-        this.rolRepository = rolRepository;
-        this.administradorRepository = administradorRepository;
     }
 
     @Override

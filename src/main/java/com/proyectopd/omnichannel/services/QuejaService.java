@@ -15,7 +15,7 @@ public interface QuejaService {
 
     boolean createQueja (Queja queja);
     boolean answerQueja(Respuesta respuesta, Integer idQueja);
-    boolean assignProfesional(Integer idQueja);
+    boolean assignProfesional();
 
     boolean updateDailyQuejas();
 
