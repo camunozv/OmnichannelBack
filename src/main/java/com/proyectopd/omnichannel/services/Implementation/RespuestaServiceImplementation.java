@@ -23,7 +23,6 @@ public class RespuestaServiceImplementation implements RespuestaService {
             respuestaRepository.save(newRespuesta);
             created = true;
         } catch (Exception e) {
-            System.out.println("Excepcion: " + e);
             created = false;
         }
 

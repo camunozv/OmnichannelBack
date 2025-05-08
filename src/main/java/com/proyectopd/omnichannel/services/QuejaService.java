@@ -1,9 +1,6 @@
 package com.proyectopd.omnichannel.services;
 
-import com.proyectopd.omnichannel.models.Empresa;
-import com.proyectopd.omnichannel.models.Queja;
-import com.proyectopd.omnichannel.models.Respuesta;
-import com.proyectopd.omnichannel.models.TipoQueja;
+import com.proyectopd.omnichannel.models.*;
 
 import java.util.List;
 
@@ -18,6 +15,9 @@ public interface QuejaService {
 
     boolean createQueja (Queja queja);
     boolean answerQueja(Respuesta respuesta, Integer idQueja);
+    boolean assignProfesional(Integer idQueja);
+
+    boolean updateDailyQuejas();
 
     // Not implemented
     boolean deleteQueja (Long idEmpresa, Long idUsuario, Long idQueja);

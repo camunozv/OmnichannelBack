@@ -6,10 +6,7 @@ import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.models.Respuesta;
 import com.proyectopd.omnichannel.models.TipoQueja;
-import com.proyectopd.omnichannel.services.EmpresaService;
-import com.proyectopd.omnichannel.services.QuejaService;
-import com.proyectopd.omnichannel.services.RespuestaService;
-import com.proyectopd.omnichannel.services.TipoQuejaService;
+import com.proyectopd.omnichannel.services.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,15 +26,15 @@ public class QuejaController {
     private TipoQuejaService tipoQuejaService;
     private EmpresaService empresaService;
     private RespuestaService respuestaService;
+    private ProfesionalService profesionalService;
 
-    public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService) {
+    public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService, ProfesionalService profesionalService) {
         this.quejaService = quejaService;
         this.tipoQuejaService = tipoQuejaService;
         this.empresaService = empresaService;
         this.respuestaService = respuestaService;
+        this.profesionalService = profesionalService;
     }
-
-
 
     /*@GetMapping()
     public ResponseEntity<QuejaEmpresaDTO> getQuejaById(@PathVariable Integer idQueja){
@@ -102,4 +99,6 @@ public class QuejaController {
             return new ResponseEntity<>(newRespuesta, HttpStatus.NOT_FOUND);
         }
     }
+
+
 }

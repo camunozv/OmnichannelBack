@@ -5,6 +5,8 @@ import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.services.ProfesionalService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProfesionalServiceImplementation implements ProfesionalService {
 
@@ -28,4 +30,15 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
 
         return created;
     }
+
+    @Override
+    public Profesional getProfesionalById(Integer profesionalId) {
+        return profesionalRepository.getProfesionalByIdProfesional(profesionalId);
+    }
+
+    @Override
+    public List<Profesional> getAllFreeProfesionales() {
+        return profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
+    }
+
 }

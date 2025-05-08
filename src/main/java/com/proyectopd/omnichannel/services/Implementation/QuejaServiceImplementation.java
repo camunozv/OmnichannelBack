@@ -1,31 +1,33 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
+import com.proyectopd.omnichannel.models.Profesional;
 import com.proyectopd.omnichannel.models.Respuesta;
+import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.services.EmpresaService;
 import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
+import com.proyectopd.omnichannel.services.ProfesionalService;
 import com.proyectopd.omnichannel.services.QuejaService;
 import com.proyectopd.omnichannel.services.UsuarioService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class QuejaServiceImplementation implements QuejaService {
 
-    QuejaRepository quejaRepository;
-    EmpresaService empresaService;
-    UsuarioService usuarioService;
+    private ProfesionalRepository profesionalRepository;
+    private QuejaRepository quejaRepository;
 
-    public QuejaServiceImplementation(QuejaRepository quejaRepository, EmpresaService empresaService, UsuarioService usuarioService) {
+    public QuejaServiceImplementation(ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository) {
+        this.profesionalRepository = profesionalRepository;
         this.quejaRepository = quejaRepository;
-        this.empresaService = empresaService;
-        this.usuarioService = usuarioService;
     }
 
     @Override
-    public List<Queja> getAllQuejasEmpresa(String nombreEmpresa){
+    public List<Queja> getAllQuejasEmpresa(String nombreEmpresa) {
         return quejaRepository.findQuejasByEmpresa_NombreEmpresaEquals(nombreEmpresa);
     }
 
@@ -58,6 +60,7 @@ public class QuejaServiceImplementation implements QuejaService {
         return created;
     }
 
+
     @Override
     public boolean answerQueja(Respuesta respuesta, Integer idQueja) {
 
@@ -72,6 +75,34 @@ public class QuejaServiceImplementation implements QuejaService {
         }
 
         return answered;
+    }
+
+    @Override
+    public boolean assignProfesional(Integer idQueja) {
+
+        Optional<Queja> quejaOptional = quejaRepository.findById(idQueja);
+
+        boolean assigned = false;
+
+        if (quejaOptional.isPresent()) {
+            List<Profesional> profesionales = profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
+            Random random = new Random();
+            Integer randomProfesional = random.nextInt(profesionales.size());
+            Profesional profesional = profesionales.get(randomProfesional);
+            Queja queja = quejaOptional.get();
+            queja.setProfesional(profesional);
+            quejaRepository.save(queja);
+            profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
+            profesionalRepository.save(profesional);
+            assigned = true;
+        }
+
+        return assigned;
+    }
+
+    @Override
+    public boolean updateDailyQuejas() {
+        return false;
     }
 
 
