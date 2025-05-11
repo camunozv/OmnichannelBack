@@ -10,15 +10,15 @@ public class Queja {
 
     @Id
     private Integer idQueja;
-    private String prioridad;
-    // tiempoMinimoRespuesta should be refactored to Date datatype
+
+    private String estado;
+
     @Column(name = "tiempoMinimoRespuesta")
     private LocalDate tiempoMinimoRespuesta;
-    // descripcion should be refactored to Long text instead of varchar(255)
+
     @Column(columnDefinition = "TEXT")
     private String descripcion;
-    // archivo should be refactored to Long text instead of varchar(255) since
-    // we want to store a base64 string within the data base.
+
     @Column(columnDefinition = "TEXT")
     private String archivo;
 
@@ -44,16 +44,16 @@ public class Queja {
     public Queja() {
     }
 
-    public Queja(Integer idQueja, String prioridad, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, TipoQueja tipoQueja, Profesional profesional, Empresa empresa, Respuesta respuesta) {
+    public Queja(Integer idQueja, String estado, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, Respuesta respuesta, TipoQueja tipoQueja, Profesional profesional, Empresa empresa) {
         this.idQueja = idQueja;
-        this.prioridad = prioridad;
+        this.estado = estado;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
         this.descripcion = descripcion;
         this.archivo = archivo;
+        this.respuesta = respuesta;
         this.tipoQueja = tipoQueja;
         this.profesional = profesional;
         this.empresa = empresa;
-        this.respuesta = respuesta;
     }
 
     public String getArchivo() {
@@ -104,12 +104,12 @@ public class Queja {
         this.idQueja = idQueja;
     }
 
-    public String getPrioridad() {
-        return prioridad;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public LocalDate getTiempoMinimoRespuesta() {

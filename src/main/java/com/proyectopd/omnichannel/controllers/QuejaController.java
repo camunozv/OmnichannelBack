@@ -34,7 +34,7 @@ public class QuejaController {
         this.respuestaService = respuestaService;
     }
 
-    @GetMapping("/id")
+    @GetMapping("/queja")
     public ResponseEntity<QuejaEmpresaDTO> getQuejaById(@RequestParam Integer idQueja) {
         Queja queja = quejaService.getQuejaById(idQueja);
         return new ResponseEntity<>(mapQuejaToQuejaEmpresaDTO(queja), HttpStatus.OK);
@@ -46,8 +46,9 @@ public class QuejaController {
         return new ResponseEntity<>(queja.getRespuesta(), HttpStatus.OK);
     }
 
-    @GetMapping("/{nombreEmpresa}")
-    public ResponseEntity<List<QuejaEmpresaDTO>> getAllQuejasEmpresa(@PathVariable String nombreEmpresa) {
+    // Reenvío de queja a la empresa, según parametrización
+    @GetMapping("/empresa")
+    public ResponseEntity<List<QuejaEmpresaDTO>> getAllQuejasEmpresa(@RequestParam String nombreEmpresa) {
 
         ArrayList<QuejaEmpresaDTO> list = new ArrayList<>();
 
@@ -58,21 +59,26 @@ public class QuejaController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+    // Funcionalidad de crear una queja
     @PostMapping("/nuevaQueja")
     public ResponseEntity<QuejaEmpresaDTO> registrarQueja(@RequestBody QuejaEmpresaDTO newQueja) {
 
         Queja queja = mapQuejaEmpresaDTOToQueja(newQueja);
 
+        queja.setEstado("SIN RESOLVER");
+
         Random random = new Random();
         Integer idQueja = random.nextInt(1000000000);
         queja.setIdQueja(idQueja);
 
+        // Tipificación de quejas recibidas
         TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(newQueja.getTipoQueja());
 
         queja.setTipoQueja(tipoQueja);
 
         Empresa empresa = empresaService.getEmpresaByName(newQueja.getNombreEmpresa());
 
+        // Configuracion de tiempo de queja por tipo de queja.
         queja.setTiempoMinimoRespuesta(newQueja.getTiempoMinimoRespuesta().plusDays(tipoQueja.getDias()));
 
         queja.setEmpresa(empresa);
@@ -86,6 +92,7 @@ public class QuejaController {
         }
     }
 
+    // Funcionalidad de respuesta de quejas
     @PutMapping("/responderQueja")
     public ResponseEntity<QuejaRespuestaDTO> responderQueja(@RequestBody QuejaRespuestaDTO newRespuesta) {
 

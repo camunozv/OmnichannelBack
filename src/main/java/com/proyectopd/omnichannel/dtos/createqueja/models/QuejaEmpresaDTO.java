@@ -9,7 +9,7 @@ public class QuejaEmpresaDTO {
 
     // Datos de queja
     private Integer idQueja;
-    private String prioridad;
+    private String estado;
     private LocalDate tiempoMinimoRespuesta;
     private String descripcion;
     private String archivo;
@@ -21,9 +21,9 @@ public class QuejaEmpresaDTO {
     public QuejaEmpresaDTO() {
     }
 
-    public QuejaEmpresaDTO(Integer idQueja, String prioridad, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
+    public QuejaEmpresaDTO(Integer idQueja, String estado, LocalDate tiempoMinimoRespuesta, String descripcion, String archivo, String tipoQueja, String nombreEmpresa) {
         this.idQueja = idQueja;
-        this.prioridad = prioridad;
+        this.estado = estado;
         this.tiempoMinimoRespuesta = tiempoMinimoRespuesta;
         this.descripcion = descripcion;
         this.archivo = archivo;
@@ -39,12 +39,12 @@ public class QuejaEmpresaDTO {
         this.idQueja = idQueja;
     }
 
-    public String getPrioridad() {
-        return prioridad;
+    public String getEstado() {
+        return estado;
     }
 
-    public void setPrioridad(String prioridad) {
-        this.prioridad = prioridad;
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public LocalDate getTiempoMinimoRespuesta() {

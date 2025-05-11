@@ -12,8 +12,13 @@ public class UpdateDailyQuejasImplementation {
 
     //@Scheduled(cron = "0 0 0 * * ?")// Runs at midnight every day
     //@Scheduled(initialDelay = 300000) // For testing the method
-    @Scheduled(fixedRate = 300000) // Exceetues the method every 5 minutes
+    @Scheduled(fixedRate = 300000) // Executes the method every 5 minutes
     public boolean updateQuejasDaily() {
+
+        boolean var1 = quejaService.updateDailyQuejas();
+        boolean var2 = quejaService.assignProfesional();
+
+        // ¿Que pasa ahora sino puedo asignar un profesional a todas las quejas?
         return quejaService.assignProfesional();
     }
 

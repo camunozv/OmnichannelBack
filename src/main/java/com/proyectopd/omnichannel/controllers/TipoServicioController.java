@@ -31,6 +31,7 @@ public class TipoServicioController {
         }
     }
 
+    // Definición de empresas por tipo de servicio
     @GetMapping("/empresasPorTipoServicio")
     public ResponseEntity<List<EmpresaDTO>> getAllEmpresasPorTipoServicio(@RequestParam String nombreServicio) {
         List<EmpresaDTO> empresas = tipoServicioService.getAllEmpresasPorTipoServicio(nombreServicio);

@@ -15,7 +15,7 @@ public class QuejaEmpresaDTOMapper {
         quejaEmpresaDTO.setArchivo(queja.getArchivo());
         quejaEmpresaDTO.setNombreEmpresa(queja.getEmpresa().getNombreEmpresa());
         quejaEmpresaDTO.setTipoQueja(queja.getTipoQueja().getTipoQueja());
-        quejaEmpresaDTO.setPrioridad(queja.getPrioridad());
+        quejaEmpresaDTO.setEstado(queja.getEstado());
         quejaEmpresaDTO.setTiempoMinimoRespuesta(queja.getTiempoMinimoRespuesta());
         quejaEmpresaDTO.setDescripcion(queja.getDescripcion());
 
@@ -27,7 +27,7 @@ public class QuejaEmpresaDTOMapper {
         Queja queja = new Queja();
 
         queja.setIdQueja(quejaEmpresaDTO.getIdQueja());
-        queja.setPrioridad(quejaEmpresaDTO.getPrioridad());
+        queja.setEstado(quejaEmpresaDTO.getEstado());
 
         queja.setDescripcion(quejaEmpresaDTO.getDescripcion());
         queja.setArchivo(quejaEmpresaDTO.getArchivo());

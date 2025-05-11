@@ -68,6 +68,8 @@ public class QuejaServiceImplementation implements QuejaService {
         if (quejaOptional.isPresent()) {
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
+            queja.setEstado("RESPONDIDA");
+            queja.setTiempoMinimoRespuesta(LocalDate.MAX);
             quejaRepository.save(queja);
             answered = true;
         }
@@ -88,6 +90,7 @@ public class QuejaServiceImplementation implements QuejaService {
                 Profesional profesional = profesionales.get(i);
                 if (profesional.getCantidadQuejasEncargadas() < 3) {
                     queja.setProfesional(profesional);
+                    queja.setEstado("VENCIDA");
                     quejaRepository.save(queja);
                     profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
                     assigned += 1;
@@ -103,7 +106,18 @@ public class QuejaServiceImplementation implements QuejaService {
 
     @Override
     public boolean updateDailyQuejas() {
-        return false;
+
+        List<Queja> quejasProximasAVencer = quejaRepository.findQuejasByTiempoMinimoRespuestaEquals(LocalDate.now().plusDays(2));
+
+        int counter = 0;
+
+        for (Queja queja : quejasProximasAVencer) {
+            queja.setEstado("PROXIMA A VENCER");
+            quejaRepository.save(queja);
+            counter++;
+        }
+
+        return counter == quejasProximasAVencer.size();
     }
 
 

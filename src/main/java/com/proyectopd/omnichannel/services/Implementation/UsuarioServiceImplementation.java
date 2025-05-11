@@ -27,7 +27,6 @@ public class UsuarioServiceImplementation implements UsuarioService {
     }
 
 
-
     @Override
     public boolean createUsuario(Usuario usuario) {
 

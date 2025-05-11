@@ -87,6 +87,7 @@ public class UsuarioController {
         }
     }
 
+    // Definición de empresa por tipo de servicio.
     @PostMapping("/empresa")
     public ResponseEntity<UsuarioEmpresaDTO> createEmpresa(@RequestBody UsuarioEmpresaDTO newEmpresa) {
 
@@ -118,9 +119,9 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/{cedula}")
-    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer cedula) {
-        Usuario usuario = usuarioService.getUsuarioById(cedula);
+    @GetMapping("/id/{idUsuario}")
+    public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer idUsuario) {
+        Usuario usuario = usuarioService.getUsuarioById(idUsuario);
         if (usuario == null) {
             return new ResponseEntity<>(usuario, HttpStatus.NOT_FOUND);
         } else {
