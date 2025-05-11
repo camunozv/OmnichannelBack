@@ -18,21 +18,14 @@ public class EmpresaController {
         this.empresaService = empresaService;
     }
 
-    @PostMapping
-    public ResponseEntity<String> createEmpresa(@RequestBody Empresa empresa) {
-        boolean created = empresaService.createEmpresa(empresa);
-
-        if (created) {
-            return new ResponseEntity<>("Empresa creada exitosamente", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("No se pudo crear la empresa", HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<Empresa>> getAllEmpresas() {
         return new ResponseEntity<>(empresaService.getAllEmpresas(), HttpStatus.OK);
     }
 
+    @GetMapping("/{nombreEmpresa}")
+    public ResponseEntity<Empresa> getEmpresaByName(@PathVariable String nombreEmpresa) {
+        return new ResponseEntity<>(empresaService.getEmpresaByName(nombreEmpresa), HttpStatus.OK);
+    }
 
 }

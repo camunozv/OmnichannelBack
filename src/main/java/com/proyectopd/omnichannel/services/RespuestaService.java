@@ -9,4 +9,7 @@ public interface RespuestaService {
 
     // Delete
     boolean deleteRespuestaById(Integer idRespuesta);
+
+    // Get
+    Respuesta getRespuestaById(Integer idRespuesta);
 }

@@ -1,9 +1,17 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
+import com.proyectopd.omnichannel.dtos.createuser.models.EmpresaDTO;
+import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.TipoServicio;
+import com.proyectopd.omnichannel.repositories.EmpresaRepository;
 import com.proyectopd.omnichannel.repositories.TipoServicioRepository;
 import com.proyectopd.omnichannel.services.TipoServicioService;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.proyectopd.omnichannel.mappers.TipoServicioEmpresaDTOMapper.mapEmpresaToEmpresaDTO;
 
 @Service
 public class TipoServicioServiceImplementation implements TipoServicioService {
@@ -33,5 +41,17 @@ public class TipoServicioServiceImplementation implements TipoServicioService {
         }
 
         return created;
+    }
+
+    @Override
+    public ArrayList<EmpresaDTO> getAllEmpresasPorTipoServicio(String nombreServicio) {
+
+        TipoServicio tipoServicio = tipoServicioRepository.findTipoServicioByNombreServicio(nombreServicio);
+        List<Empresa> empresasTipoServicio = tipoServicio.getEmpresa();
+        ArrayList<EmpresaDTO> empresasDTO = new ArrayList<>();
+        for (Empresa empresa : empresasTipoServicio) {
+            empresasDTO.add(mapEmpresaToEmpresaDTO(empresa));
+        }
+        return empresasDTO;
     }
 }

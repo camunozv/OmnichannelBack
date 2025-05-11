@@ -15,12 +15,11 @@ import java.util.Objects;
 public class AdministradorController {
 
     private AdministradorService administradorService;
-    private UsuarioService usuarioService;
 
-    public AdministradorController(AdministradorService administradorService, UsuarioService usuarioService) {
+    public AdministradorController(AdministradorService administradorService) {
         this.administradorService = administradorService;
-        this.usuarioService = usuarioService;
     }
+
 
 
     @GetMapping("/{adminId}")

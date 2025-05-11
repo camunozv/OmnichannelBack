@@ -42,5 +42,10 @@ public class RespuestaServiceImplementation implements RespuestaService {
         return deleted;
     }
 
+    @Override
+    public Respuesta getRespuestaById(Integer idRespuesta) {
+        return respuestaRepository.getRespuestaByIdRespuesta(idRespuesta);
+    }
+
 
 }

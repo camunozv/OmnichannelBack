@@ -11,9 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaEmpresaDTOToQueja;
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaToQuejaEmpresaDTO;
@@ -26,38 +26,46 @@ public class QuejaController {
     private TipoQuejaService tipoQuejaService;
     private EmpresaService empresaService;
     private RespuestaService respuestaService;
-    private ProfesionalService profesionalService;
 
-    public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService, ProfesionalService profesionalService) {
+    public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService) {
         this.quejaService = quejaService;
         this.tipoQuejaService = tipoQuejaService;
         this.empresaService = empresaService;
         this.respuestaService = respuestaService;
-        this.profesionalService = profesionalService;
     }
 
-    /*@GetMapping()
-    public ResponseEntity<QuejaEmpresaDTO> getQuejaById(@PathVariable Integer idQueja){
+    @GetMapping("/id")
+    public ResponseEntity<QuejaEmpresaDTO> getQuejaById(@RequestParam Integer idQueja) {
         Queja queja = quejaService.getQuejaById(idQueja);
         return new ResponseEntity<>(mapQuejaToQuejaEmpresaDTO(queja), HttpStatus.OK);
-    }*/
+    }
+
+    @GetMapping("/respuesta")
+    public ResponseEntity<Respuesta> getRespuestaByQuejaId(@RequestParam Integer idQueja) {
+        Queja queja = quejaService.getQuejaById(idQueja);
+        return new ResponseEntity<>(queja.getRespuesta(), HttpStatus.OK);
+    }
 
     @GetMapping("/{nombreEmpresa}")
-    public ResponseEntity<List<QuejaEmpresaDTO>> getAllQuejasEmpresa(@PathVariable String nombreEmpresa){
+    public ResponseEntity<List<QuejaEmpresaDTO>> getAllQuejasEmpresa(@PathVariable String nombreEmpresa) {
 
         ArrayList<QuejaEmpresaDTO> list = new ArrayList<>();
 
-        for (Queja queja: quejaService.getAllQuejasEmpresa(nombreEmpresa)) {
+        for (Queja queja : quejaService.getAllQuejasEmpresa(nombreEmpresa)) {
             list.add(mapQuejaToQuejaEmpresaDTO(queja));
         }
 
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-    @PostMapping
+    @PostMapping("/nuevaQueja")
     public ResponseEntity<QuejaEmpresaDTO> registrarQueja(@RequestBody QuejaEmpresaDTO newQueja) {
 
         Queja queja = mapQuejaEmpresaDTOToQueja(newQueja);
+
+        Random random = new Random();
+        Integer idQueja = random.nextInt(1000000000);
+        queja.setIdQueja(idQueja);
 
         TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(newQueja.getTipoQueja());
 
@@ -78,11 +86,15 @@ public class QuejaController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/responderQueja")
     public ResponseEntity<QuejaRespuestaDTO> responderQueja(@RequestBody QuejaRespuestaDTO newRespuesta) {
 
         Respuesta respuesta = new Respuesta();
-        respuesta.setIdRespuesta(newRespuesta.getIdRespuesta());
+
+        Random random = new Random();
+        Integer idRespuesta = random.nextInt(1000000000);
+
+        respuesta.setIdRespuesta(idRespuesta);
         respuesta.setTextoRespuesta(newRespuesta.getTextoRespuesta());
 
         Queja quejaToAnswer = quejaService.getQuejaById(newRespuesta.getIdQueja());
@@ -90,15 +102,21 @@ public class QuejaController {
         respuesta.setQueja(quejaToAnswer);
 
         boolean saved = respuestaService.createRespuesta(respuesta);
-//        System.out.println("Respuesta guardada: " + saved);
         boolean answered = quejaService.answerQueja(respuesta, quejaToAnswer.getIdQueja());
 
         if (answered && saved) {
-            return new ResponseEntity<>(newRespuesta, HttpStatus.OK);
+            return new ResponseEntity<>(newRespuesta, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(newRespuesta, HttpStatus.NOT_FOUND);
         }
     }
 
+    // Get all quejas vencidas
+
+    // Get all quejas respondidas
+
+    // Get all quejas pendientes (menor a mayor tiempo)
+
+    // Get all quejas pendientes (mayor a menor tiempo)
 
 }

@@ -11,10 +11,10 @@ public class UpdateDailyQuejasImplementation {
     private QuejaServiceImplementation quejaService;
 
     //@Scheduled(cron = "0 0 0 * * ?")// Runs at midnight every day
-    @Scheduled(initialDelay = 300000) // For testing the method
-    public void updateQuejasDaily() {
-        System.out.println("Updating quejas daily");
-        quejaService.assignProfesional();
+    //@Scheduled(initialDelay = 300000) // For testing the method
+    @Scheduled(fixedRate = 300000) // Exceetues the method every 5 minutes
+    public boolean updateQuejasDaily() {
+        return quejaService.assignProfesional();
     }
 
 }
