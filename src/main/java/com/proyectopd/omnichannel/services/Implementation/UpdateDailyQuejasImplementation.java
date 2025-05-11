@@ -10,16 +10,29 @@ public class UpdateDailyQuejasImplementation {
     @Autowired
     private QuejaServiceImplementation quejaService;
 
+    @Autowired
+    private NotificacionServiceImplementation notificacionService;
+
     //@Scheduled(cron = "0 0 0 * * ?")// Runs at midnight every day
     //@Scheduled(initialDelay = 300000) // For testing the method
     @Scheduled(fixedRate = 300000) // Executes the method every 5 minutes
-    public boolean updateQuejasDaily() {
+    public void updateQuejasDaily() {
 
         boolean var1 = quejaService.updateDailyQuejas();
-        boolean var2 = quejaService.assignProfesional();
 
-        // ¿Que pasa ahora sino puedo asignar un profesional a todas las quejas?
-        return quejaService.assignProfesional();
+        if (var1) {
+            notificacionService.createNotificacion("Se han actualizado las quejas diarias correctamente.");
+        } else {
+            notificacionService.createNotificacion("No se han podido actualizar las quejas diarias.");
+        }
+
+        boolean var2 = quejaService.assignProfesional();
+        if (var2) {
+            notificacionService.createNotificacion("Se han asignado profesionales a las quejas correctamente.");
+        } else {
+            notificacionService.createNotificacion("No se han podido asignar todas las quejas, no hay profesionales disponibles.");
+        }
+
     }
 
 }

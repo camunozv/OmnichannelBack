@@ -15,4 +15,6 @@ public interface QuejaRepository extends JpaRepository<Queja, Integer> {
     List<Queja> findQuejasByTiempoMinimoRespuestaEquals(LocalDate dueDate);
 
     List<Queja> findQuejasByEstado(String estado);
+
+    boolean deleteQuejaByIdQueja(Integer idQueja);
 }

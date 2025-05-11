@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
+
 
 @Service
 public class QuejaServiceImplementation implements QuejaService {
@@ -29,20 +29,12 @@ public class QuejaServiceImplementation implements QuejaService {
         return quejaRepository.findQuejasByEmpresa_NombreEmpresaEquals(nombreEmpresa);
     }
 
-    @Override
-    public List<Queja> getAllQuejasUsuario(Long idUsuario) {
-        return List.of();
-    }
 
     @Override
     public Queja getQuejaById(Integer idQueja) {
         return quejaRepository.getQuejaByIdQueja(idQueja);
     }
 
-    @Override
-    public Queja getQuejaByCompany(Long idEmpresa, Long idQueja) {
-        return null;
-    }
 
     @Override
     public boolean createQueja(Queja queja) {
@@ -81,13 +73,13 @@ public class QuejaServiceImplementation implements QuejaService {
     public boolean assignProfesional() {
 
         List<Queja> quejasVencidas = quejaRepository.findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate.now());
-        List<Profesional> profesionales = profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
+        List<Profesional> profesionalesLibres = profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
 
         int assigned = 0;
         int i = 0;
         for (Queja queja : quejasVencidas) {
-            if (i < profesionales.size()) {
-                Profesional profesional = profesionales.get(i);
+            if (i < profesionalesLibres.size()) {
+                Profesional profesional = profesionalesLibres.get(i);
                 if (profesional.getCantidadQuejasEncargadas() < 3) {
                     queja.setProfesional(profesional);
                     queja.setEstado("VENCIDA");
@@ -98,6 +90,9 @@ public class QuejaServiceImplementation implements QuejaService {
                     profesionalRepository.save(profesional);
                     i += 1;
                 }
+            } else {
+                queja.setEstado("VENCIDA SIN PROFESIONAL ASIGNADO");
+                quejaRepository.save(queja);
             }
         }
 
@@ -122,12 +117,8 @@ public class QuejaServiceImplementation implements QuejaService {
 
 
     @Override
-    public boolean deleteQueja(Long idEmpresa, Long idUsuario, Long idQueja) {
-        return false;
+    public boolean deleteQueja(Integer idQueja) {
+        return quejaRepository.deleteQuejaByIdQueja(idQueja);
     }
 
-    @Override
-    public boolean updateQueja(Queja queja, Long idQueja) {
-        return false;
-    }
 }
