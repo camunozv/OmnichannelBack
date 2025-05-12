@@ -11,6 +11,9 @@ public class UsuarioProfesionalDTO {
     private Integer cantidadQuejasEncargadas;
     private String rol;
 
+    public UsuarioProfesionalDTO() {
+    }
+
     public UsuarioProfesionalDTO(Integer id, String contrasenha, String nombre, String apellido, String correoElectronico, Integer telefonoMovil, Integer cantidadQuejasEncargadas, String rol) {
         this.id = id;
         this.contrasenha = contrasenha;
