@@ -10,4 +10,7 @@ public interface AdministradorService {
 
     // Get
     UsuarioAdministradorDTO getAdministradorById(Integer administradorId);
+
+    // Delete
+    boolean deleteAdministradorById(Integer idUsuario);
 }

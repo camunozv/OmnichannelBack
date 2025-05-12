@@ -11,6 +11,6 @@ public interface UsuarioService {
 
     // Not implemented
     boolean updateUsuario(Long cedula, Usuario usuario);
-    boolean deleteUsuario(Long cedula);
+    boolean deleteUsuario(Integer idUsuario);
     //    List<Usuario> getAllUsuarios();
 }

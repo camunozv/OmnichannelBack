@@ -2,8 +2,6 @@ package com.proyectopd.omnichannel.controllers;
 
 import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
 import com.proyectopd.omnichannel.services.AdministradorService;
-import com.proyectopd.omnichannel.models.Administrador;
-import com.proyectopd.omnichannel.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/administradores")
 public class AdministradorController {
 
     private AdministradorService administradorService;
@@ -21,12 +19,10 @@ public class AdministradorController {
     }
 
 
+    @GetMapping("/{idUsuario}")
+    public ResponseEntity<UsuarioAdministradorDTO> getAdministradorById(@PathVariable Integer idUsuario) {
 
-    @GetMapping("/{adminId}")
-    public ResponseEntity<UsuarioAdministradorDTO> getAdministradorById(@PathVariable Integer adminId) {
-
-        // Called the Creator -> replace new by factory method.
-        UsuarioAdministradorDTO adminToReturn = administradorService.getAdministradorById(adminId);
+        UsuarioAdministradorDTO adminToReturn = administradorService.getAdministradorById(idUsuario);
 
         if (Objects.equals(adminToReturn.getNombre(), null)) {
             return new ResponseEntity<>(adminToReturn, HttpStatus.NOT_FOUND);
@@ -36,13 +32,16 @@ public class AdministradorController {
 
     }
 
-    @PostMapping
-    public ResponseEntity<Administrador> crearAdministrador(@RequestBody Administrador newAdministrador) {
-        Administrador adminToReturn = administradorService.crearAdministrador(newAdministrador);
-        if (Objects.equals(adminToReturn.getNombre(), "NOT CREATED")) {
-            return new ResponseEntity<>(adminToReturn, HttpStatus.BAD_REQUEST);
+    @DeleteMapping("/{idUsuario}")
+    public ResponseEntity<Boolean> deleteAdministrador(@PathVariable Integer idUsuario) {
+
+        boolean deleted = administradorService.deleteAdministradorById(idUsuario);
+
+        if (deleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(adminToReturn, HttpStatus.CREATED);
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
+
 }

@@ -46,7 +46,18 @@ public class UsuarioServiceImplementation implements UsuarioService {
     }
 
     @Override
-    public boolean deleteUsuario(Long cedula) {
-        return false;
+    public boolean deleteUsuario(Integer idUsuario) {
+
+        boolean deleted;
+
+        try {
+            usuarioRepository.deleteUsuarioByIdUsuario(idUsuario);
+            deleted = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            deleted = false;
+        }
+
+        return deleted;
     }
 }
