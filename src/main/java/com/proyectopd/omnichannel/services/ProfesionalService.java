@@ -8,7 +8,9 @@ public interface ProfesionalService {
 
     boolean crearProfesional(Profesional newProfesional);
 
-    Profesional getProfesionalById(Integer profesionalId);
+    Profesional getProfesionalById(Integer idUsuario);
+
+    boolean deleteProfesionalById(Integer idUsuario);
 
     List<Profesional> getAllFreeProfesionales();
 }
