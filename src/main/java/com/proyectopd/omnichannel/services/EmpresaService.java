@@ -7,8 +7,8 @@ import java.util.List;
 public interface EmpresaService {
     // Declarations for methods within service implementation
     // Not implemented
-    boolean updateEmpresa(Long nit, Empresa empresa);
-    boolean deleteEmpresa(Long nit);
+
+    boolean deleteEmpresaById(Integer idUsuario) ;
 
     // Implemented
     boolean createEmpresa(Empresa empresa);

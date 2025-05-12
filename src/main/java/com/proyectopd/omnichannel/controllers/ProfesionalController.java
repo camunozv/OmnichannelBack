@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import static com.proyectopd.omnichannel.mappers.UsuarioProfesionalDTOMapper.mapProfesionalToUsuarioProfesionalDTO;
-import static com.proyectopd.omnichannel.mappers.UsuarioProfesionalDTOMapper.mapUsuarioProfesionalDTOToProfesional;
 
 @RestController
 @RequestMapping("/profesionales")

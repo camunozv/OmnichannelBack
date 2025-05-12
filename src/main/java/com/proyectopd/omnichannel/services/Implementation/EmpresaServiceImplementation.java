@@ -1,7 +1,9 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
 import com.proyectopd.omnichannel.models.Empresa;
+import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.EmpresaRepository;
+import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.EmpresaService;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +14,11 @@ import java.util.Optional;
 public class EmpresaServiceImplementation implements EmpresaService {
 
     private EmpresaRepository empresaRepository;
+    private UsuarioRepository usuarioRepository;
 
-    public EmpresaServiceImplementation(EmpresaRepository empresaRepository) {
+    public EmpresaServiceImplementation(EmpresaRepository empresaRepository, UsuarioRepository usuarioRepository) {
         this.empresaRepository = empresaRepository;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @Override
@@ -22,10 +26,10 @@ public class EmpresaServiceImplementation implements EmpresaService {
 
         boolean created;
 
-        try{
+        try {
             empresaRepository.save(empresa);
             created = true;
-        } catch(Exception e) {
+        } catch (Exception e) {
             created = false;
         }
 
@@ -33,13 +37,18 @@ public class EmpresaServiceImplementation implements EmpresaService {
     }
 
     @Override
-    public boolean updateEmpresa(Long nit, Empresa empresa) {
-        return false;
-    }
+    public boolean deleteEmpresaById(Integer idUsuario) {
 
-    @Override
-    public boolean deleteEmpresa(Long nit) {
-        return false;
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+
+        boolean deleted = false;
+        if (usuario != null) {
+            empresaRepository.deleteEmpresaByNombreEmpresa(usuario.getEmpresa().getNombreEmpresa());
+            usuarioRepository.deleteUsuarioByIdUsuario(idUsuario);
+            deleted = true;
+        }
+
+        return deleted;
     }
 
     @Override
