@@ -8,4 +8,6 @@ import java.util.List;
 // <dtype of the entity, dtype of the pk>
 public interface RolRepository extends JpaRepository<Rol, Integer> {
     List<Rol> getRolByNombreRol(String nombreRol);
+
+    void deleteRolByNombreRol(String nombreRol);
 }

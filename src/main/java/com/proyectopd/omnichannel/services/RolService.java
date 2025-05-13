@@ -9,4 +9,7 @@ public interface RolService {
 
     // Get
     Rol getRolById(String rolName);
+
+    // Delete
+    boolean deleteRol(String rolName);
 }
