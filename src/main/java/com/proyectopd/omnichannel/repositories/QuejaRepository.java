@@ -16,5 +16,5 @@ public interface QuejaRepository extends JpaRepository<Queja, Integer> {
 
     List<Queja> findQuejasByEstado(String estado);
 
-    boolean deleteQuejaByIdQueja(Integer idQueja);
+    void deleteQuejaByIdQueja(Integer idQueja);
 }

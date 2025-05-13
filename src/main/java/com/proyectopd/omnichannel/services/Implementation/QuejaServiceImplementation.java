@@ -117,8 +117,19 @@ public class QuejaServiceImplementation implements QuejaService {
 
 
     @Override
-    public boolean deleteQueja(Integer idQueja) {
-        return quejaRepository.deleteQuejaByIdQueja(idQueja);
+    public boolean deleteQuejaById(Integer idQueja) {
+
+        boolean deleted;
+
+        try {
+            quejaRepository.deleteQuejaByIdQueja(idQueja);
+            deleted = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            deleted = false;
+        }
+
+        return deleted;
     }
 
 }

@@ -11,5 +11,5 @@ public interface QuejaService {
     boolean answerQueja(Respuesta respuesta, Integer idQueja);
     boolean assignProfesional();
     boolean updateDailyQuejas();
-    boolean deleteQueja(Integer idQueja);
+    boolean deleteQuejaById(Integer idQueja);
 }

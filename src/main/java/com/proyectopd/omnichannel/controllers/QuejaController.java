@@ -118,6 +118,20 @@ public class QuejaController {
         }
     }
 
+    // Integration test pending
+    @DeleteMapping("/borrarQueja")
+    public ResponseEntity<Boolean> deleteQueja(@RequestParam Integer idQueja) {
+
+        boolean deleted = quejaService.deleteQuejaById(idQueja);
+
+        if (deleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     // Get all quejas vencidas
 
     // Get all quejas respondidas

@@ -16,6 +16,7 @@ public class RolController {
         this.rolService = rolService;
     }
 
+    // Modify integration test
     @PostMapping("/nuevoRol")
     public ResponseEntity<Rol> crearRol(@RequestBody Rol newRol) {
         try {
@@ -26,6 +27,7 @@ public class RolController {
         }
     }
 
+    // Modify integration test
     @GetMapping("/nombreRol")
     public ResponseEntity<Rol> getRol(@RequestBody Rol rolToFind) {
         try {
@@ -36,6 +38,7 @@ public class RolController {
         }
     }
 
+    // Integration test pending
     @DeleteMapping("/borrarRol")
     public ResponseEntity<Boolean> deleteRol(@RequestParam String nombreRol) {
         try {
