@@ -35,7 +35,10 @@ public class QuejaServiceImplementation implements QuejaService {
         return quejaRepository.getQuejaByIdQueja(idQueja);
     }
 
-
+    @Override
+    public List<Queja> getQuejasByEstado(String estado) {
+        return quejaRepository.findQuejasByEstado(estado);
+    }
 
 
     @Override

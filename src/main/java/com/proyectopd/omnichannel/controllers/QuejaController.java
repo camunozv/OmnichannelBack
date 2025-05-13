@@ -2,6 +2,7 @@ package com.proyectopd.omnichannel.controllers;
 
 import com.proyectopd.omnichannel.dtos.createqueja.models.QuejaEmpresaDTO;
 import com.proyectopd.omnichannel.dtos.createrespuesta.QuejaRespuestaDTO;
+import com.proyectopd.omnichannel.dtos.quejaBeauty.RespuestaQuejaDTO;
 import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.models.Respuesta;
@@ -11,10 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaEmpresaDTOToQueja;
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaToQuejaEmpresaDTO;
+import static com.proyectopd.omnichannel.mappers.RespuestaQuejaDTOMapper.mapRespuestaToRespuestaQuejaDTO;
 
 @RestController
 @RequestMapping("/quejas")
@@ -115,6 +119,23 @@ public class QuejaController {
         } else {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
+    }
+
+    // Integration test pending
+    @GetMapping("/quejasPorEstado")
+    public ResponseEntity<List<RespuestaQuejaDTO>> getQuejasPorEstado(@RequestParam String estado) {
+
+        try {
+            ArrayList<RespuestaQuejaDTO> listToReturn = new ArrayList<>();
+            for (Queja queja : quejaService.getQuejasByEstado(estado)) {
+                listToReturn.add(mapRespuestaToRespuestaQuejaDTO(queja));
+            }
+
+            return new ResponseEntity<>(listToReturn, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+
     }
 
     // Get all quejas vencidas
