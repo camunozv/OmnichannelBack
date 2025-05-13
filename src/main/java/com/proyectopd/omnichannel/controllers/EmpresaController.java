@@ -1,5 +1,6 @@
 package com.proyectopd.omnichannel.controllers;
 
+import com.proyectopd.omnichannel.dtos.createqueja.models.QuejaEmpresaDTO;
 import com.proyectopd.omnichannel.dtos.createuser.models.EmpresaDTO;
 import com.proyectopd.omnichannel.services.EmpresaService;
 import com.proyectopd.omnichannel.models.Empresa;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.proyectopd.omnichannel.mappers.TipoServicioEmpresaDTOMapper.mapEmpresaToEmpresaDTO;
@@ -42,7 +44,21 @@ public class EmpresaController {
 
     }
 
-    @DeleteMapping("/borrar")
+    // Integration test pending
+    // Reenvío de queja a la empresa, según parametrización
+    @GetMapping("/quejasEmpresa")
+    public ResponseEntity<ArrayList<QuejaEmpresaDTO>> getAllQuejasEmpresa(@RequestParam String nombreEmpresa) {
+        try {
+            ArrayList<QuejaEmpresaDTO> list = empresaService.getAllQuejasEmpresa(nombreEmpresa);
+            return new ResponseEntity<>(list, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Integration test pending
+    @DeleteMapping("/borrarEmpresaById")
     public ResponseEntity<Boolean> deleteEmpresa(@RequestParam Integer idUsuario) {
 
         boolean deleted = empresaService.deleteEmpresaById(idUsuario);

@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaEmpresaDTOToQueja;
@@ -46,18 +44,6 @@ public class QuejaController {
         return new ResponseEntity<>(queja.getRespuesta(), HttpStatus.OK);
     }
 
-    // Reenvío de queja a la empresa, según parametrización
-    @GetMapping("/empresa")
-    public ResponseEntity<List<QuejaEmpresaDTO>> getAllQuejasEmpresa(@RequestParam String nombreEmpresa) {
-
-        ArrayList<QuejaEmpresaDTO> list = new ArrayList<>();
-
-        for (Queja queja : quejaService.getAllQuejasEmpresa(nombreEmpresa)) {
-            list.add(mapQuejaToQuejaEmpresaDTO(queja));
-        }
-
-        return new ResponseEntity<>(list, HttpStatus.OK);
-    }
 
     // Funcionalidad de crear una queja
     @PostMapping("/nuevaQueja")
@@ -130,7 +116,6 @@ public class QuejaController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
-
 
     // Get all quejas vencidas
 
