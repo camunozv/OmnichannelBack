@@ -1,7 +1,10 @@
 package com.proyectopd.omnichannel.services;
 
 import com.proyectopd.omnichannel.models.Administrador;
+import com.proyectopd.omnichannel.models.Notificacion;
 import com.proyectopd.omnichannel.models.Usuario;
+
+import java.util.List;
 
 public interface UsuarioService {
     // Implemented
@@ -12,5 +15,5 @@ public interface UsuarioService {
     // Not implemented
     boolean updateUsuario(Long cedula, Usuario usuario);
     boolean deleteUsuario(Integer idUsuario);
-    //    List<Usuario> getAllUsuarios();
+
 }

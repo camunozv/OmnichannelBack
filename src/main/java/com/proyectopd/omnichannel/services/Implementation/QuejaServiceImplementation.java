@@ -1,9 +1,9 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
-import com.proyectopd.omnichannel.models.Profesional;
-import com.proyectopd.omnichannel.models.Respuesta;
+import com.proyectopd.omnichannel.models.*;
+
+import com.proyectopd.omnichannel.repositories.NotificacionRepository;
 import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
-import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
 import com.proyectopd.omnichannel.services.QuejaService;
 import org.springframework.stereotype.Service;
@@ -18,10 +18,12 @@ public class QuejaServiceImplementation implements QuejaService {
 
     private ProfesionalRepository profesionalRepository;
     private QuejaRepository quejaRepository;
+    private NotificacionRepository notificacionRepository;
 
-    public QuejaServiceImplementation(ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository) {
+    public QuejaServiceImplementation(ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository, NotificacionRepository notificacionRepository) {
         this.profesionalRepository = profesionalRepository;
         this.quejaRepository = quejaRepository;
+        this.notificacionRepository = notificacionRepository;
     }
 
     @Override
@@ -90,6 +92,19 @@ public class QuejaServiceImplementation implements QuejaService {
                     queja.setEstado("VENCIDA");
                     quejaRepository.save(queja);
                     profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
+
+                    // Notificación al profesional encargado
+                    Notificacion nuevaNotificacionProfesional = new Notificacion();
+                    nuevaNotificacionProfesional.setTextoNotificacion("Nueva queja asignada con id: " + queja.getIdQueja());
+                    nuevaNotificacionProfesional.setUsuario(profesional.getUsuario());
+                    notificacionRepository.save(nuevaNotificacionProfesional);
+
+                    // Notificación a la empresa que incumple
+                    Notificacion nuevaNotificacionEmpresa = new Notificacion();
+                    nuevaNotificacionEmpresa.setTextoNotificacion("Hay un aviso de incumplimiento por Queja con id: " + queja.getIdQueja() + ".");
+                    nuevaNotificacionEmpresa.setUsuario(queja.getEmpresa().getUsuario());
+                    notificacionRepository.save(nuevaNotificacionEmpresa);
+
                     assigned += 1;
                 } else {
                     profesionalRepository.save(profesional);

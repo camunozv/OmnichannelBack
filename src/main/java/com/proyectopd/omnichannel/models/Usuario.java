@@ -3,6 +3,8 @@ package com.proyectopd.omnichannel.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Usuario {
 
@@ -28,15 +30,28 @@ public class Usuario {
     @JoinColumn(name = "idRol", nullable = false)
     private Rol rol;
 
+    @OneToMany(mappedBy = "usuario")
+    private List<Notificacion> notificaciones;
+
     public Usuario() {
     }
 
-    public Usuario(Integer idUsuario, String contrasenha, Administrador administrador, Profesional profesional, Rol rol) {
+    public Usuario(Integer idUsuario, String contrasenha, Administrador administrador, Profesional profesional, Empresa empresa, Rol rol, List<Notificacion> notificaciones) {
         this.idUsuario = idUsuario;
         this.contrasenha = contrasenha;
         this.administrador = administrador;
         this.profesional = profesional;
+        this.empresa = empresa;
         this.rol = rol;
+        this.notificaciones = notificaciones;
+    }
+
+    public void setNotificaciones(List<Notificacion> notificaciones) {
+        this.notificaciones = notificaciones;
+    }
+
+    public List<Notificacion> getNotificaciones() {
+        return notificaciones;
     }
 
     public Empresa getEmpresa() {

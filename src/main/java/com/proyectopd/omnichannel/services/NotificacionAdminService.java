@@ -4,7 +4,7 @@ import com.proyectopd.omnichannel.models.NotificacionAdmin;
 
 import java.util.List;
 
-public interface NotificacionServiceAdmin {
+public interface NotificacionAdminService {
 
     List<NotificacionAdmin> getAllNotificaciones();
     boolean createNotificacion(String textoNotificacion);

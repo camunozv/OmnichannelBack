@@ -1,10 +1,13 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
+import com.proyectopd.omnichannel.models.Notificacion;
 import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.UsuarioService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -60,4 +63,5 @@ public class UsuarioServiceImplementation implements UsuarioService {
 
         return deleted;
     }
+
 }

@@ -1,57 +1,57 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
-import com.proyectopd.omnichannel.models.NotificacionAdmin;
+import com.proyectopd.omnichannel.models.Notificacion;
+import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.NotificacionRepository;
-import com.proyectopd.omnichannel.services.NotificacionServiceAdmin;
+import com.proyectopd.omnichannel.repositories.UsuarioRepository;
+import com.proyectopd.omnichannel.services.NotificacionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class NotificacionServiceImplementation implements NotificacionServiceAdmin {
+public class NotificacionServiceImplementation implements NotificacionService {
 
-    NotificacionRepository notificacionAdminRepository;
+    NotificacionRepository notificacionRepository;
+    UsuarioRepository usuarioRepository;
 
-    public NotificacionServiceImplementation() {
+    public NotificacionServiceImplementation(NotificacionRepository notificacionRepository) {
+        this.notificacionRepository = notificacionRepository;
     }
 
-    @Override
-    public List<NotificacionAdmin> getAllNotificaciones() {
-        return notificacionAdminRepository.findAll();
-    }
 
     @Override
-    public boolean createNotificacion(String textoNotificacion) {
-        NotificacionAdmin notificacion = new NotificacionAdmin();
-        notificacion.setTextoNotificacion(textoNotificacion);
-        boolean created;
-        try{
-            notificacionAdminRepository.save(notificacion);
-            created = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            created = false;
+    public List<Notificacion> getAllNotificacionesUsuario(Integer idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        if (usuario != null) {
+            List<Notificacion> listOfNotifs = notificacionRepository.getNotificacionsByUsuarioEquals(usuario);
+            return listOfNotifs;
+        } else {
+            return null;
         }
 
-        return created;
     }
 
     @Override
-    public boolean deleteNotificacion(Integer idNotificacion) {
+    public Notificacion getNotificacionById(Integer idNotificacion) {
+        return notificacionRepository.getNotificacionByIdNotificacion(idNotificacion);
+    }
+
+    @Override
+    public boolean deleteNotificacionById(Integer idNotificacion) {
 
         boolean deleted;
-        try{
-            notificacionAdminRepository.deleteById(idNotificacion);
+
+        try {
+            notificacionRepository.deleteNotificacionByIdNotificacionEquals(idNotificacion);
             deleted = true;
         } catch (Exception e) {
             e.printStackTrace();
             deleted = false;
         }
+
         return deleted;
     }
 
-    @Override
-    public NotificacionAdmin getNotificacionById(Integer idNotificacion) {
-        return notificacionAdminRepository.getNotificacionAdminByIdNotificacion(idNotificacion);
-    }
+
 }
