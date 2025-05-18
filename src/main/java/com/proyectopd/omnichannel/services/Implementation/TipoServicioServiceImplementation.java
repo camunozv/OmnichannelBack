@@ -54,4 +54,20 @@ public class TipoServicioServiceImplementation implements TipoServicioService {
         }
         return empresasDTO;
     }
+
+    @Override
+    public boolean deleteTipoServicioByNombreTipoServicio(String nombreServicio) {
+
+        boolean deleted;
+
+        try {
+            tipoServicioRepository.deleteTipoServicioByNombreServicioEquals(nombreServicio);
+            deleted = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            deleted = false;
+        }
+
+        return deleted;
+    }
 }

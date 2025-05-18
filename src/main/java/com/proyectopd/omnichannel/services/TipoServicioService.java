@@ -12,4 +12,7 @@ public interface TipoServicioService {
 
     // Get
     List<EmpresaDTO> getAllEmpresasPorTipoServicio(String nombreServicio);
+
+    // Delete
+    boolean deleteTipoServicioByNombreTipoServicio(String nombreServicio);
 }

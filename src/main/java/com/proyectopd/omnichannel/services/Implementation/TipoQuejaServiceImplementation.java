@@ -42,4 +42,20 @@ public class TipoQuejaServiceImplementation implements TipoQuejaService {
         }
 
     }
+
+    @Override
+    public boolean deleteTipoQueja(String nombreTipoQueja) {
+
+        boolean deleted = false;
+
+        try {
+            tipoQuejaRepository.deleteTipoQuejaByTipoQuejaEquals(nombreTipoQueja);
+            deleted = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            deleted = false;
+        }
+
+        return deleted;
+    }
 }

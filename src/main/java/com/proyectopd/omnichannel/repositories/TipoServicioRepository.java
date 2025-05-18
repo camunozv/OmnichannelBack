@@ -11,4 +11,6 @@ public interface TipoServicioRepository extends JpaRepository<TipoServicio, Inte
     List<Empresa> getTipoServicioByNombreServicio(String nombreServicio);
 
     TipoServicio findTipoServicioByNombreServicio(String nombreServicio);
+
+    void deleteTipoServicioByNombreServicioEquals(String nombreServicio);
 }

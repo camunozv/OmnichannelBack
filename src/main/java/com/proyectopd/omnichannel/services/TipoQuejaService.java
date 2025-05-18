@@ -9,4 +9,7 @@ public interface TipoQuejaService {
 
     // Get
     TipoQueja getTipoQuejaById(String nombreTipoQueja);
+
+    // Delete
+    boolean deleteTipoQueja(String nombreTipoQueja);
 }

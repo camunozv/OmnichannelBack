@@ -37,4 +37,18 @@ public class TipoServicioController {
         List<EmpresaDTO> empresas = tipoServicioService.getAllEmpresasPorTipoServicio(nombreServicio);
         return new ResponseEntity<>(empresas, HttpStatus.OK);
     }
+
+    // Integration test pending
+    @DeleteMapping("/borrarTipoServicio")
+    public ResponseEntity<Boolean> deleteTipoServicioByNombreTipoServicio(@RequestParam String nombreTipoServicio) {
+
+        boolean deleted = tipoServicioService.deleteTipoServicioByNombreTipoServicio(nombreTipoServicio);
+
+        if (deleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+
+    }
 }

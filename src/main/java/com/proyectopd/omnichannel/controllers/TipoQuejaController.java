@@ -39,4 +39,17 @@ public class TipoQuejaController {
             return new ResponseEntity<>(tipoQueja, HttpStatus.NOT_FOUND);
         }
     }
+
+    // Integration test pending.
+    @DeleteMapping
+    public ResponseEntity<Boolean> deleteTipoQuejaByNombreTipoQueja(@RequestParam String nombreTipoQueja) {
+
+        boolean deleted = tipoQuejaService.deleteTipoQueja(nombreTipoQueja);
+
+        if (deleted) {
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
 }
