@@ -10,14 +10,14 @@ import java.util.List;
 @Service
 public class RolServiceImplementation implements RolService {
 
-    private final RolService rolService;
     RolRepository rolRepository;
 
     // Always write the constructor, bce the initialization of the rol service object
     // is handled during runtime.
-    public RolServiceImplementation(RolRepository rolRepository, RolService rolService) {
+
+
+    public RolServiceImplementation(RolRepository rolRepository) {
         this.rolRepository = rolRepository;
-        this.rolService = rolService;
     }
 
     @Override
