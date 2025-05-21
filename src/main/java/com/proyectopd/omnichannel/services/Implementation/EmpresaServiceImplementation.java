@@ -1,10 +1,13 @@
 package com.proyectopd.omnichannel.services.Implementation;
 
 import com.proyectopd.omnichannel.dtos.createqueja.models.QuejaEmpresaDTO;
+import com.proyectopd.omnichannel.dtos.createuser.models.EmpresaDTO;
 import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.Queja;
+import com.proyectopd.omnichannel.models.TipoServicio;
 import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.EmpresaRepository;
+import com.proyectopd.omnichannel.repositories.TipoServicioRepository;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.EmpresaService;
 import org.springframework.stereotype.Service;
@@ -13,16 +16,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaToQuejaEmpresaDTO;
+import static com.proyectopd.omnichannel.mappers.TipoServicioEmpresaDTOMapper.mapEmpresaToEmpresaDTO;
 
 @Service
 public class EmpresaServiceImplementation implements EmpresaService {
 
     private EmpresaRepository empresaRepository;
     private UsuarioRepository usuarioRepository;
+    private TipoServicioRepository tipoServicioRepository;
 
-    public EmpresaServiceImplementation(EmpresaRepository empresaRepository, UsuarioRepository usuarioRepository) {
+    public EmpresaServiceImplementation(EmpresaRepository empresaRepository, UsuarioRepository usuarioRepository, TipoServicioRepository tipoServicioRepository) {
         this.empresaRepository = empresaRepository;
         this.usuarioRepository = usuarioRepository;
+        this.tipoServicioRepository = tipoServicioRepository;
     }
 
     @Override
@@ -78,5 +84,20 @@ public class EmpresaServiceImplementation implements EmpresaService {
         }
 
         return listOfComplains;
+    }
+
+    @Override
+    public List<EmpresaDTO> getEmpresasByTipoServicio(String tipoServicio) {
+
+        TipoServicio tipoServicio1 = tipoServicioRepository.getTipoServicioByNombreServicioEquals(tipoServicio);
+        List<Empresa> listOfEmpresas = empresaRepository.getEmpresasByTipoServicioEquals(tipoServicio1);
+
+        ArrayList<EmpresaDTO> listOfEmpresasDTO = new ArrayList<>();
+
+        for (Empresa empresa: listOfEmpresas) {
+            listOfEmpresasDTO.add(mapEmpresaToEmpresaDTO(empresa));
+        }
+
+        return listOfEmpresasDTO;
     }
 }

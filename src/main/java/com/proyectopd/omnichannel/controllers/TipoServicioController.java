@@ -31,13 +31,6 @@ public class TipoServicioController {
         }
     }
 
-    // Definición de empresas por tipo de servicio
-    @GetMapping("/empresasPorTipoServicio")
-    public ResponseEntity<List<EmpresaDTO>> getAllEmpresasPorTipoServicio(@RequestParam String nombreServicio) {
-        List<EmpresaDTO> empresas = tipoServicioService.getAllEmpresasPorTipoServicio(nombreServicio);
-        return new ResponseEntity<>(empresas, HttpStatus.OK);
-    }
-
     // Integration test pending
     @DeleteMapping("/borrarTipoServicio")
     public ResponseEntity<Boolean> deleteTipoServicioByNombreTipoServicio(@RequestParam String nombreTipoServicio) {

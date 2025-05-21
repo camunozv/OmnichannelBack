@@ -13,4 +13,6 @@ public interface TipoServicioRepository extends JpaRepository<TipoServicio, Inte
     TipoServicio findTipoServicioByNombreServicio(String nombreServicio);
 
     void deleteTipoServicioByNombreServicioEquals(String nombreServicio);
+
+    TipoServicio getTipoServicioByNombreServicioEquals(String nombreServicio);
 }

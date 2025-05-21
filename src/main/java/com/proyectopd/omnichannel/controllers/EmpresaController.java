@@ -69,4 +69,11 @@ public class EmpresaController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
+
+    // Definición de empresas por tipo de servicio
+    @GetMapping("/empresasPorTipoServicio")
+    public ResponseEntity<List<EmpresaDTO>> getAllEmpresasPorTipoServicio(@RequestParam String nombreServicio) {
+        List<EmpresaDTO> empresas = empresaService.getEmpresasByTipoServicio(nombreServicio);
+        return new ResponseEntity<>(empresas, HttpStatus.OK);
+    }
 }
