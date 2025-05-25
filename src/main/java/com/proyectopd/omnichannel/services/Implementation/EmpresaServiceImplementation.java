@@ -31,6 +31,7 @@ public class EmpresaServiceImplementation implements EmpresaService {
         this.tipoServicioRepository = tipoServicioRepository;
     }
 
+    // No test
     @Override
     public boolean createEmpresa(Empresa empresa) {
 
@@ -53,6 +54,7 @@ public class EmpresaServiceImplementation implements EmpresaService {
 
         boolean deleted = false;
         if (usuario != null) {
+            // Test delete empresa
             empresaRepository.deleteEmpresaByNombreEmpresa(usuario.getEmpresa().getNombreEmpresa());
             usuarioRepository.deleteUsuarioByIdUsuario(idUsuario);
             deleted = true;
@@ -63,6 +65,7 @@ public class EmpresaServiceImplementation implements EmpresaService {
 
     @Override
     public List<Empresa> getAllEmpresas() {
+        // Requires test
         return empresaRepository.findAll();
     }
 
@@ -71,9 +74,11 @@ public class EmpresaServiceImplementation implements EmpresaService {
         return empresaRepository.findEmpresaByNombreEmpresa(nombreEmpresa);
     }
 
+
     @Override
     public ArrayList<QuejaEmpresaDTO> getAllQuejasEmpresa(String nombreEmpresa) {
 
+        // Requires test
         Empresa empresa = empresaRepository.findEmpresaByNombreEmpresa(nombreEmpresa);
         ArrayList<QuejaEmpresaDTO> listOfComplains = new ArrayList<>();
 
@@ -89,7 +94,10 @@ public class EmpresaServiceImplementation implements EmpresaService {
     @Override
     public List<EmpresaDTO> getEmpresasByTipoServicio(String tipoServicio) {
 
+        // Requieres test
         TipoServicio tipoServicio1 = tipoServicioRepository.getTipoServicioByNombreServicioEquals(tipoServicio);
+
+        // Requieres test
         List<Empresa> listOfEmpresas = empresaRepository.getEmpresasByTipoServicioEquals(tipoServicio1);
 
         ArrayList<EmpresaDTO> listOfEmpresasDTO = new ArrayList<>();

@@ -26,6 +26,7 @@ public class NotificacionAdminImplementation implements NotificacionAdminService
         notificacion.setTextoNotificacion(textoNotificacion);
         boolean created;
         try{
+            // Requires test
             notificacionAdminRepository.save(notificacion);
             created = true;
         } catch (Exception e) {
@@ -41,6 +42,7 @@ public class NotificacionAdminImplementation implements NotificacionAdminService
 
         boolean deleted;
         try{
+            // Requires test
             notificacionAdminRepository.deleteById(idNotificacion);
             deleted = true;
         } catch (Exception e) {
@@ -52,6 +54,7 @@ public class NotificacionAdminImplementation implements NotificacionAdminService
 
     @Override
     public NotificacionAdmin getNotificacionById(Integer idNotificacion) {
+        // Requires test
         return notificacionAdminRepository.getNotificacionAdminByIdNotificacion(idNotificacion);
     }
 }

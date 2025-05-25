@@ -10,7 +10,8 @@ public interface QuejaRepository extends JpaRepository<Queja, Integer> {
     Queja getQuejaByIdQueja(Integer idQueja);
 
     List<Queja> findQuejasByEmpresa_NombreEmpresaEquals(String empresaNombreEmpresa);
-    List<Queja> findQuejasByTiempoMinimoRespuestaIsLessThan (LocalDate today);
+
+    List<Queja> findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate today);
 
     List<Queja> findQuejasByTiempoMinimoRespuestaEquals(LocalDate dueDate);
 

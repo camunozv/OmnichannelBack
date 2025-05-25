@@ -26,6 +26,7 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
         boolean created;
 
         try {
+            // Requires test
             profesionalRepository.save(newProfesional);
             created = true;
         } catch (Exception e) {
@@ -41,6 +42,7 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
         Profesional profesional = null;
         if (usuario != null) {
+            // Requires test
             profesional = profesionalRepository.findProfesionalByUsuario_IdUsuario(idUsuario);
         }
 
@@ -54,7 +56,9 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
 
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
         if (usuario != null) {
+            // Requires test
             profesionalRepository.deleteProfesionalByUsuario(usuario);
+            // Doesn't requires test
             usuarioRepository.deleteUsuarioByIdUsuario(idUsuario);
             deleted = true;
         }
@@ -65,6 +69,7 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
 
     @Override
     public List<Profesional> getAllFreeProfesionales() {
+        // Requires test
         return profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
     }
 

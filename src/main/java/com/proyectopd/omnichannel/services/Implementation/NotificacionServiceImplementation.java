@@ -22,6 +22,7 @@ public class NotificacionServiceImplementation implements NotificacionService {
 
     @Override
     public List<Notificacion> getAllNotificacionesUsuario(Integer idUsuario) {
+        // Requires test
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
         if (usuario != null) {
             List<Notificacion> listOfNotifs = notificacionRepository.getNotificacionsByUsuarioEquals(usuario);
@@ -43,6 +44,7 @@ public class NotificacionServiceImplementation implements NotificacionService {
         boolean deleted;
 
         try {
+            // Requires test
             notificacionRepository.deleteNotificacionByIdNotificacionEquals(idNotificacion);
             deleted = true;
         } catch (Exception e) {
