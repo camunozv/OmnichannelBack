@@ -200,39 +200,40 @@ public class QuejaServiceTests {
         verify(quejaRepository, times(1)).findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate.now());
     }
 
-    /*
-    @Override
-    public boolean updateDailyQuejas() {
+    @Test
+    public void testUpdateDailyQuejas() {
+        ArrayList<Queja> quejasProximasVencer = new ArrayList<>();
 
-        List<Queja> quejasProximasAVencer = quejaRepository.findQuejasByTiempoMinimoRespuestaEquals(LocalDate.now().plusDays(2));
-
-        int counter = 0;
-
-        for (Queja queja : quejasProximasAVencer) {
-            queja.setEstado("PROXIMA A VENCER");
-            quejaRepository.save(queja);
-            counter++;
+        for (int i = 0; i < 20; i++) {
+            Queja queja = new Queja();
+            queja.setIdQueja(i);
+            queja.setTiempoMinimoRespuesta(LocalDate.of(2001, 1, 1));
+            queja.setEstado("SIN RESPONDER");
+            quejasProximasVencer.add(queja);
         }
 
-        return counter == quejasProximasAVencer.size();
+        when(quejaRepository.findQuejasByTiempoMinimoRespuestaEquals(LocalDate.now().plusDays(2))).thenReturn(quejasProximasVencer);
+
+        boolean updatedQuejas = quejaServiceImplementation.updateDailyQuejas();
+
+        assertEquals(true, updatedQuejas);
+        verify(quejaRepository, times(1)).findQuejasByTiempoMinimoRespuestaEquals(LocalDate.now().plusDays(2));
     }
 
+    @Test
+    public void testDeleteQuejaById() {
+        Queja queja = new Queja();
+        queja.setIdQueja(1);
+        queja.setEstado("RESPONDIDA");
 
-    @Override
-    public boolean deleteQuejaById(Integer idQueja) {
+        doNothing().when(quejaRepository).deleteQuejaByIdQueja(1);
 
-        boolean deleted;
+        boolean deleted = quejaServiceImplementation.deleteQuejaById(1);
 
-        try {
-            quejaRepository.deleteQuejaByIdQueja(idQueja);
-            deleted = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            deleted = false;
-        }
+        assertEquals(true, deleted);
 
-        return deleted;
+        verify(quejaRepository, times(1)).deleteQuejaByIdQueja(1);
+
     }
 
-    * */
 }
