@@ -84,9 +84,12 @@ public class QuejaServiceImplementation implements QuejaService {
 
         int assigned = 0;
         int i = 0;
+        Profesional profesional;
         for (Queja queja : quejasVencidas) {
+            // If a queja is not assigned the algorithm jumps
+            // must find another solution.
             if (i < profesionalesLibres.size()) {
-                Profesional profesional = profesionalesLibres.get(i);
+                profesional = profesionalesLibres.get(i);
                 if (profesional.getCantidadQuejasEncargadas() < 3) {
                     queja.setProfesional(profesional);
                     queja.setEstado("VENCIDA");

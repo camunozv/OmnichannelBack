@@ -1,9 +1,6 @@
 package com.proyectopd.omnichannel.service;
 
-import com.proyectopd.omnichannel.models.Empresa;
-import com.proyectopd.omnichannel.models.Profesional;
-import com.proyectopd.omnichannel.models.Queja;
-import com.proyectopd.omnichannel.models.Respuesta;
+import com.proyectopd.omnichannel.models.*;
 import com.proyectopd.omnichannel.repositories.NotificacionRepository;
 import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
@@ -128,8 +125,16 @@ public class QuejaServiceTests {
     @Test
     public void testAssignProfesionalAllQuejasAssigned() {
         ArrayList<Queja> quejasVencidas = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(1);
+
+        Empresa empresa = new Empresa();
+        empresa.setUsuario(usuario);
+        empresa.setNombreEmpresa("Emcali");
+
+        for(int i = 0; i < 4; i++) {
             Queja queja = new Queja();
+            queja.setEmpresa(empresa);
             queja.setIdQueja(i);
             queja.setTiempoMinimoRespuesta(LocalDate.of(2001, 1, 1));
             queja.setEstado("SIN RESPONDER");
@@ -137,15 +142,18 @@ public class QuejaServiceTests {
         }
 
         ArrayList<Profesional> profesionalesLibres = new ArrayList<>();
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 10; i++) {
             Profesional profesional = new Profesional();
             profesional.setIdProfesional(i);
-            profesional.setCantidadQuejasEncargadas(1);
+            profesional.setCantidadQuejasEncargadas(0);
             profesionalesLibres.add(profesional);
         }
 
         when(quejaRepository.findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate.now())).thenReturn(quejasVencidas);
         when(profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3)).thenReturn(profesionalesLibres);
+
+        boolean assigned = quejaServiceImplementation.assignProfesional();
+        assertEquals(true, assigned);
     }
     /*
 
@@ -163,28 +171,39 @@ public class QuejaServiceTests {
                 if (profesional.getCantidadQuejasEncargadas() < 3) {
                     queja.setProfesional(profesional);
                     queja.setEstado("VENCIDA");
+
+                    // not mock
                     quejaRepository.save(queja);
+
                     profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
 
                     // Notificación al profesional encargado
                     Notificacion nuevaNotificacionProfesional = new Notificacion();
                     nuevaNotificacionProfesional.setTextoNotificacion("Nueva queja asignada con id: " + queja.getIdQueja());
                     nuevaNotificacionProfesional.setUsuario(profesional.getUsuario());
+
+                    // not mock
                     notificacionRepository.save(nuevaNotificacionProfesional);
 
                     // Notificación a la empresa que incumple
                     Notificacion nuevaNotificacionEmpresa = new Notificacion();
                     nuevaNotificacionEmpresa.setTextoNotificacion("Hay un aviso de incumplimiento por Queja con id: " + queja.getIdQueja() + ".");
                     nuevaNotificacionEmpresa.setUsuario(queja.getEmpresa().getUsuario());
+
+                    // not mock
                     notificacionRepository.save(nuevaNotificacionEmpresa);
 
                     assigned += 1;
                 } else {
+
+                    // not mock
                     profesionalRepository.save(profesional);
                     i += 1;
                 }
             } else {
                 queja.setEstado("VENCIDA SIN PROFESIONAL ASIGNADO");
+
+                // not mock
                 quejaRepository.save(queja);
             }
         }
