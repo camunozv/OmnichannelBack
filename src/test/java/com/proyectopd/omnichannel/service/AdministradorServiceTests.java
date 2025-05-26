@@ -1,6 +1,8 @@
 package com.proyectopd.omnichannel.service;
 
+import com.proyectopd.omnichannel.dtos.createuser.models.UsuarioAdministradorDTO;
 import com.proyectopd.omnichannel.models.Administrador;
+import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.AdministradorRepository;
 import com.proyectopd.omnichannel.services.Implementation.AdministradorServiceImplementation;
 import org.junit.jupiter.api.Test;
@@ -30,7 +32,7 @@ public class AdministradorServiceTests {
 
         when(administradorRepository.save(adminNuevo)).thenReturn(adminNuevo);
 
-        Administrador adminTest = administradorRepository.save(adminNuevo);
+        Administrador adminTest = administradorServiceImplementation.crearAdministrador(adminNuevo);
 
         assertEquals(adminNuevo, adminTest);
 
@@ -41,13 +43,18 @@ public class AdministradorServiceTests {
     public void testGetAdminById() {
 
         Administrador adminNuevo = new Administrador();
+        Usuario usuario = new Usuario();
+        usuario.setIdUsuario(1);
         adminNuevo.setNombre("Nuevo Administrador");
+        adminNuevo.setUsuario(usuario);
         adminNuevo.setIdAdministrador(1);
 
         when(administradorRepository.getAdministradorByIdAdministrador(1)).thenReturn(adminNuevo);
 
-        Administrador adminTest = administradorRepository.getAdministradorByIdAdministrador(1);
-        assertEquals(adminNuevo, adminTest);
+        UsuarioAdministradorDTO adminTest = administradorServiceImplementation.getAdministradorById(1);
+
+        assertEquals(adminNuevo.getUsuario().getIdUsuario(), adminTest.getId());
+        assertEquals(adminNuevo.getNombre(), adminTest.getNombre());
 
         verify(administradorRepository, times(1)).getAdministradorByIdAdministrador(1);
 

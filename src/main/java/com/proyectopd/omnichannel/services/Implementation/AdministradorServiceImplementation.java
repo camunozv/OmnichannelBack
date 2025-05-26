@@ -40,7 +40,6 @@ public class AdministradorServiceImplementation implements AdministradorService 
         try {
             Administrador originalAdmin = administradorRepository.getAdministradorByIdAdministrador(administradorId);
             UsuarioAdministradorDTO adminToReturn = new CreateAdministradorProfesionalDTO().createNewUserDTO();
-
             adminToReturn.setId(originalAdmin.getUsuario().getIdUsuario());
             adminToReturn.setNombre(originalAdmin.getNombre());
             adminToReturn.setApellido(originalAdmin.getApellido());
