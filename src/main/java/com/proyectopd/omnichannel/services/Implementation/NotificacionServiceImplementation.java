@@ -8,6 +8,7 @@ import com.proyectopd.omnichannel.services.NotificacionService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class NotificacionServiceImplementation implements NotificacionService {
@@ -15,17 +16,19 @@ public class NotificacionServiceImplementation implements NotificacionService {
     NotificacionRepository notificacionRepository;
     UsuarioRepository usuarioRepository;
 
-    public NotificacionServiceImplementation(NotificacionRepository notificacionRepository) {
+    public NotificacionServiceImplementation(NotificacionRepository notificacionRepository, UsuarioRepository usuarioRepository) {
         this.notificacionRepository = notificacionRepository;
+        this.usuarioRepository = usuarioRepository;
     }
-
 
     @Override
     public List<Notificacion> getAllNotificacionesUsuario(Integer idUsuario) {
         // Requires test
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
-        if (usuario != null) {
-            List<Notificacion> listOfNotifs = notificacionRepository.getNotificacionsByUsuarioEquals(usuario);
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+
+        if (usuario.isPresent()) {
+            Usuario usuario1 = usuario.get();
+            List<Notificacion> listOfNotifs = notificacionRepository.getNotificacionsByUsuarioEquals(usuario1);
             return listOfNotifs;
         } else {
             return null;
