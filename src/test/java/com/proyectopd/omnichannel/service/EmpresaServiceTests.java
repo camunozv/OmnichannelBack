@@ -1,9 +1,13 @@
 package com.proyectopd.omnichannel.service;
 
+import com.proyectopd.omnichannel.dtos.createuser.models.EmpresaDTO;
 import com.proyectopd.omnichannel.models.Empresa;
+import com.proyectopd.omnichannel.models.Rol;
 import com.proyectopd.omnichannel.models.TipoServicio;
+import com.proyectopd.omnichannel.models.Usuario;
 import com.proyectopd.omnichannel.repositories.EmpresaRepository;
 import com.proyectopd.omnichannel.repositories.TipoServicioRepository;
+import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.Implementation.EmpresaServiceImplementation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +16,7 @@ import org.mockito.Mock;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -25,6 +30,9 @@ public class EmpresaServiceTests {
     @Mock
     private TipoServicioRepository tipoServicioRepository;
 
+    @Mock
+    private UsuarioRepository usuarioRepository;
+
     @InjectMocks
     private EmpresaServiceImplementation empresaServiceImplementation;
 
@@ -35,9 +43,9 @@ public class EmpresaServiceTests {
 
         when(empresaRepository.save(empresa)).thenReturn(empresa);
 
-        Empresa empresaTest = empresaRepository.save(empresa);
+        boolean empresaTest = empresaServiceImplementation.createEmpresa(empresa);
 
-        assertEquals(empresa, empresaTest);
+        assertEquals(true, empresaTest);
 
         verify(empresaRepository, times(1)).save(empresa);
     }
@@ -47,11 +55,24 @@ public class EmpresaServiceTests {
         Empresa empresa = new Empresa();
         empresa.setNombreEmpresa("Emcali");
 
-        when(empresaRepository.deleteEmpresaByNombreEmpresa(empresa.getNombreEmpresa())).thenReturn(empresa);
+        Usuario usuario = new Usuario();
+        Rol rol = new Rol();
 
-        Empresa empresaTest = empresaRepository.deleteEmpresaByNombreEmpresa(empresa.getNombreEmpresa());
+        rol.setNombreRol("Empresa");
+        usuario.setRol(rol);
 
-        assertEquals(empresa, empresaTest);
+        usuario.setEmpresa(empresa);
+        usuario.setIdUsuario(1);
+
+        empresa.setUsuario(usuario);
+
+        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
+        doNothing().when(usuarioRepository).deleteUsuarioByIdUsuario(1);
+        when(empresaRepository.deleteEmpresaByNombreEmpresa("Emcali")).thenReturn(empresa);
+
+        boolean empresaTest = empresaServiceImplementation.deleteEmpresaById(1);
+
+        assertEquals(true, empresaTest);
 
         verify(empresaRepository, times(1)).deleteEmpresaByNombreEmpresa(empresa.getNombreEmpresa());
     }
@@ -68,7 +89,7 @@ public class EmpresaServiceTests {
 
         when(empresaRepository.findAll()).thenReturn(listOfEmpresas);
 
-        assertEquals(listOfEmpresas, empresaRepository.findAll());
+        assertEquals(listOfEmpresas, empresaServiceImplementation.getAllEmpresas());
 
         verify(empresaRepository, times(1)).findAll();
     }
@@ -80,26 +101,13 @@ public class EmpresaServiceTests {
 
         when(empresaRepository.findEmpresaByNombreEmpresa(empresa.getNombreEmpresa())).thenReturn(empresa);
 
-        Empresa empresaTest = empresaRepository.findEmpresaByNombreEmpresa(empresa.getNombreEmpresa());
+        Empresa empresaTest = empresaServiceImplementation.getEmpresaByName("Emcali");
 
         assertEquals(empresa, empresaTest);
 
         verify(empresaRepository, times(1)).findEmpresaByNombreEmpresa(empresa.getNombreEmpresa());
     }
 
-    @Test
-    public void testGetTipoServicioByNombreTipoServicio() {
-        TipoServicio tipoServicio = new TipoServicio();
-        tipoServicio.setNombreServicio("Alcantarillado");
-
-        when(tipoServicioRepository.getTipoServicioByNombreServicioEquals(tipoServicio.getNombreServicio())).thenReturn(tipoServicio);
-
-        TipoServicio tipoServicioTest = tipoServicioRepository.getTipoServicioByNombreServicioEquals("Alcantarillado");
-
-        assertEquals(tipoServicio, tipoServicioTest);
-
-        verify(tipoServicioRepository, times(1)).getTipoServicioByNombreServicioEquals("Alcantarillado");
-    }
 
     @Test
     public void testGetEmpresasByNombreTipoServicio() {
@@ -109,14 +117,22 @@ public class EmpresaServiceTests {
 
         for (int i = 0; i < 10; i++) {
             Empresa empresa = new Empresa();
+            Usuario usuario = new Usuario();
+            usuario.setIdUsuario(i);
             empresa.setNombreEmpresa("Empresa " + i);
             empresa.setTipoServicio(servicio);
+            empresa.setUsuario(usuario);
             listOfEmpresas.add(empresa);
         }
 
         when(empresaRepository.getEmpresasByTipoServicioEquals(servicio)).thenReturn(listOfEmpresas);
+        when(tipoServicioRepository.getTipoServicioByNombreServicioEquals(servicio.getNombreServicio())).thenReturn(servicio);
 
-        assertEquals(listOfEmpresas, empresaRepository.getEmpresasByTipoServicioEquals(servicio));
+        ArrayList<EmpresaDTO> returnEmpresas = (ArrayList<EmpresaDTO>) empresaServiceImplementation.getEmpresasByTipoServicio("Alcantarillado");
+
+        for (int i = 0; i < 10; i++) {
+            assertEquals(returnEmpresas.get(i).getNombre(), listOfEmpresas.get(i).getNombreEmpresa());
+        }
 
         verify(empresaRepository, times(1)).getEmpresasByTipoServicioEquals(servicio);
     }

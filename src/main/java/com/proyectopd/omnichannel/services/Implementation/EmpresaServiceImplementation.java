@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaToQuejaEmpresaDTO;
 import static com.proyectopd.omnichannel.mappers.TipoServicioEmpresaDTOMapper.mapEmpresaToEmpresaDTO;
@@ -50,12 +51,14 @@ public class EmpresaServiceImplementation implements EmpresaService {
     @Override
     public boolean deleteEmpresaById(Integer idUsuario) {
 
-        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
 
         boolean deleted = false;
-        if (usuario != null) {
-            // Test delete empresa
-            empresaRepository.deleteEmpresaByNombreEmpresa(usuario.getEmpresa().getNombreEmpresa());
+
+        if (usuario.isPresent()) {
+            Usuario usuario1 = usuario.get();
+            String nombreEmpresa = usuario1.getEmpresa().getNombreEmpresa();
+            empresaRepository.deleteEmpresaByNombreEmpresa(nombreEmpresa);
             usuarioRepository.deleteUsuarioByIdUsuario(idUsuario);
             deleted = true;
         }
