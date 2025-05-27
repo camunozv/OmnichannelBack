@@ -9,6 +9,7 @@ import java.time.LocalDate;
 public class Queja {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idQueja;
 
     private String estado;

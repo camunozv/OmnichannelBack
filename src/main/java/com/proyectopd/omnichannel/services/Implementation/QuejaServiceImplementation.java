@@ -71,7 +71,7 @@ public class QuejaServiceImplementation implements QuejaService {
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
             queja.setEstado("RESPONDIDA");
-            queja.setTiempoMinimoRespuesta(LocalDate.MAX);
+            queja.setTiempoMinimoRespuesta(LocalDate.of(5874897,12,31));
             quejaRepository.save(queja);
             answered = true;
         }

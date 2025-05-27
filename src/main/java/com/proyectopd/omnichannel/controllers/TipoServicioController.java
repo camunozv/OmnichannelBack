@@ -19,6 +19,7 @@ public class TipoServicioController {
         this.tipoServicioService = tipoServicioService;
     }
 
+    // Update integration test
     @PostMapping("/nuevoServicio")
     public ResponseEntity<TipoServicio> createTipoServicio(@RequestBody TipoServicio tipoServicio) {
 

@@ -28,6 +28,7 @@ public class QuejaController {
     private TipoQuejaService tipoQuejaService;
     private EmpresaService empresaService;
     private RespuestaService respuestaService;
+    private Integer seq = 0;
 
     public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService) {
         this.quejaService = quejaService;
@@ -57,9 +58,7 @@ public class QuejaController {
 
         queja.setEstado("SIN RESOLVER");
 
-        Random random = new Random();
-        Integer idQueja = random.nextInt(1000000000);
-        queja.setIdQueja(idQueja);
+        queja.setIdQueja(newQueja.getIdQueja());
 
         // Tipificación de quejas recibidas
         TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(newQueja.getTipoQueja());
@@ -72,6 +71,8 @@ public class QuejaController {
         queja.setTiempoMinimoRespuesta(newQueja.getTiempoMinimoRespuesta().plusDays(tipoQueja.getDias()));
 
         queja.setEmpresa(empresa);
+
+        newQueja.setIdQueja(++seq);
 
         boolean created = quejaService.createQueja(queja);
 
@@ -89,7 +90,7 @@ public class QuejaController {
         Respuesta respuesta = new Respuesta();
 
         Random random = new Random();
-        Integer idRespuesta = random.nextInt(1000000000);
+        Integer idRespuesta = random.nextInt(1000000);
 
         respuesta.setIdRespuesta(idRespuesta);
         respuesta.setTextoRespuesta(newRespuesta.getTextoRespuesta());
