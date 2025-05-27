@@ -61,21 +61,4 @@ public class RolServiceTests {
         verify(rolRepository, times(1)).deleteRolByNombreRol("Administrador");
     }
 
-    /*
-
-    @Override
-    public boolean deleteRol(String rolName) {
-        boolean deleted;
-
-        try {
-            rolRepository.deleteRolByNombreRol(rolName);
-            deleted = true;
-        } catch (Exception e) {
-            deleted = false;
-            e.printStackTrace();
-        }
-
-        return deleted;
-    }
-    * */
 }

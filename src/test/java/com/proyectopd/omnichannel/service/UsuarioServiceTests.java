@@ -46,12 +46,11 @@ public class UsuarioServiceTests {
         Usuario usuarioTest = new Usuario();
 
         usuarioTest.setIdUsuario(1);
-        when(usuarioRepository.save(usuarioTest)).thenReturn(usuarioTest);
-        Usuario usuarioResult = usuarioRepository.save(usuarioTest);
-        assertEquals(usuarioTest, usuarioResult);
 
+        boolean usuarioResult = usuarioServiceImplementation.createUsuario(usuarioTest);
+
+        assert(usuarioResult);
         verify(usuarioRepository, times(1)).findById(1);
-
     }
 
     /*@Test
