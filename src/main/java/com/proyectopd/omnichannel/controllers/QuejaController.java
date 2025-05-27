@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import com.google.gson.Gson;
 import java.util.List;
 import java.util.Random;
 
@@ -29,6 +30,8 @@ public class QuejaController {
     private EmpresaService empresaService;
     private RespuestaService respuestaService;
     private Integer seq = 0;
+    private Integer seq2 = 100;
+    private final Gson gson = new Gson();
 
     public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService) {
         this.quejaService = quejaService;
@@ -89,17 +92,20 @@ public class QuejaController {
 
         Respuesta respuesta = new Respuesta();
 
-        Random random = new Random();
-        Integer idRespuesta = random.nextInt(1000000);
-
-        respuesta.setIdRespuesta(idRespuesta);
+        respuesta.setIdRespuesta(++seq2);
         respuesta.setTextoRespuesta(newRespuesta.getTextoRespuesta());
 
         Queja quejaToAnswer = quejaService.getQuejaById(newRespuesta.getIdQueja());
 
         respuesta.setQueja(quejaToAnswer);
 
+        System.out.println(respuesta.getIdRespuesta());
+        System.out.println(respuesta.getTextoRespuesta());
+        System.out.println(respuesta.getQueja().getIdQueja());
+        System.out.println(respuesta.getQueja().getEstado());
+
         boolean saved = respuestaService.createRespuesta(respuesta);
+
         boolean answered = quejaService.answerQueja(respuesta, quejaToAnswer.getIdQueja());
 
         if (answered && saved) {

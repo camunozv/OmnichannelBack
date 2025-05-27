@@ -58,16 +58,18 @@ public class RolControllerTest {
 
         for (String requestBody : requestBodies) {
 
-            mockMvc.perform(post(BASE_URL)
+            System.out.println(requestBody);
+
+            mockMvc.perform(post(BASE_URL + "/nuevoRol")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody))
+                    .content(requestBody).characterEncoding("UTF-8"))
                     .andExpect(status().isCreated())
                     .andExpect(content().string(requestBody));
 
 
-            mockMvc.perform(get(BASE_URL)
+            mockMvc.perform(get(BASE_URL +"/nombreRol")
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody))
+                    .content(requestBody).content(requestBody).characterEncoding("UTF-8"))
                     .andExpect(status().isOk())
                     .andExpect(content().string(requestBody));
         }

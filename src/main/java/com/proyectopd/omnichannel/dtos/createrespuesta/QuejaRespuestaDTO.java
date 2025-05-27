@@ -13,6 +13,10 @@ public class QuejaRespuestaDTO {
         this.idQueja = idQueja;
     }
 
+    public QuejaRespuestaDTO() {
+
+    }
+
     public Integer getIdRespuesta() {
         return idRespuesta;
     }
