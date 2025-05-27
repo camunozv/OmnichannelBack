@@ -15,7 +15,6 @@ public class RolServiceImplementation implements RolService {
     // Always write the constructor, bce the initialization of the rol service object
     // is handled during runtime.
 
-
     public RolServiceImplementation(RolRepository rolRepository) {
         this.rolRepository = rolRepository;
     }
