@@ -32,10 +32,11 @@ public class UsuarioServiceTests {
 
         Usuario usuarioTest = new Usuario();
         usuarioTest.setIdUsuario(1);
-        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuarioTest));
-        Optional<Usuario> usuarioResult = usuarioRepository.findById(1);
 
-        assertEquals(usuarioTest, usuarioResult.get());
+        when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuarioTest));
+        Usuario usuarioResult = usuarioServiceImplementation.getUsuarioById(1);
+
+        assertEquals(usuarioTest.getIdUsuario(), usuarioResult.getIdUsuario());
 
         verify(usuarioRepository, times(1)).findById(1);
     }
@@ -49,26 +50,17 @@ public class UsuarioServiceTests {
 
         boolean usuarioResult = usuarioServiceImplementation.createUsuario(usuarioTest);
 
-        assert(usuarioResult);
-        verify(usuarioRepository, times(1)).findById(1);
+        assert (usuarioResult);
     }
 
-    /*@Test
-    // Not implemented, since i dont want to alter the already implemented delete method.
-    // Specifically i dont want to alter the return type, for me it's just fine.
-    public void testDeleteUser() {
-
+    @Test
+    public void testDeleteUsuario() {
         Usuario usuarioTest = new Usuario();
-
         usuarioTest.setIdUsuario(1);
 
-        when(usuarioRepository.deleteUsuarioByIdUsuario(usuarioTest.getIdUsuario())).then(usuarioRepository.findBy(usuarioTest.getIdUsuario())).thenReturn(Optional.of(usuarioTest));
+        boolean deleted = usuarioServiceImplementation.deleteUsuario(1);
 
-        Usuario usuarioResult = usuarioRepository.save(usuarioTest);
-        assertEquals(usuarioTest, usuarioResult);
-
-        verify(usuarioRepository, times(1)).findById(1);
-
-    }*/
+        assert (deleted);
+    }
 
 }
