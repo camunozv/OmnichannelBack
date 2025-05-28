@@ -22,6 +22,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import com.google.gson.Gson;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Random;
@@ -117,23 +118,23 @@ public class QuejaControllerTests {
 
         when(empresaService.getEmpresaByName(newQueja.getNombreEmpresa())).thenReturn(empresa);
 
-        Queja queja = new Queja();
-        queja.setIdQueja(1);
-        queja.setEstado("SIN RESOLVER");
-        queja.setEmpresa(empresa);
-        queja.setTipoQueja(tipoQueja);
-        queja.setTiempoMinimoRespuesta(LocalDate.now().plusDays(tipoQueja.getDias()));
+        when(quejaService.createQueja(ArgumentMatchers.any(Queja.class))).thenReturn(true);
 
-        when(quejaService.createQueja(queja)).thenReturn(true);
+        String requestBody = "{"
+                + "\"estado\": \"" + newQueja.getEstado() + "\","
+                + "\"tiempoMinimoRespuesta\": \"" + Date.valueOf(newQueja.getTiempoMinimoRespuesta()) + "\","
+                + "\"descripcion\": \"" + newQueja.getDescripcion() + "\","
+                + "\"archivo\": \"" + newQueja.getArchivo() + "\","
+                + "\"tipoQueja\": \"" + newQueja.getTipoQueja() + "\","
+                + "\"nombreEmpresa\": \"" + newQueja.getNombreEmpresa() + "\""
+                + "}";
 
-        Gson gson = new Gson();
-
-        // Pending to fix valueOf(newQueja)
 
         mockMvc.perform(post(BASE_URL + "/nuevaQueja")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(gson.toJson(String.valueOf(newQueja))).characterEncoding("utf-8"))
+                        .content(requestBody).characterEncoding("utf-8"))
                 .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.idQueja").value(1))
                 .andExpect(jsonPath("$.estado").value("SIN RESOLVER"));
     }
 
