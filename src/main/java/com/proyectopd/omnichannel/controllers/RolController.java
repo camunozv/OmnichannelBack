@@ -29,9 +29,9 @@ public class RolController {
 
     // Modify integration test
     @GetMapping("/nombreRol")
-    public ResponseEntity<Rol> getRol(@RequestBody Rol rolToFind) {
+    public ResponseEntity<Rol> getRol(@RequestParam String nombreRol) {
         try {
-            Rol rolToReturn = rolService.getRolById(rolToFind.getNombreRol());
+            Rol rolToReturn = rolService.getRolById(nombreRol);
             return new ResponseEntity<>(rolToReturn, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new Rol("ERROR"), HttpStatus.NOT_FOUND);

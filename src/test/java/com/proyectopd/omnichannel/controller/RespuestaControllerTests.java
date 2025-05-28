@@ -1,7 +1,11 @@
 package com.proyectopd.omnichannel.controller;
 
 import com.proyectopd.omnichannel.controllers.NotificacionController;
+import com.proyectopd.omnichannel.controllers.RespuestaController;
+import com.proyectopd.omnichannel.models.Queja;
+import com.proyectopd.omnichannel.models.Respuesta;
 import com.proyectopd.omnichannel.services.RespuestaService;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,7 +18,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(NotificacionController.class)
+@WebMvcTest(RespuestaController.class)
 @AutoConfigureMockMvc(addFilters = false)
 public class RespuestaControllerTests {
 
@@ -24,4 +28,31 @@ public class RespuestaControllerTests {
     private MockMvc mockMvc;
     @MockitoBean
     private RespuestaService respuestaService;
+
+    @Test
+    public void testGetRespuestaById() throws Exception {
+        Respuesta respuesta = new Respuesta();
+        respuesta.setTextoRespuesta("Respuesta de queja");
+        respuesta.setIdRespuesta(0);
+
+        Queja queja = new Queja();
+        queja.setIdQueja(1);
+
+        respuesta.setQueja(queja);
+
+        when(respuestaService.getRespuestaById(0)).thenReturn(respuesta);
+
+        mockMvc.perform(get(BASE_URL + "/id").param("idRespuesta", "0"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.idRespuesta").value(0))
+                .andExpect(jsonPath("$.textoRespuesta").value("Respuesta de queja"));
+
+    }
+
+    /*
+    @GetMapping("/id")
+    public Respuesta getRespuestaByIdRespuesta(@RequestParam Integer idRespuesta) {
+        return respuestaService.getRespuestaById(idRespuesta);
+    }
+    * */
 }
