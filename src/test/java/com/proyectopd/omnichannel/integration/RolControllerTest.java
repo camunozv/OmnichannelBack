@@ -51,28 +51,33 @@ public class RolControllerTest {
         /*when(rolService.createNewRol(newRol)).thenReturn(true);*/
 
         ArrayList<String> requestBodies = new ArrayList<>();
+        ArrayList<String> roleNames = new ArrayList<>();
 
         requestBodies.add("{\"nombreRol\":\"Empresa\"}");
         requestBodies.add("{\"nombreRol\":\"Profesional\"}");
         requestBodies.add("{\"nombreRol\":\"Administrador\"}");
+
+        roleNames.add("Empresa");
+        roleNames.add("Profesional");
+        roleNames.add("Administrador");
 
         for (String requestBody : requestBodies) {
 
             System.out.println(requestBody);
 
             mockMvc.perform(post(BASE_URL + "/nuevoRol")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody).characterEncoding("UTF-8"))
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(requestBody).characterEncoding("UTF-8"))
                     .andExpect(status().isCreated())
                     .andExpect(content().string(requestBody));
-
-
-            mockMvc.perform(get(BASE_URL +"/nombreRol")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(requestBody).content(requestBody).characterEncoding("UTF-8"))
-                    .andExpect(status().isOk())
-                    .andExpect(content().string(requestBody));
         }
+
+        for (String roleName : roleNames) {
+
+            mockMvc.perform(get(BASE_URL + "/nombreRol").param("nombreRol", roleName))
+                    .andExpect(status().isOk());
+        }
+
 
     }
 

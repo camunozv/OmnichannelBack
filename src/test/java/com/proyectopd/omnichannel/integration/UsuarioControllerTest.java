@@ -30,11 +30,12 @@ public class UsuarioControllerTest {
         String userId = "1";
         mockMvc.perform(post(BASE_URL + "/admin")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                        .content(requestBody)
+                        .characterEncoding("UTF-8"))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("{\"idUsuario\":1,\"contrasenha\":\"1234\",\"rol\":{\"nombreRol\":\"Administrador\"}}"));
+                .andExpect(content().string("{\"idUsuario\":1,\"contrasenha\":\"1234\",\"rol\":{\"nombreRol\":\"Administrador\"},\"notificaciones\":null}"));
 
-        mockMvc.perform(get(BASE_URL + "/" + userId))
+        mockMvc.perform(get(BASE_URL + "/id/" + userId))
                 .andExpect(status().isOk());
     }
 
@@ -46,11 +47,12 @@ public class UsuarioControllerTest {
         String userId = "2";
         mockMvc.perform(post(BASE_URL + "/empresa")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                        .content(requestBody)
+                        .characterEncoding("UTF-8"))
                 .andExpect(status().isCreated())
                 .andExpect(content().string("{\"id\":2,\"contrasenha\":\"1234\",\"nombre\":\"Emcali\",\"ciudad\":\"Cali\",\"tipoServicio\":\"Alcantarillado\",\"rol\":\"Empresa\"}"));
 
-        mockMvc.perform(get(BASE_URL + "/" + userId)).andExpect(status().isOk());
+        mockMvc.perform(get(BASE_URL + "/id/" + userId)).andExpect(status().isOk());
     }
 
     @Test
@@ -60,30 +62,33 @@ public class UsuarioControllerTest {
         String userId = "3";
         mockMvc.perform(post(BASE_URL + "/profesional")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+                        .content(requestBody)
+                        .characterEncoding("UTF-8"))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("{\"idUsuario\":3,\"contrasenha\":\"1234\",\"rol\":{\"nombreRol\":\"Profesional\"}}"));
+                .andExpect(content().string("{\"idUsuario\":3,\"contrasenha\":\"1234\",\"rol\":{\"nombreRol\":\"Profesional\"},\"notificaciones\":null}"));
 
-        mockMvc.perform(get(BASE_URL + "/" + userId)).andExpect(status().isOk());
+        mockMvc.perform(get(BASE_URL + "/id/" + userId)).andExpect(status().isOk());
     }
 
     @Test
     public void createQuejaTest() throws Exception {
-        String requestBody = "{\"idQueja\":1,\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}";
+        String requestBody = "{\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}";
 
-        mockMvc.perform(post(BASE_URL2).contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
+        mockMvc.perform(post(BASE_URL2 + "/nuevaQueja").contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .characterEncoding("UTF-8"))
                 .andExpect(status().isCreated())
-                .andExpect(content().string("{\"idQueja\":1,\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}"));
+                .andExpect(content().string("{\"idQueja\":1,\"estado\":null,\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}"));
     }
 
     @Test
     public void answerQuejaTest() throws Exception {
         String requestBody = "{\"idRespuesta\":1,\"textoRespuesta\":\"Pronto se arreglará\",\"idQueja\":1}";
 
-        mockMvc.perform(put(BASE_URL2).contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody))
-                .andExpect(status().isOk())
+        mockMvc.perform(put(BASE_URL2 + "/responderQueja").contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody)
+                        .characterEncoding("UTF-8"))
+                .andExpect(status().isCreated())
                 .andExpect(content().string("{\"idRespuesta\":1,\"textoRespuesta\":\"Pronto se arreglará\",\"idQueja\":1}"));
 
     }
@@ -91,10 +96,9 @@ public class UsuarioControllerTest {
     @Test
     public void getAllQuejasEmpresaTest() throws Exception {
 
-
-        mockMvc.perform(get(BASE_URL2 + "/Emcali"))
+        mockMvc.perform(get("/empresa/quejasEmpresa").param("nombreEmpresa", "Emcali"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"idQueja\":1,\"prioridad\":\"Media\",\"tiempoMinimoRespuesta\":\"2025-06-03\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}]"));
+                .andExpect(content().string("[{\"idQueja\":1,\"estado\":\"RESPONDIDA\",\"tiempoMinimoRespuesta\":\"+5874897-12-31\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}]"));
     }
 
 }

@@ -27,7 +27,7 @@ public class TipoServicioContollerTest {
 
         String requestBody = "{\"nombreServicio\":\"Alcantarillado\"}";
 
-        mockMvc.perform(post(BASE_URL).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(post(BASE_URL + "/nuevoServicio").contentType(MediaType.APPLICATION_JSON)
                 .content(requestBody)).andExpect(status().isOk())
                 .andExpect(content().string("{\"nombreServicio\":\"Alcantarillado\",\"empresa\":null}"));
 

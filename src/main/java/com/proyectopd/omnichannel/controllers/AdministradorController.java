@@ -18,7 +18,6 @@ public class AdministradorController {
         this.administradorService = administradorService;
     }
 
-
     @GetMapping("/{idUsuario}")
     public ResponseEntity<UsuarioAdministradorDTO> getAdministradorById(@PathVariable Integer idUsuario) {
 
