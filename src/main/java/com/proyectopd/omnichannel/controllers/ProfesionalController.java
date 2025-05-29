@@ -23,7 +23,7 @@ public class ProfesionalController {
         this.usuarioService = usuarioService;
     }
 
-    // Integration test pending
+    // Tested
     @GetMapping("/{idUsuario}")
     public ResponseEntity<UsuarioProfesionalDTO> getProfesionalById(@PathVariable Integer idUsuario) {
 
@@ -39,7 +39,7 @@ public class ProfesionalController {
         }
     }
 
-    // Integration test pending
+    // Tested
     @DeleteMapping("/{idUsuario}")
     public ResponseEntity<Boolean> deleteProfesional(@PathVariable Integer idUsuario) {
 

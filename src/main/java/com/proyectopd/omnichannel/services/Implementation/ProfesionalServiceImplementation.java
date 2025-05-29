@@ -58,9 +58,7 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
 
         Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
         if (usuario != null) {
-            // Requires test
             profesionalRepository.deleteProfesionalByUsuario(usuario);
-            // Doesn't requires test
             usuarioRepository.deleteUsuarioByIdUsuario(idUsuario);
             deleted = true;
         }

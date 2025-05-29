@@ -14,15 +14,15 @@ public class Usuario {
     @Column(columnDefinition = "TEXT")
     private String contrasenha;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Administrador administrador;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Profesional profesional;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Empresa empresa;
 

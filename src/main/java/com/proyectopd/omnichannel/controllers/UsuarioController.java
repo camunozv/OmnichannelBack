@@ -30,6 +30,7 @@ public class UsuarioController {
         this.empresaService = empresaService;
     }
 
+    // Tested
     @PostMapping("/admin")
     public ResponseEntity<Usuario> createAdmin(@RequestBody UsuarioAdministradorDTO newAdmin) {
 
@@ -57,6 +58,7 @@ public class UsuarioController {
         }
     }
 
+    // Tested
     @PostMapping("/profesional")
     public ResponseEntity<Usuario> createProfesional(@RequestBody UsuarioProfesionalDTO newProfesional) {
 
@@ -87,6 +89,7 @@ public class UsuarioController {
         }
     }
 
+    // Tested
     // Definición de empresa por tipo de servicio.
     @PostMapping("/empresa")
     public ResponseEntity<UsuarioEmpresaDTO> createEmpresa(@RequestBody UsuarioEmpresaDTO newEmpresa) {
@@ -119,6 +122,7 @@ public class UsuarioController {
         }
     }
 
+    // Tested
     @GetMapping("/id/{idUsuario}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Integer idUsuario) {
         Usuario usuario = usuarioService.getUsuarioById(idUsuario);
