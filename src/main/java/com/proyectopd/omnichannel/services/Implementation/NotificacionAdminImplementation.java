@@ -4,6 +4,7 @@ import com.proyectopd.omnichannel.models.NotificacionAdmin;
 import com.proyectopd.omnichannel.repositories.NotificacionAdminRepository;
 import com.proyectopd.omnichannel.services.NotificacionAdminService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -38,6 +39,7 @@ public class NotificacionAdminImplementation implements NotificacionAdminService
     }
 
     @Override
+    @Transactional
     public boolean deleteNotificacion(Integer idNotificacion) {
 
         boolean deleted;

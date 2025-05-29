@@ -11,6 +11,7 @@ import com.proyectopd.omnichannel.repositories.TipoServicioRepository;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.EmpresaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class EmpresaServiceImplementation implements EmpresaService {
     }
 
     @Override
+    @Transactional
     public boolean deleteEmpresaById(Integer idUsuario) {
 
         Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);

@@ -8,6 +8,7 @@ import com.proyectopd.omnichannel.repositories.AdministradorRepository;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.AdministradorService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -52,6 +53,7 @@ public class AdministradorServiceImplementation implements AdministradorService 
     }
 
     @Override
+    @Transactional
     public boolean deleteAdministradorById(Integer idUsuario) {
 
         boolean deleted;

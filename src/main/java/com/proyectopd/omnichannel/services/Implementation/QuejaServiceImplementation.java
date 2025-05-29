@@ -8,6 +8,7 @@ import com.proyectopd.omnichannel.repositories.QuejaRepository;
 import com.proyectopd.omnichannel.services.ProfesionalService;
 import com.proyectopd.omnichannel.services.QuejaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -150,6 +151,7 @@ public class QuejaServiceImplementation implements QuejaService {
 
 
     @Override
+    @Transactional
     public boolean deleteQuejaById(Integer idQueja) {
 
         boolean deleted;

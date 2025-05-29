@@ -15,17 +15,12 @@ import java.util.List;
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaToQuejaEmpresaDTO;
 
 public interface EmpresaService {
-    // Declarations for methods within service implementation
-    // Not implemented
 
     boolean deleteEmpresaById(Integer idUsuario) ;
-
-    // Implemented
     boolean createEmpresa(Empresa empresa);
     List<Empresa> getAllEmpresas();
     Empresa getEmpresaByName(String nombreEmpresa);
     ArrayList<QuejaEmpresaDTO> getAllQuejasEmpresa(String nombreEmpresa);
-
     List<EmpresaDTO> getEmpresasByTipoServicio(String tipoServicio);
 
 }

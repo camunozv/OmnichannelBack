@@ -6,6 +6,7 @@ import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.repositories.UsuarioRepository;
 import com.proyectopd.omnichannel.services.ProfesionalService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -50,6 +51,7 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
     }
 
     @Override
+    @Transactional
     public boolean deleteProfesionalById(Integer idUsuario) {
 
         boolean deleted = false;
