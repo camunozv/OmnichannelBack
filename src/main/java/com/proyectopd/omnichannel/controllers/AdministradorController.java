@@ -18,6 +18,7 @@ public class AdministradorController {
         this.administradorService = administradorService;
     }
 
+    // Tested
     @GetMapping("/{idUsuario}")
     public ResponseEntity<UsuarioAdministradorDTO> getAdministradorById(@PathVariable Integer idUsuario) {
 
@@ -31,6 +32,7 @@ public class AdministradorController {
 
     }
 
+    // Tested
     @DeleteMapping("/{idUsuario}")
     public ResponseEntity<Boolean> deleteAdministrador(@PathVariable Integer idUsuario) {
 
