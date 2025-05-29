@@ -68,7 +68,6 @@ public class EmpresaServiceTests {
 
         when(usuarioRepository.findById(1)).thenReturn(Optional.of(usuario));
         doNothing().when(usuarioRepository).deleteUsuarioByIdUsuario(1);
-        when(empresaRepository.deleteEmpresaByNombreEmpresa("Emcali")).thenReturn(empresa);
 
         boolean empresaTest = empresaServiceImplementation.deleteEmpresaById(1);
 

@@ -23,13 +23,13 @@ public class EmpresaController {
         this.empresaService = empresaService;
     }
 
-    // Integration test pending
+    // Tested
     @GetMapping("/all")
     public ResponseEntity<List<Empresa>> getAllEmpresas() {
         return new ResponseEntity<>(empresaService.getAllEmpresas(), HttpStatus.OK);
     }
 
-    // Integration test pending
+    // Tested
     @GetMapping("/nombre")
     public ResponseEntity<EmpresaDTO> getEmpresaByName(@RequestParam String nombreEmpresa) {
 
@@ -44,7 +44,7 @@ public class EmpresaController {
 
     }
 
-    // Integration test pending
+    // Tested
     // Reenvío de queja a la empresa, según parametrización
     @GetMapping("/quejasEmpresa")
     public ResponseEntity<ArrayList<QuejaEmpresaDTO>> getAllQuejasEmpresa(@RequestParam String nombreEmpresa) {
@@ -57,7 +57,7 @@ public class EmpresaController {
         }
     }
 
-    // Integration test pending
+    // Tested
     @DeleteMapping("/borrarEmpresaById")
     public ResponseEntity<Boolean> deleteEmpresa(@RequestParam Integer idUsuario) {
 
@@ -70,7 +70,7 @@ public class EmpresaController {
         }
     }
 
-    // Definición de empresas por tipo de servicio
+    // Tested
     @GetMapping("/empresasPorTipoServicio")
     public ResponseEntity<List<EmpresaDTO>> getAllEmpresasPorTipoServicio(@RequestParam String nombreServicio) {
         List<EmpresaDTO> empresas = empresaService.getEmpresasByTipoServicio(nombreServicio);

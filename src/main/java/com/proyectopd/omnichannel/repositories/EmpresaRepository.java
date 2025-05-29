@@ -10,7 +10,7 @@ public interface EmpresaRepository extends JpaRepository<Empresa, Long> {
     // Add methods if needed
     Empresa findEmpresaByNombreEmpresa(String nombreEmpresa);
 
-    Empresa deleteEmpresaByNombreEmpresa(String nombreEmpresa);
+    void deleteEmpresaByNombreEmpresa(String nombreEmpresa);
 
     List<Empresa> getEmpresasByTipoServicioEquals(TipoServicio tipoServicio);
 }
