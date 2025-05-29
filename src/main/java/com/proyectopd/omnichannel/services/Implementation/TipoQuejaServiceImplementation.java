@@ -4,6 +4,7 @@ import com.proyectopd.omnichannel.models.TipoQueja;
 import com.proyectopd.omnichannel.repositories.TipoQuejaRepository;
 import com.proyectopd.omnichannel.services.TipoQuejaService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
@@ -31,6 +32,7 @@ public class TipoQuejaServiceImplementation implements TipoQuejaService {
     }
 
     @Override
+    @Transactional
     public TipoQueja getTipoQuejaById(String nombreTipoQueja) {
 
         TipoQueja tipoQueja = tipoQuejaRepository.getTipoQuejaByTipoQueja(nombreTipoQueja);

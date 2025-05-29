@@ -84,12 +84,12 @@ public class TipoServicioTests {
         TipoServicio tipoServicio = new TipoServicio();
         tipoServicio.setNombreServicio("Prueba");
 
-        doNothing().when(tipoServicioRepository).deleteTipoServicioByNombreServicioEquals(tipoServicio.getNombreServicio());
+        doNothing().when(tipoServicioRepository).deleteTipoServicioByNombreServicio(tipoServicio.getNombreServicio());
 
         boolean deleted = tipoServicioServiceImplementation.deleteTipoServicioByNombreTipoServicio("Prueba");
 
         assertEquals(true, deleted);
-        verify(tipoServicioRepository, times(1)).deleteTipoServicioByNombreServicioEquals("Prueba");
+        verify(tipoServicioRepository, times(1)).deleteTipoServicioByNombreServicio("Prueba");
     }
 
 }

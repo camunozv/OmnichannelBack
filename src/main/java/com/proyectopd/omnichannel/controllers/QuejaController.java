@@ -31,7 +31,7 @@ public class QuejaController {
     private RespuestaService respuestaService;
     private Integer seq = 0;
     private Integer seq2 = 100;
-    private final Gson gson = new Gson();
+
 
     public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService) {
         this.quejaService = quejaService;

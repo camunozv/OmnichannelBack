@@ -19,7 +19,7 @@ public class TipoServicioController {
         this.tipoServicioService = tipoServicioService;
     }
 
-    // Update integration test
+    // Tested
     @PostMapping("/nuevoServicio")
     public ResponseEntity<TipoServicio> createTipoServicio(@RequestBody TipoServicio tipoServicio) {
 
@@ -32,9 +32,9 @@ public class TipoServicioController {
         }
     }
 
-    // Integration test pending
+    // Tested
     @DeleteMapping("/borrarTipoServicio")
-    public ResponseEntity<Boolean> deleteTipoServicioByNombreTipoServicio(@RequestParam String nombreTipoServicio) {
+    public ResponseEntity<Boolean> deleteTipoServicioByNombreTipoServicioApi(@RequestParam String nombreTipoServicio) {
 
         boolean deleted = tipoServicioService.deleteTipoServicioByNombreTipoServicio(nombreTipoServicio);
 

@@ -7,6 +7,7 @@ import com.proyectopd.omnichannel.repositories.EmpresaRepository;
 import com.proyectopd.omnichannel.repositories.TipoServicioRepository;
 import com.proyectopd.omnichannel.services.TipoServicioService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +57,14 @@ public class TipoServicioServiceImplementation implements TipoServicioService {
     }
 
     @Override
+    @Transactional
     public boolean deleteTipoServicioByNombreTipoServicio(String nombreServicio) {
 
         boolean deleted;
 
         try {
-            tipoServicioRepository.deleteTipoServicioByNombreServicioEquals(nombreServicio);
+            System.out.println("Hola");
+            tipoServicioRepository.deleteTipoServicioByNombreServicio(nombreServicio);
             deleted = true;
         } catch (Exception e) {
             e.printStackTrace();

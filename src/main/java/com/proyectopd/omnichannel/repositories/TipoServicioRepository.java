@@ -3,6 +3,7 @@ package com.proyectopd.omnichannel.repositories;
 import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.TipoServicio;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,7 +13,8 @@ public interface TipoServicioRepository extends JpaRepository<TipoServicio, Inte
 
     TipoServicio findTipoServicioByNombreServicio(String nombreServicio);
 
-    void deleteTipoServicioByNombreServicioEquals(String nombreServicio);
+    @Transactional
+    void deleteTipoServicioByNombreServicio(String nombreServicio);
 
     TipoServicio getTipoServicioByNombreServicioEquals(String nombreServicio);
 }

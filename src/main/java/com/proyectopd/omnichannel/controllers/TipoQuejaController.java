@@ -17,6 +17,7 @@ public class TipoQuejaController {
         this.tipoQuejaService = tipoQuejaService;
     }
 
+    // Tested
     @PostMapping
     public ResponseEntity<TipoQueja> createTipoQueja(@RequestBody TipoQueja tipoQueja) {
 
@@ -28,6 +29,7 @@ public class TipoQuejaController {
         }
     }
 
+    // Tested
     @GetMapping
     public ResponseEntity<TipoQueja> getTipoQueja(@RequestParam String nombreTipoQueja) {
 
@@ -40,7 +42,7 @@ public class TipoQuejaController {
         }
     }
 
-    // Integration test pending.
+    // Tested
     @DeleteMapping
     public ResponseEntity<Boolean> deleteTipoQuejaByNombreTipoQueja(@RequestParam String nombreTipoQueja) {
 
