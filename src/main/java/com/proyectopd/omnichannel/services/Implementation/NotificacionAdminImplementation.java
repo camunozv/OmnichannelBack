@@ -13,7 +13,8 @@ public class NotificacionAdminImplementation implements NotificacionAdminService
 
     NotificacionAdminRepository notificacionAdminRepository;
 
-    public NotificacionAdminImplementation() {
+    public NotificacionAdminImplementation(NotificacionAdminRepository notificacionAdminRepository) {
+        this.notificacionAdminRepository = notificacionAdminRepository;
     }
 
     @Override

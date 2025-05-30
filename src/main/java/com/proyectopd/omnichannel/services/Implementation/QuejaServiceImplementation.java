@@ -2,10 +2,7 @@ package com.proyectopd.omnichannel.services.Implementation;
 
 import com.proyectopd.omnichannel.models.*;
 
-import com.proyectopd.omnichannel.repositories.NotificacionRepository;
-import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
-import com.proyectopd.omnichannel.repositories.QuejaRepository;
-import com.proyectopd.omnichannel.repositories.RespuestaRepository;
+import com.proyectopd.omnichannel.repositories.*;
 import com.proyectopd.omnichannel.services.ProfesionalService;
 import com.proyectopd.omnichannel.services.QuejaService;
 import org.springframework.stereotype.Service;
@@ -19,14 +16,12 @@ import java.util.Optional;
 @Service
 public class QuejaServiceImplementation implements QuejaService {
 
-    private final ProfesionalService profesionalService;
     private ProfesionalRepository profesionalRepository;
     private QuejaRepository quejaRepository;
     private NotificacionRepository notificacionRepository;
     private RespuestaRepository respuestaRepository;
 
-    public QuejaServiceImplementation(ProfesionalService profesionalService, ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository, NotificacionRepository notificacionRepository, RespuestaRepository respuestaRepository) {
-        this.profesionalService = profesionalService;
+    public QuejaServiceImplementation(ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository, NotificacionRepository notificacionRepository, RespuestaRepository respuestaRepository) {
         this.profesionalRepository = profesionalRepository;
         this.quejaRepository = quejaRepository;
         this.notificacionRepository = notificacionRepository;
@@ -100,6 +95,7 @@ public class QuejaServiceImplementation implements QuejaService {
                 queja = quejasVencidas.get(begin);
                 queja.setProfesional(profesional);
                 queja.setEstado("VENCIDA");
+                queja.setTiempoMinimoRespuesta(LocalDate.of(5874897, 12, 31));
                 quejaRepository.save(queja);
                 profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
 

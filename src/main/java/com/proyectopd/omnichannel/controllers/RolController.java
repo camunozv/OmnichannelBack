@@ -18,7 +18,7 @@ public class RolController {
 
     // Tested
     @PostMapping("/nuevoRol")
-    public ResponseEntity<Rol> crearRol(@RequestBody Rol newRol) {
+    public ResponseEntity<Rol> crearRol(@RequestParam Rol newRol) {
         try {
             rolService.createNewRol(newRol);
             return new ResponseEntity<>(newRol, HttpStatus.CREATED);

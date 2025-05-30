@@ -14,6 +14,10 @@ public class NotificacionAdmin {
     public NotificacionAdmin() {
     }
 
+    public NotificacionAdmin(String textoNotificacion) {
+        this.textoNotificacion = textoNotificacion;
+    }
+
     public NotificacionAdmin(Integer idNotificacion, String textoNotificacion) {
         this.idNotificacion = idNotificacion;
         this.textoNotificacion = textoNotificacion;

@@ -13,17 +13,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/respuesta")
 public class RespuestaController {
 
-    // Ich glaube, dass ich dieses URL nicht brauche.
     RespuestaService respuestaService;
 
     public RespuestaController(RespuestaService respuestaService) {
         this.respuestaService = respuestaService;
     }
 
+    // Tested
     @GetMapping("/id")
     public ResponseEntity<Respuesta> getRespuestaByIdRespuesta(@RequestParam Integer idRespuesta) {
         return new ResponseEntity<>(respuestaService.getRespuestaById(idRespuesta), HttpStatus.OK);
     }
-
-
 }

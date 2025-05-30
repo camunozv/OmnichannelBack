@@ -1,5 +1,6 @@
 package com.proyectopd.omnichannel.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class Notificacion {
 
     @ManyToOne
     @JoinColumn(name = "idUsuario", nullable = false)
+    @JsonIgnore
     private Usuario usuario;
 
     public Notificacion() {

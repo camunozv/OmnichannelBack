@@ -55,7 +55,6 @@ public class QuejaController {
 
 
     // Tested
-    // Funcionalidad de crear una queja
     @PostMapping("/nuevaQueja")
     public ResponseEntity<QuejaEmpresaDTO> registrarQueja(@RequestBody QuejaEmpresaDTO newQueja) {
 
@@ -112,7 +111,6 @@ public class QuejaController {
     }
 
     // Tested
-    // Integration test pending
     @DeleteMapping("/borrarQueja")
     public ResponseEntity<Boolean> deleteQueja(@RequestParam Integer idQueja) {
 
@@ -126,7 +124,6 @@ public class QuejaController {
     }
 
     // Tested
-    // Integration test pending
     @GetMapping("/quejasPorEstado")
     public ResponseEntity<List<Queja>> getQuejasPorEstado(@RequestParam String estado) {
 

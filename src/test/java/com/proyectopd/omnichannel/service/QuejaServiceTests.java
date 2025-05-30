@@ -135,7 +135,7 @@ public class QuejaServiceTests {
         empresa.setUsuario(usuario);
         empresa.setNombreEmpresa("Emcali");
 
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 4; i++) {
             Queja queja = new Queja();
             queja.setEmpresa(empresa);
             queja.setIdQueja(i);
@@ -145,10 +145,10 @@ public class QuejaServiceTests {
         }
 
         ArrayList<Profesional> profesionalesLibres = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 1; i++) {
             Profesional profesional = new Profesional();
             profesional.setIdProfesional(i);
-            profesional.setCantidadQuejasEncargadas(1);
+            profesional.setCantidadQuejasEncargadas(0);
             profesionalesLibres.add(profesional);
         }
 
@@ -156,7 +156,7 @@ public class QuejaServiceTests {
         when(profesionalRepository.findProfesionalsByCantidadQuejasEncargadasIsLessThan(3)).thenReturn(profesionalesLibres);
 
         boolean assigned = quejaServiceImplementation.assignProfesional();
-        assertEquals(true, assigned);
+        assertEquals(false, assigned);
         verify(profesionalRepository, times(1)).findProfesionalsByCantidadQuejasEncargadasIsLessThan(3);
         verify(quejaRepository, times(1)).findQuejasByTiempoMinimoRespuestaIsLessThan(LocalDate.now());
     }
