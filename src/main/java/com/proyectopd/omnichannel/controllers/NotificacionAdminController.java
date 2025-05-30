@@ -18,19 +18,38 @@ public class NotificacionAdminController {
         this.notificacionAdminService = notificacionAdminService;
     }
 
+    // Tested
     @GetMapping("/todas")
     public ResponseEntity<List<NotificacionAdmin>> getAllNotificaciones() {
-        return new ResponseEntity<>(notificacionAdminService.getAllNotificaciones(), HttpStatus.OK);
+
+        List<NotificacionAdmin> listOfNotificaciones = notificacionAdminService.getAllNotificaciones();
+
+        if(!listOfNotificaciones.isEmpty()) {
+            return new ResponseEntity<>(listOfNotificaciones, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
-    @GetMapping("/{idNotificacion}")
-    public ResponseEntity<NotificacionAdmin> getNotificacionById(@PathVariable Integer idNotificacion) {
-        return new ResponseEntity<>(notificacionAdminService.getNotificacionById(idNotificacion), HttpStatus.OK);
+    // Tested
+    @GetMapping
+    public ResponseEntity<NotificacionAdmin> getNotificacionById(@RequestParam Integer idNotificacion) {
+
+        NotificacionAdmin notificacionAdmin = notificacionAdminService.getNotificacionById(idNotificacion);
+
+        if (notificacionAdmin != null) {
+            return new ResponseEntity<>(notificacionAdmin, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
+    // Tested
     @DeleteMapping
     public ResponseEntity<Boolean> deleteNotificacion(@RequestParam Integer idNotificacion) {
+
         boolean deleted = notificacionAdminService.deleteNotificacion(idNotificacion);
+
         if (deleted) {
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {

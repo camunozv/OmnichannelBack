@@ -57,7 +57,6 @@ public class NotificacionAdminImplementation implements NotificacionAdminService
 
     @Override
     public NotificacionAdmin getNotificacionById(Integer idNotificacion) {
-        // Requires test
-        return notificacionAdminRepository.getNotificacionAdminByIdNotificacion(idNotificacion);
+        return notificacionAdminRepository.findById(idNotificacion).orElse(null);
     }
 }
