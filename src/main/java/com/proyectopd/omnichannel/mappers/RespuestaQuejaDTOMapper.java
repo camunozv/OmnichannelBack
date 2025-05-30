@@ -21,10 +21,6 @@ public class RespuestaQuejaDTOMapper {
         respuestaQuejaDTO.setDescripcion(queja.getDescripcion());
         respuestaQuejaDTO.setTiempoMinimoRespuesta(queja.getTiempoMinimoRespuesta());
 
-
-
-
-
         return respuestaQuejaDTO;
     }
 }

@@ -5,6 +5,7 @@ import com.proyectopd.omnichannel.models.*;
 import com.proyectopd.omnichannel.repositories.NotificacionRepository;
 import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
+import com.proyectopd.omnichannel.repositories.RespuestaRepository;
 import com.proyectopd.omnichannel.services.ProfesionalService;
 import com.proyectopd.omnichannel.services.QuejaService;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,14 @@ public class QuejaServiceImplementation implements QuejaService {
     private ProfesionalRepository profesionalRepository;
     private QuejaRepository quejaRepository;
     private NotificacionRepository notificacionRepository;
+    private RespuestaRepository respuestaRepository;
 
-    public QuejaServiceImplementation(ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository, NotificacionRepository notificacionRepository, ProfesionalService profesionalService) {
+    public QuejaServiceImplementation(ProfesionalService profesionalService, ProfesionalRepository profesionalRepository, QuejaRepository quejaRepository, NotificacionRepository notificacionRepository, RespuestaRepository respuestaRepository) {
+        this.profesionalService = profesionalService;
         this.profesionalRepository = profesionalRepository;
         this.quejaRepository = quejaRepository;
         this.notificacionRepository = notificacionRepository;
-        this.profesionalService = profesionalService;
+        this.respuestaRepository = respuestaRepository;
     }
 
     @Override
@@ -43,7 +46,12 @@ public class QuejaServiceImplementation implements QuejaService {
 
     @Override
     public List<Queja> getQuejasByEstado(String estado) {
-        return quejaRepository.findQuejasByEstado(estado);
+        System.out.println(estado + "repo");
+        List<Queja> list = quejaRepository.findQuejasByEstado(estado);
+        for (Queja queja: list) {
+            System.out.println(queja.getEstado());
+        }
+        return list;
     }
 
 
@@ -72,7 +80,7 @@ public class QuejaServiceImplementation implements QuejaService {
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
             queja.setEstado("RESPONDIDA");
-            queja.setTiempoMinimoRespuesta(LocalDate.of(5874897,12,31));
+            queja.setTiempoMinimoRespuesta(LocalDate.of(5874897, 12, 31));
             quejaRepository.save(queja);
             answered = true;
         }
@@ -157,7 +165,14 @@ public class QuejaServiceImplementation implements QuejaService {
         boolean deleted;
 
         try {
-            quejaRepository.deleteQuejaByIdQueja(idQueja);
+            Queja queja = quejaRepository.getQuejaByIdQueja(idQueja);
+            try {
+                respuestaRepository.deleteById(queja.getRespuesta().getIdRespuesta());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            quejaRepository.deleteById(idQueja);
             deleted = true;
         } catch (Exception e) {
             e.printStackTrace();

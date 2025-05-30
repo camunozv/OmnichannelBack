@@ -23,7 +23,7 @@ public class Queja {
     @Column(columnDefinition = "TEXT")
     private String archivo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "idRespuesta", nullable = true)
     @JsonIgnore
     private Respuesta respuesta;

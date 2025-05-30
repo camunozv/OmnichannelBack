@@ -13,7 +13,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+
 import com.google.gson.Gson;
+
 import java.util.List;
 import java.util.Random;
 
@@ -40,12 +42,14 @@ public class QuejaController {
         this.respuestaService = respuestaService;
     }
 
+    // Tested
     @GetMapping("/queja")
     public ResponseEntity<QuejaEmpresaDTO> getQuejaById(@RequestParam Integer idQueja) {
         Queja queja = quejaService.getQuejaById(idQueja);
         return new ResponseEntity<>(mapQuejaToQuejaEmpresaDTO(queja), HttpStatus.OK);
     }
 
+    // Tested
     @GetMapping("/respuesta")
     public ResponseEntity<Respuesta> getRespuestaByQuejaId(@RequestParam Integer idQueja) {
         Queja queja = quejaService.getQuejaById(idQueja);
@@ -53,13 +57,14 @@ public class QuejaController {
     }
 
 
+    // Tested
     // Funcionalidad de crear una queja
     @PostMapping("/nuevaQueja")
     public ResponseEntity<QuejaEmpresaDTO> registrarQueja(@RequestBody QuejaEmpresaDTO newQueja) {
 
         Queja queja = mapQuejaEmpresaDTOToQueja(newQueja);
 
-        queja.setEstado("SIN RESOLVER");
+        queja.setEstado("NO");
 
         queja.setIdQueja(newQueja.getIdQueja());
 
@@ -86,6 +91,7 @@ public class QuejaController {
         }
     }
 
+    // Tested
     // Funcionalidad de respuesta de quejas
     @PutMapping("/responderQueja")
     public ResponseEntity<QuejaRespuestaDTO> responderQueja(@RequestBody QuejaRespuestaDTO newRespuesta) {
@@ -99,14 +105,11 @@ public class QuejaController {
 
         respuesta.setQueja(quejaToAnswer);
 
-        System.out.println(respuesta.getIdRespuesta());
-        System.out.println(respuesta.getTextoRespuesta());
-        System.out.println(respuesta.getQueja().getIdQueja());
-        System.out.println(respuesta.getQueja().getEstado());
-
         boolean saved = respuestaService.createRespuesta(respuesta);
 
         boolean answered = quejaService.answerQueja(respuesta, quejaToAnswer.getIdQueja());
+
+        newRespuesta.setIdRespuesta(respuesta.getIdRespuesta());
 
         if (answered && saved) {
             return new ResponseEntity<>(newRespuesta, HttpStatus.CREATED);
@@ -115,6 +118,7 @@ public class QuejaController {
         }
     }
 
+    // Tested
     // Integration test pending
     @DeleteMapping("/borrarQueja")
     public ResponseEntity<Boolean> deleteQueja(@RequestParam Integer idQueja) {
@@ -128,17 +132,24 @@ public class QuejaController {
         }
     }
 
+
     // Integration test pending
     @GetMapping("/quejasPorEstado")
-    public ResponseEntity<List<RespuestaQuejaDTO>> getQuejasPorEstado(@RequestParam String estado) {
+    public ResponseEntity<List<Queja>> getQuejasPorEstado(@RequestParam String estado) {
 
+        System.out.println(estado);
         try {
             ArrayList<RespuestaQuejaDTO> listToReturn = new ArrayList<>();
-            for (Queja queja : quejaService.getQuejasByEstado(estado)) {
-                listToReturn.add(mapRespuestaToRespuestaQuejaDTO(queja));
-            }
 
-            return new ResponseEntity<>(listToReturn, HttpStatus.OK);
+            // Pending to fix a better return when create queja is called
+            // Pending to make this mapping of DTO to work.
+
+            /*for (int i = 0; i < list.size(); i++) {
+                listToReturn.add(mapRespuestaToRespuestaQuejaDTO(list.get(i)));
+                System.out.println(list.get(i).getEstado() + "ciclo");
+            }*/
+
+            return new ResponseEntity<>(quejaService.getQuejasByEstado(estado), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
