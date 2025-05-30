@@ -18,9 +18,8 @@ public class NotificacionController {
         this.notificacionService = notificacionService;
     }
 
-
-    // Integrations test pending
-    @GetMapping("/all")
+    // Tested
+    @GetMapping("/todas")
     public ResponseEntity<List<Notificacion>> getAllNotificacionesUsuario(@RequestParam Integer idUsuario) {
         try {
             List<Notificacion> listaDeNotificaciones = notificacionService.getAllNotificacionesUsuario(idUsuario);
@@ -31,8 +30,8 @@ public class NotificacionController {
         }
     }
 
-    // Integrations test pending
-    @GetMapping("/id")
+    // Tested
+    @GetMapping
     public ResponseEntity<Notificacion> getNotificacionById(@RequestParam Integer idNotificacion) {
         try {
             Notificacion notificacion = notificacionService.getNotificacionById(idNotificacion);
@@ -42,8 +41,8 @@ public class NotificacionController {
         }
     }
 
-    // Integrations test pending
-    @DeleteMapping("/borrarNotificacion")
+    // Tested
+    @DeleteMapping
     public ResponseEntity<Boolean> deleteNotificacion(@RequestParam Integer idNotificacion) {
 
         boolean deleted = notificacionService.deleteNotificacionById(idNotificacion);

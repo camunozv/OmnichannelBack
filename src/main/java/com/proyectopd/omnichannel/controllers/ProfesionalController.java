@@ -51,4 +51,6 @@ public class ProfesionalController {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
         }
     }
+
+    // Pending get all notificaciones profesional
 }
