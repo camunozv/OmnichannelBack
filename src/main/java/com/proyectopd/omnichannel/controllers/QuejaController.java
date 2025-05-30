@@ -31,9 +31,6 @@ public class QuejaController {
     private TipoQuejaService tipoQuejaService;
     private EmpresaService empresaService;
     private RespuestaService respuestaService;
-    private Integer seq = 0;
-    private Integer seq2 = 100;
-
 
     public QuejaController(QuejaService quejaService, TipoQuejaService tipoQuejaService, EmpresaService empresaService, RespuestaService respuestaService) {
         this.quejaService = quejaService;
@@ -64,9 +61,7 @@ public class QuejaController {
 
         Queja queja = mapQuejaEmpresaDTOToQueja(newQueja);
 
-        queja.setEstado("NO");
-
-        queja.setIdQueja(newQueja.getIdQueja());
+        queja.setEstado("SIN RESOLVER");
 
         // Tipificación de quejas recibidas
         TipoQueja tipoQueja = tipoQuejaService.getTipoQuejaById(newQueja.getTipoQueja());
@@ -80,11 +75,10 @@ public class QuejaController {
 
         queja.setEmpresa(empresa);
 
-        newQueja.setIdQueja(++seq);
+        Queja created = quejaService.createQueja(queja);
 
-        boolean created = quejaService.createQueja(queja);
-
-        if (created) {
+        if (created != null) {
+            newQueja = mapQuejaToQuejaEmpresaDTO(created);
             return new ResponseEntity<>(newQueja, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(newQueja, HttpStatus.NOT_ACCEPTABLE);
@@ -98,7 +92,6 @@ public class QuejaController {
 
         Respuesta respuesta = new Respuesta();
 
-        respuesta.setIdRespuesta(++seq2);
         respuesta.setTextoRespuesta(newRespuesta.getTextoRespuesta());
 
         Queja quejaToAnswer = quejaService.getQuejaById(newRespuesta.getIdQueja());
@@ -132,25 +125,23 @@ public class QuejaController {
         }
     }
 
-
+    // Tested
     // Integration test pending
     @GetMapping("/quejasPorEstado")
     public ResponseEntity<List<Queja>> getQuejasPorEstado(@RequestParam String estado) {
 
-        System.out.println(estado);
         try {
             ArrayList<RespuestaQuejaDTO> listToReturn = new ArrayList<>();
 
-            // Pending to fix a better return when create queja is called
-            // Pending to make this mapping of DTO to work.
-
-            /*for (int i = 0; i < list.size(); i++) {
-                listToReturn.add(mapRespuestaToRespuestaQuejaDTO(list.get(i)));
-                System.out.println(list.get(i).getEstado() + "ciclo");
-            }*/
+            for (Queja queja : quejaService.getQuejasByEstado(estado)) {
+                listToReturn.add(mapRespuestaToRespuestaQuejaDTO(queja));
+            }
 
             return new ResponseEntity<>(quejaService.getQuejasByEstado(estado), HttpStatus.OK);
+
         } catch (Exception e) {
+
+            e.printStackTrace();
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 

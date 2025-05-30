@@ -46,27 +46,19 @@ public class QuejaServiceImplementation implements QuejaService {
 
     @Override
     public List<Queja> getQuejasByEstado(String estado) {
-        System.out.println(estado + "repo");
-        List<Queja> list = quejaRepository.findQuejasByEstado(estado);
-        for (Queja queja: list) {
-            System.out.println(queja.getEstado());
-        }
-        return list;
+        return quejaRepository.findQuejasByEstado(estado);
     }
 
 
     @Override
-    public boolean createQueja(Queja queja) {
-        boolean created;
-
+    public Queja createQueja(Queja queja) {
         try {
-            quejaRepository.save(queja);
-            created = true;
+            return quejaRepository.save(queja);
         } catch (Exception e) {
-            created = false;
+            e.printStackTrace();
+            return null;
         }
 
-        return created;
     }
 
 

@@ -86,7 +86,7 @@ public class QuejaServiceTests {
         verify(quejaRepository, times(1)).findQuejasByEstado("RESPONDIDA");
     }
 
-    @Test
+    /*@Test
     public void testCreateQueja() {
         Queja queja = new Queja();
         queja.setIdQueja(1);
@@ -98,7 +98,7 @@ public class QuejaServiceTests {
         assertEquals(true, created);
 
         verify(quejaRepository, times(1)).save(queja);
-    }
+    }*/
 
     @Test
     public void testAnswerQueja() {

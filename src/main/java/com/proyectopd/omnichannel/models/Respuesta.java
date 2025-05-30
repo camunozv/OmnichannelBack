@@ -7,6 +7,7 @@ import jakarta.persistence.*;
 public class Respuesta {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Must create the database again to make this work.
     private Integer idRespuesta;
     // textoRespuesta needs to be refactored to long text instead of varchar(255)
     @Column(columnDefinition = "TEXT")

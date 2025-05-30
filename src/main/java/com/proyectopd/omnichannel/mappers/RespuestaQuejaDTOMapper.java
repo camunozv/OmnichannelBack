@@ -15,7 +15,11 @@ public class RespuestaQuejaDTOMapper {
         RespuestaQuejaDTO respuestaQuejaDTO = new RespuestaQuejaDTO();
 
         respuestaQuejaDTO.setIdQueja(queja.getIdQueja());
-        respuestaQuejaDTO.setTextoRespuesta(queja.getRespuesta().getTextoRespuesta());
+        try {
+            respuestaQuejaDTO.setTextoRespuesta(queja.getRespuesta().getTextoRespuesta());
+        } catch (Exception e) {
+            respuestaQuejaDTO.setTextoRespuesta("");
+        }
         respuestaQuejaDTO.setArchivo(queja.getArchivo());
         respuestaQuejaDTO.setEstado(queja.getEstado());
         respuestaQuejaDTO.setDescripcion(queja.getDescripcion());
