@@ -4,12 +4,14 @@ import com.proyectopd.omnichannel.models.*;
 import com.proyectopd.omnichannel.repositories.NotificacionRepository;
 import com.proyectopd.omnichannel.repositories.ProfesionalRepository;
 import com.proyectopd.omnichannel.repositories.QuejaRepository;
+import com.proyectopd.omnichannel.repositories.RespuestaRepository;
 import com.proyectopd.omnichannel.services.Implementation.QuejaServiceImplementation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.OngoingStubbing;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,6 +29,8 @@ public class QuejaServiceTests {
     private QuejaRepository quejaRepository;
     @Mock
     private NotificacionRepository notificacionRepository;
+    @Mock
+    private RespuestaRepository respuestaRepository;
 
     @InjectMocks
     private QuejaServiceImplementation quejaServiceImplementation;
@@ -226,13 +230,24 @@ public class QuejaServiceTests {
         queja.setIdQueja(1);
         queja.setEstado("RESPONDIDA");
 
-        doNothing().when(quejaRepository).deleteQuejaByIdQueja(1);
+        Respuesta respuesta = new Respuesta();
+        respuesta.setQueja(queja);
+        respuesta.setTextoRespuesta("Holaaa");
+        respuesta.setIdRespuesta(1);
+
+        queja.setRespuesta(respuesta);
+
+        when(quejaRepository.getQuejaByIdQueja(1)).thenReturn(queja);
+
+        doNothing().when(respuestaRepository).deleteById(1);
+
+        doNothing().when(quejaRepository).deleteById(1);
 
         boolean deleted = quejaServiceImplementation.deleteQuejaById(1);
 
         assertEquals(true, deleted);
 
-        verify(quejaRepository, times(1)).deleteQuejaByIdQueja(1);
+        verify(quejaRepository, times(1)).deleteById(1);
 
     }
 

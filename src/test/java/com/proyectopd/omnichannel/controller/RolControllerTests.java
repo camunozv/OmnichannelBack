@@ -38,18 +38,8 @@ public class RolControllerTests {
 
     @Test
     public void testCrearRol() throws Exception {
-        Rol rol = new Rol();
-        rol.setNombreRol("Admin");
 
-//        when(rolService.createNewRol(rol)).thenReturn(rol);
-
-        String requestBody = "{"
-                + "\"nombreRol\": \"" + "Admin" + "\""
-                + "}";
-
-        mockMvc.perform(post(BASE_URL + "/nuevoRol")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody)
+        mockMvc.perform(post(BASE_URL + "/nuevoRol").param("newRol", "Admin")
                         .characterEncoding("UTF-8"))
                 .andExpect(status().isCreated());
     }
@@ -75,15 +65,4 @@ public class RolControllerTests {
                 .andExpect(jsonPath("$").value(true));
     }
 
-
-    /*
-    @DeleteMapping("/borrarRol")
-    public ResponseEntity<Boolean> deleteRol(@RequestParam String nombreRol) {
-        try {
-            rolService.deleteRol(nombreRol);
-            return new ResponseEntity<>(true, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
-        }
-    }*/
 }

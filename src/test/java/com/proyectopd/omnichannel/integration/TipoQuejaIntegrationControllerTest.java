@@ -8,28 +8,36 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
-public class TipoServicioContollerTest {
+public class TipoQuejaIntegrationControllerTest {
 
-    String BASE_URL = "/tipoServicio";
+    String BASE_URL = "/tipoQueja";
 
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    public void testCreateTipoServicio() throws Exception {
+    public void createTipoQueja() throws Exception {
 
-        String requestBody = "{\"nombreServicio\":\"Alcantarillado\"}";
+        String requestBody = "{\"tipoQueja\":\"Incumplimiento\",\"dias\":15}";
 
-        mockMvc.perform(post(BASE_URL + "/nuevoServicio").contentType(MediaType.APPLICATION_JSON)
-                .content(requestBody)).andExpect(status().isOk())
-                .andExpect(content().string("{\"nombreServicio\":\"Alcantarillado\",\"empresa\":null}"));
+        mockMvc.perform(post(BASE_URL).contentType(MediaType.APPLICATION_JSON)
+                        .content(requestBody))
+                .andExpect(status().isCreated())
+                .andExpect(content().string("{\"tipoQueja\":\"Incumplimiento\",\"dias\":15}"));
 
+        mockMvc.perform(get(BASE_URL).param("nombreTipoQueja", "Incumplimiento"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("{\"tipoQueja\":\"Incumplimiento\",\"dias\":15}"));
     }
+
+
 }

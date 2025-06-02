@@ -4,14 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 // Our intention here is to test the rest controller
@@ -26,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
-public class RolControllerTest {
+public class RolIntegrationControllerTest {
 
     String BASE_URL = "/rol";
 
@@ -50,26 +48,16 @@ public class RolControllerTest {
         // Defines the behavior of a mocked object.
         /*when(rolService.createNewRol(newRol)).thenReturn(true);*/
 
-        ArrayList<String> requestBodies = new ArrayList<>();
         ArrayList<String> roleNames = new ArrayList<>();
-
-        requestBodies.add("{\"nombreRol\":\"Empresa\"}");
-        requestBodies.add("{\"nombreRol\":\"Profesional\"}");
-        requestBodies.add("{\"nombreRol\":\"Administrador\"}");
 
         roleNames.add("Empresa");
         roleNames.add("Profesional");
         roleNames.add("Administrador");
 
-        for (String requestBody : requestBodies) {
-
-            System.out.println(requestBody);
-
+        for (String roleName : roleNames) {
             mockMvc.perform(post(BASE_URL + "/nuevoRol")
-                            .contentType(MediaType.APPLICATION_JSON)
-                            .content(requestBody).characterEncoding("UTF-8"))
-                    .andExpect(status().isCreated())
-                    .andExpect(content().string(requestBody));
+                            .param("newRol", roleName).characterEncoding("UTF-8"))
+                    .andExpect(status().isCreated());
         }
 
         for (String roleName : roleNames) {

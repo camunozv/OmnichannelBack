@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -78,13 +79,13 @@ public class NotificacionAdminServiceTests {
         notificacion.setIdNotificacion(1);
         notificacion.setTextoNotificacion("Notificacion de prueba");
 
-        when(notificacionAdminRepository.getNotificacionAdminByIdNotificacion(1)).thenReturn(notificacion);
+        when(notificacionAdminRepository.findById(1)).thenReturn(Optional.of(notificacion));
 
         NotificacionAdmin returnNotificacion = notificacionAdminImplementation.getNotificacionById(1);
 
         assertEquals(notificacion, returnNotificacion);
 
-        verify(notificacionAdminRepository, times(1)).getNotificacionAdminByIdNotificacion(1);
+        verify(notificacionAdminRepository, times(1)).findById(1);
     }
 
 }
