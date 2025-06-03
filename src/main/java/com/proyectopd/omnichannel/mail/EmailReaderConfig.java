@@ -22,6 +22,7 @@ public class EmailReaderConfig {
 
     public static void readEmails() {
         Properties props = new Properties();
+
         props.put("mail.store.protocol", "imaps"); // Use "imaps" for secure IMAP
         props.put("mail.imaps.host", "imap.gmail.com");
         props.put("mail.imaps.port", 993);
@@ -49,22 +50,32 @@ public class EmailReaderConfig {
                 System.out.println("There are no messages.");
             } else {
                 for (Message message : messages) {
+
+                    Multipart multiPart = (Multipart) message.getContent();
+
                     System.out.println("-----------MESSAGE No. " + i + "---------------");
                     System.out.println("Subject: " + message.getSubject());
                     System.out.println("From: " + InternetAddress.toString(message.getFrom()));
                     System.out.println("Sent Date: " + message.getSentDate());
+
+                    for (int k = 0; k < multiPart.getCount(); k++) {
+                        BodyPart bodyPart = multiPart.getBodyPart(k);
+                        if (bodyPart.isMimeType("text/plain")) {
+                            System.out.println("This is plain text");
+                            System.out.println("---------------------------");
+                            System.out.println((String) bodyPart.getContent());
+                        } // with other conditions we can handle multiple content types.
+                    }
+
                     i++;
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public static void main(String[] args) {
         readEmails();
     }
-
 }
