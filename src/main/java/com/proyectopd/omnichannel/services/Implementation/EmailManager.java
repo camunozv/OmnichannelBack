@@ -5,11 +5,17 @@ import com.proyectopd.omnichannel.models.Empresa;
 import com.proyectopd.omnichannel.models.Queja;
 import com.proyectopd.omnichannel.models.TipoQueja;
 import jakarta.mail.*;
+import jakarta.mail.internet.InternetAddress;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Properties;
 
 import static com.proyectopd.omnichannel.mappers.QuejaEmpresaDTOMapper.mapQuejaEmpresaDTOToQueja;
@@ -30,8 +36,25 @@ public class EmailManager {
     @Autowired
     private QuejaServiceImplementation quejaServiceImplementation;
 
-    //@Scheduled(cron = "0 0 0 * * ?")// Runs at midnight every day
-    //@Scheduled(initialDelay = 300000) // For testing the method
+    @Autowired
+    private JavaMailSender mailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
+
+    @Async
+    public void replyEmails(String recipient, String body, String subject) {
+
+        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
+
+        simpleMailMessage.setFrom(fromEmail);
+        simpleMailMessage.setTo(recipient);
+        simpleMailMessage.setSubject(subject);
+        simpleMailMessage.setText(body);
+
+        mailSender.send(simpleMailMessage);
+    }
+
     @Scheduled(fixedRate = 120000) // Executes the method every 2 minutes
     public void readEmails() {
         Properties props = new Properties();
@@ -48,7 +71,7 @@ public class EmailManager {
         try {
             // Connection
             Store store = session.getStore("imaps");
-            store.connect("imap.gmail.com", "quejasomnichannel@gmail.com", "");
+            store.connect("imap.gmail.com", "quejasomnichannel@gmail.com", "aogg nnrt jtbr buwf");
 
             // Inbox opening
             Folder inbox = store.getFolder("INBOX");
@@ -63,7 +86,7 @@ public class EmailManager {
 
                     Multipart multiPart = (Multipart) message.getContent();
 
-                    String [] typeComplainAndCompany = message.getSubject().split(",");
+                    String[] typeComplainAndCompany = message.getSubject().split(",");
                     String typeComplain = typeComplainAndCompany[0].trim();
                     String company = typeComplainAndCompany[1].trim();
 
@@ -94,12 +117,24 @@ public class EmailManager {
 
                     Queja created = quejaServiceImplementation.createQueja(quejaToSave);
 
+                    Address[] mailAddress = message.getFrom();
+
+                    String mailToReply = "";
+
+                    if (mailAddress != null && mailAddress.length > 0) {
+                        if (mailAddress[0] instanceof InternetAddress) {
+                            mailToReply = ((InternetAddress) mailAddress[0]).getAddress();
+                        }
+                    }
+
                     if (created != null) {
-                        // Email answering good
-                        System.out.println("Queja created successfully!");
+                        replyEmails(mailToReply,
+                                "Hemos recibido su queja, para consultarla su estado en nuestro stio web utilice el id: " + created.getIdQueja(),
+                                "Re: " + message.getSubject());
                     } else {
-                        // Email fucking the usere
-                        System.out.println("Go fuck yourself!");
+                        replyEmails(mailToReply,
+                                "Su queja NO ha sido guardada correctamente, favor colocar los campos en el formato correcto.",
+                                "Re: " + message.getSubject());
                     }
 
                     message.setFlag(Flags.Flag.DELETED, true);
