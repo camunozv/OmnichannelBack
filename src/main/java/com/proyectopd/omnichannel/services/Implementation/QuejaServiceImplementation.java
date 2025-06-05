@@ -44,6 +44,15 @@ public class QuejaServiceImplementation implements QuejaService {
         return quejaRepository.findQuejasByEstado(estado);
     }
 
+    @Override
+    public List<Queja> getAllQuejas() {
+        try {
+            return quejaRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public Queja createQueja(Queja queja) {
