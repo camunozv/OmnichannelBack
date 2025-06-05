@@ -15,8 +15,8 @@ public class UpdateDailyQuejasImplementation {
 
     //@Scheduled(cron = "0 0 0 * * ?")// Runs at midnight every day
     //@Scheduled(initialDelay = 300000) // For testing the method
-    //@Scheduled(fixedRate = 120000) // Executes the method every 5 minutes
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(fixedRate = 120000)
+//    @Scheduled(cron = "0 0 0 * * ?")
     public boolean updateQuejasDaily() {
 
         boolean var1 = quejaService.updateDailyQuejas();
