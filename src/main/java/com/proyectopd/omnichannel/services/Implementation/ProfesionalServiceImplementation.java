@@ -66,6 +66,15 @@ public class ProfesionalServiceImplementation implements ProfesionalService {
         return deleted;
     }
 
+    @Override
+    public List<Profesional> getAllProfesionales() {
+        try {
+            return profesionalRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public List<Profesional> getAllFreeProfesionales() {

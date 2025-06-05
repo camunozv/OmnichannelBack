@@ -12,5 +12,7 @@ public interface ProfesionalService {
 
     boolean deleteProfesionalById(Integer idUsuario);
 
+    List<Profesional> getAllProfesionales();
+
     List<Profesional> getAllFreeProfesionales();
 }
