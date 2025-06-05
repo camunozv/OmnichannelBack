@@ -44,6 +44,15 @@ public class QuejaServiceImplementation implements QuejaService {
         return quejaRepository.findQuejasByEstado(estado);
     }
 
+    @Override
+    public List<Queja> getAllQuejas() {
+        try {
+            return quejaRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
     @Override
     public Queja createQueja(Queja queja) {
@@ -67,7 +76,7 @@ public class QuejaServiceImplementation implements QuejaService {
             Queja queja = quejaOptional.get();
             queja.setRespuesta(respuesta);
             queja.setEstado("RESPONDIDA");
-            queja.setTiempoMinimoRespuesta(LocalDate.of(5874897, 12, 31));
+            queja.setTiempoMinimoRespuesta(LocalDate.of(9999, 12, 31));
             quejaRepository.save(queja);
             answered = true;
         }
@@ -95,7 +104,7 @@ public class QuejaServiceImplementation implements QuejaService {
                 queja = quejasVencidas.get(begin);
                 queja.setProfesional(profesional);
                 queja.setEstado("VENCIDA");
-                queja.setTiempoMinimoRespuesta(LocalDate.of(5874897, 12, 31));
+                queja.setTiempoMinimoRespuesta(LocalDate.of(9999, 12, 31));
                 quejaRepository.save(queja);
                 profesional.setCantidadQuejasEncargadas(profesional.getCantidadQuejasEncargadas() + 1);
 

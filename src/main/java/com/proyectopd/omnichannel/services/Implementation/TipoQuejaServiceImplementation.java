@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
+import java.util.List;
 
 @Service
 public class TipoQuejaServiceImplementation implements TipoQuejaService {
@@ -59,5 +60,15 @@ public class TipoQuejaServiceImplementation implements TipoQuejaService {
         }
 
         return deleted;
+    }
+
+    @Override
+    public List<TipoQueja> getAllTipoQuejas() {
+        try {
+            return tipoQuejaRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

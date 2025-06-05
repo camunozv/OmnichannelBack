@@ -8,6 +8,7 @@ public interface QuejaService {
     List<Queja> getAllQuejasEmpresa(String nombreEmpresa);
     Queja getQuejaById(Integer idQueja);
     List<Queja> getQuejasByEstado(String estado);
+    List<Queja> getAllQuejas();
     Queja createQueja (Queja queja);
     boolean answerQueja(Respuesta respuesta, Integer idQueja);
     boolean assignProfesional();

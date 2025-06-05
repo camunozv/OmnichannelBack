@@ -18,10 +18,11 @@ public class RolController {
 
     // Tested
     @PostMapping("/nuevoRol")
-    public ResponseEntity<Rol> crearRol(@RequestParam Rol newRol) {
+    public ResponseEntity<Rol> crearRol(@RequestParam String newRol) {
         try {
-            rolService.createNewRol(newRol);
-            return new ResponseEntity<>(newRol, HttpStatus.CREATED);
+            Rol nuevoRol = new Rol(newRol);
+            rolService.createNewRol(nuevoRol);
+            return new ResponseEntity<>(nuevoRol, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new Rol("ERROR"), HttpStatus.NOT_FOUND);
         }

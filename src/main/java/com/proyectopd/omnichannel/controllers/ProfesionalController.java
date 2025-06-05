@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.proyectopd.omnichannel.mappers.UsuarioProfesionalDTOMapper.mapProfesionalToUsuarioProfesionalDTO;
 
 @RestController
@@ -24,7 +26,7 @@ public class ProfesionalController {
     }
 
     // Tested
-    @GetMapping("/{idUsuario}")
+    @GetMapping("/id/{idUsuario}")
     public ResponseEntity<UsuarioProfesionalDTO> getProfesionalById(@PathVariable Integer idUsuario) {
 
         Profesional profesional = profesionalService.getProfesionalById(idUsuario);
@@ -40,7 +42,7 @@ public class ProfesionalController {
     }
 
     // Tested
-    @DeleteMapping("/{idUsuario}")
+    @DeleteMapping("/id/{idUsuario}")
     public ResponseEntity<Boolean> deleteProfesional(@PathVariable Integer idUsuario) {
 
         boolean deleted = profesionalService.deleteProfesionalById(idUsuario);
@@ -49,6 +51,17 @@ public class ProfesionalController {
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(false, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Profesional>> getAllProfesionales() {
+        List<Profesional> profesionales = profesionalService.getAllProfesionales();
+        
+        if (profesionales != null && !profesionales.isEmpty()) {
+            return new ResponseEntity<>(profesionales, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(profesionales, HttpStatus.NOT_FOUND);
         }
     }
 

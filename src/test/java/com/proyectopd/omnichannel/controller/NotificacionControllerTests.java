@@ -47,7 +47,7 @@ public class NotificacionControllerTests {
 
         when(notificacionService.getAllNotificacionesUsuario(1)).thenReturn(notificaciones);
 
-        mockMvc.perform(get(BASE_URL + "/all").param("idUsuario", "1"))
+        mockMvc.perform(get(BASE_URL + "/todas").param("idUsuario", "1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(5)))
                 .andExpect(jsonPath("$[0].idNotificacion").value(0))
@@ -65,7 +65,7 @@ public class NotificacionControllerTests {
 
         when(notificacionService.getNotificacionById(1)).thenReturn(notificacion);
 
-        mockMvc.perform(get(BASE_URL + "/id").param("idNotificacion", "1")).andExpect(status().isOk())
+        mockMvc.perform(get(BASE_URL).param("idNotificacion", "1")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.idNotificacion").value(1))
                 .andExpect(jsonPath("$.textoNotificacion").value("Notificacion 1"));
     }
@@ -75,7 +75,7 @@ public class NotificacionControllerTests {
 
         when(notificacionService.deleteNotificacionById(1)).thenReturn(true);
 
-        mockMvc.perform(delete(BASE_URL + "/borrarNotificacion").param("idNotificacion", "1"))
+        mockMvc.perform(delete(BASE_URL).param("idNotificacion", "1"))
                 .andExpect(status().isOk());
     }
 

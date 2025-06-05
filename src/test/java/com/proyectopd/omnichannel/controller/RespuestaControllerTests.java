@@ -49,10 +49,4 @@ public class RespuestaControllerTests {
 
     }
 
-    /*
-    @GetMapping("/id")
-    public Respuesta getRespuestaByIdRespuesta(@RequestParam Integer idRespuesta) {
-        return respuestaService.getRespuestaById(idRespuesta);
-    }
-    * */
 }

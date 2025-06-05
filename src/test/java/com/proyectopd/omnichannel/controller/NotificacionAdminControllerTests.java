@@ -62,7 +62,7 @@ public class NotificacionAdminControllerTests {
 
         when(notificacionAdminService.getNotificacionById(1)).thenReturn(notificacion);
 
-        mockMvc.perform(get(BASE_URL + "/1")).andExpect(status().isOk())
+        mockMvc.perform(get(BASE_URL).param("idNotificacion", "1")).andExpect(status().isOk())
                 .andExpect(jsonPath("$.idNotificacion").value(1))
                 .andExpect(jsonPath("$.textoNotificacion").value("Notificacion 1"));
     }

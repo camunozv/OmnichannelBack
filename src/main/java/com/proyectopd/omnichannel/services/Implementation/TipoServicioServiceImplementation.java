@@ -73,4 +73,14 @@ public class TipoServicioServiceImplementation implements TipoServicioService {
 
         return deleted;
     }
+
+    @Override
+    public List<TipoServicio> getAllTipoServicios() {
+        try {
+            return tipoServicioRepository.findAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

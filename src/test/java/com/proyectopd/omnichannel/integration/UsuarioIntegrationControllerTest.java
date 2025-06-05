@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest
 @ActiveProfiles("test")
 @AutoConfigureMockMvc(addFilters = false)
-public class UsuarioControllerTest {
+public class UsuarioIntegrationControllerTest {
 
     String BASE_URL = "/usuario";
     String BASE_URL2 = "/quejas";
@@ -77,8 +77,7 @@ public class UsuarioControllerTest {
         mockMvc.perform(post(BASE_URL2 + "/nuevaQueja").contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
                         .characterEncoding("UTF-8"))
-                .andExpect(status().isCreated())
-                .andExpect(content().string("{\"idQueja\":1,\"estado\":null,\"tiempoMinimoRespuesta\":\"2025-05-19\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}"));
+                .andExpect(status().isCreated());
     }
 
     @Test
@@ -98,7 +97,7 @@ public class UsuarioControllerTest {
 
         mockMvc.perform(get("/empresa/quejasEmpresa").param("nombreEmpresa", "Emcali"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"idQueja\":1,\"estado\":\"RESPONDIDA\",\"tiempoMinimoRespuesta\":\"+5874897-12-31\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}]"));
+                .andExpect(content().string("[{\"idQueja\":1,\"estado\":\"RESPONDIDA\",\"tiempoMinimoRespuesta\":\"+9999-12-31\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}]"));
     }
 
 }

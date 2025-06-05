@@ -43,7 +43,11 @@ public class QuejaController {
     @GetMapping("/queja")
     public ResponseEntity<QuejaEmpresaDTO> getQuejaById(@RequestParam Integer idQueja) {
         Queja queja = quejaService.getQuejaById(idQueja);
-        return new ResponseEntity<>(mapQuejaToQuejaEmpresaDTO(queja), HttpStatus.OK);
+        if (queja != null) {
+            return new ResponseEntity<>(mapQuejaToQuejaEmpresaDTO(queja), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
     }
 
     // Tested
@@ -142,6 +146,25 @@ public class QuejaController {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
 
+    }
+
+    // Get All Quejas
+    @GetMapping("/all")
+    public ResponseEntity<List<QuejaEmpresaDTO>> getAllQuejas() {
+        try {
+            List<Queja> quejas = quejaService.getAllQuejas();
+            if (quejas != null && !quejas.isEmpty()) {
+                List<QuejaEmpresaDTO> quejaDTOs = new ArrayList<>();
+                for (Queja queja : quejas) {
+                    quejaDTOs.add(mapQuejaToQuejaEmpresaDTO(queja));
+                }
+                return new ResponseEntity<>(quejaDTOs, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get all quejas vencidas
