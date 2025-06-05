@@ -32,6 +32,21 @@ public class TipoServicioController {
         }
     }
 
+    // Get All TipoServicios
+    @GetMapping("/all")
+    public ResponseEntity<List<TipoServicio>> getAllTipoServicios() {
+        try {
+            List<TipoServicio> tipoServicios = tipoServicioService.getAllTipoServicios();
+            if (tipoServicios != null && !tipoServicios.isEmpty()) {
+                return new ResponseEntity<>(tipoServicios, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(tipoServicios, HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     // Tested
     @DeleteMapping("/borrarTipoServicio")
     public ResponseEntity<Boolean> deleteTipoServicioByNombreTipoServicioApi(@RequestParam String nombreTipoServicio) {

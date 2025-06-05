@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/tipoQueja")
@@ -26,6 +27,21 @@ public class TipoQuejaController {
             return new ResponseEntity<>(tipoQueja, HttpStatus.CREATED);
         } else {
             return new ResponseEntity<>(null, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    // Get All TipoQuejas
+    @GetMapping("/all")
+    public ResponseEntity<List<TipoQueja>> getAllTipoQuejas() {
+        try {
+            List<TipoQueja> tipoQuejas = tipoQuejaService.getAllTipoQuejas();
+            if (tipoQuejas != null && !tipoQuejas.isEmpty()) {
+                return new ResponseEntity<>(tipoQuejas, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(tipoQuejas, HttpStatus.NO_CONTENT);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
