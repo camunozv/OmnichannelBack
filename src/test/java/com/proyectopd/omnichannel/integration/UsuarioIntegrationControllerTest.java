@@ -97,7 +97,7 @@ public class UsuarioIntegrationControllerTest {
 
         mockMvc.perform(get("/empresa/quejasEmpresa").param("nombreEmpresa", "Emcali"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("[{\"idQueja\":1,\"estado\":\"RESPONDIDA\",\"tiempoMinimoRespuesta\":\"+5874897-12-31\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}]"));
+                .andExpect(content().string("[{\"idQueja\":1,\"estado\":\"RESPONDIDA\",\"tiempoMinimoRespuesta\":\"+9999-12-31\",\"descripcion\":\"No me funciona el servicio de alcantarillado.\",\"archivo\":\"BASE 64 STRING\",\"tipoQueja\":\"Incumplimiento\",\"nombreEmpresa\":\"Emcali\"}]"));
     }
 
 }
